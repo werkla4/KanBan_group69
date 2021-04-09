@@ -1,13 +1,41 @@
-let tasks = [
-    {
-        'title': '',
-        'category': '',
-        'description': '',
-        'due date': '',
-        'urgency': '',
-        'assigned to': '',
+/**
+ * Arry to save the values of add Task
+ */
+let tasks = [];
 
-    },
+/**
+ * funktion to push the values of input fields in addTask.html into Array tasks
+ */
+function addToTask() {
+    let newTitle = document.getElementById('title-value');
+    let newCategory = document.getElementById('category-value');
+    let newDescription = document.getElementById('desrciption-value');
+
+    let task = {
+        'title': newTitle.value,
+        'category': newCategory.value,
+        'description': newDescription.value
+    }
+    tasks.push(task);
+    console.log(tasks);
+    newTitle.value = '';
+    newCategory.value = '';
+    newDescription.value = '';
+
+    saveArrayToLocalStorage(tasks, tasks);
+};
 
 
-];
+
+/**
+ * function to save to local storage
+ * @param {tasks} key 
+ * @param {tasks} array 
+ */
+function saveArrayToLocalStorage(key, tasks){
+    localStorage.setItem(key, JSON.stringify(tasks));
+}
+
+function getArray(key){
+    return JSON.parse(localStorage.getItem(key));
+}
