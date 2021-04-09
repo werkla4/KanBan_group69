@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Task</title>
+</head>
+
+<body>
+    
+
+    <form onsubmit="addTask()">
+        <div>
+            <h2>TITLE</h2>
+            <input placeholder="title" type="text">
+        </div>
+        <div>
+            <h2>CATEGORY</h2>
+            <input placeholder="category" type="text">
+        </div>
+        <div>
+            <h2>description</h2>
+            <input placeholder="description" type="text">
+        </div>
+        <div>
+            <h2>DUE DATE</h2>
+            <input placeholder="due date" type="date">
+        </div>
+        <div>
+            <H2>URGENCY</H2>
+            <select name="urgency" id="urgency">
+                <option value="high-urgency">high</option>
+                <option value="medium-urgency">medium</option>
+                <option value="low-urgency">low</option>
+              
+              </select>
+        </div>
+        <div>
+            <h2>ASSIGNED TO</h2>
+            <select name="assigned to" id="assigned">
+                <option value="Felicitas">Felicitas</option>
+                <option value="Klaus">Klaus</option>
+                <option value="Klaus">Katja</option>
+                <option value="Mihai">Mihai</option>
+              </select>
+        </div>
+    </form>
+ 
+</body>
+
+</html>
