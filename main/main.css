@@ -7,3 +7,32 @@ body{
     min-width: 100%;
     min-height: 100vh;
 }
+
+.app-container{
+    display: flex;
+    flex-direction: row;
+    height: 600px;
+}
+
+.content-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 600px;
+    border: 2px solid rgb(255, 0, 0);
+}
+
+/* ---------------------------------
+    | | |  STYLES FOR NAVBAR  | | |
+    V V V                     V V V
+*/
+
+.navBar-container{
+    width: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid blue;
+}
