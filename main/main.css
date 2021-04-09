@@ -1,3 +1,16 @@
+:root{
+    --font_pt_sans: 'PT Sans', sans-serif;
+
+    --navBar_color: #1C2D92;
+
+    --background_field: #F4F3FB;
+
+    --toDo_color: #98ffa4;
+    --inProgress_color: #F3B381;
+    --testing_color: #81e8f3;
+    --done_color: #fc9191;
+}
+
 body{
     margin: 0;
     padding: 0;
