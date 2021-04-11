@@ -14,6 +14,10 @@
     <link rel="icon" href="../img/logo.png">
     <link rel="stylesheet" href="../main/main.css" />
     <script src="../main/main.js"></script>
+    <script src="../smallest_backend_ever-master/mini_backend.js"></script>
+    <!-- include font pt sans -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=PT+Sans&display=swap" rel="stylesheet">
 
     <!-- please only insert your tags and links you need: START: -->
 

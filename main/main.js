@@ -39,6 +39,20 @@ function includeHTML() {
  * - Importand initialisation the main layout!
  */
 function main_init() {
+  console.log('main_init');
   // importand for navBar, and layout
   includeHTML();
+  // init backend
+  backend_init();
+}
+
+/**
+ * with backend_init, we can save data on the webside per json file,
+ * it works similar as a localStorage API (setItem, delItem, getItem)
+ */
+async function backend_init() {
+  // set Url for including smallest backend
+  setURL('http://gruppe-69.developerakademie.com/KanBan_group69/smallest_backend_ever-master');
+  // load memory and wait until to the end
+  await downloadFromServer();
 }
