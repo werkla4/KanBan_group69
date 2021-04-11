@@ -1,4 +1,4 @@
-
+const NAVBAR_TITLES = ['board', 'backlog', 'addTask', 'help'];
 /**
  * this is a include function:
  * 
@@ -38,12 +38,14 @@ function includeHTML() {
 /**
  * - Importand initialisation the main layout!
  */
-function main_init() {
+async function main_init() {
   console.log('main_init');
   // importand for navBar, and layout
   includeHTML();
   // init backend
   backend_init();
+  // set selected item-bar in navBar
+  updateLeftBarInNavBar();
 }
 
 /**
@@ -55,4 +57,22 @@ async function backend_init() {
   setURL('http://gruppe-69.developerakademie.com/KanBan_group69/smallest_backend_ever-master');
   // load memory and wait until to the end
   await downloadFromServer();
+}
+
+function setBarLeft(item) {
+  console.log("OK____");
+  backend.setItem('temp_data', [{ 'currentPage': item }]);
+  console.log("OK");
+}
+
+function updateLeftBarInNavBar() {
+  let currentPage = localStorage.getItem('currentPage');
+  if (currentPage == null) {
+    console.log("set currentPage index");
+    localStorage.setItem('currentPage', 'index');
+  }
+
+  console.log("a");
+  console.log(document);
+  console.log(document.getElementById('board-bar'));
 }
