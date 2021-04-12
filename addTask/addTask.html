@@ -26,7 +26,7 @@
 
 </head>
 
-<body onload="main_init() loadTasks()" >
+<body onload="main_init(); loadTasks()">
     <div class="app-container">
         <div w3-include-html="../main/navBar.html" class="navBar-container"></div>
         <div class="content-container">
@@ -40,8 +40,8 @@
 
                     <div>
                         <h2>TITLE</h2>
-                        <!-- <form onsubmit="addToTask()"> -->
-                        <input required placeholder="title" type="text" id="title-value">
+                        <form onsubmit="addToTask(); return false;">
+                            <input required placeholder="title" type="text" id="title-value">
                     </div>
                     <div>
                         <h2>CATEGORY</h2>
@@ -62,7 +62,8 @@
 
 
                     <div>
-                        date <!--date noch bearbeiten-->
+                        date
+                        <!--date noch bearbeiten-->
                     </div>
                     <div>
                         <h2>URGENCY</h2>
@@ -74,12 +75,13 @@
                     </div>
                     <div>
                         <h2>ASSIGNED TO</h2>
-                        ? <!--noch bearbeiten-->
+                        ?
+                        <!--noch bearbeiten-->
                     </div>
 
-                    <button onclick="addToTask()">CREATE TASK</button>
+                    <button>CREATE TASK</button>
 
-                    <!-- </form> -->
+                    </form>
 
                     <!-- please insert your content: END-->
                 </div>
