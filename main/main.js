@@ -43,7 +43,7 @@ async function main_init() {
   // importand for navBar, and layout
   includeHTML();
   // init backend
-  backend_init();
+  await backend_init();
   // set selected item-bar in navBar
   updateLeftBarInNavBar();
 }
@@ -60,19 +60,22 @@ async function backend_init() {
 }
 
 function setBarLeft(item) {
-  console.log("OK____");
-  backend.setItem('temp_data', [{ 'currentPage': item }]);
-  console.log("OK");
+  localStorage.setItem('currentPage', item);
 }
 
 function updateLeftBarInNavBar() {
   let currentPage = localStorage.getItem('currentPage');
   if (currentPage == null) {
-    console.log("set currentPage index");
     localStorage.setItem('currentPage', 'index');
   }
-
-  console.log("a");
-  console.log(document);
-  console.log(document.getElementById('board-bar'));
+  else{
+    for(let i = 0; i < NAVBAR_TITLES.length; i++){
+      if(currentPage == NAVBAR_TITLES[i]){
+        document.getElementById(`${NAVBAR_TITLES[i]}-bar`).classList.remove('opacity-0');
+      }
+      else{
+        document.getElementById(`${NAVBAR_TITLES[i]}-bar`).classList.add('opacity-0');
+      }
+    }
+  }
 }

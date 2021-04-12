@@ -23,8 +23,12 @@ window.onload = async function() {
 
 async function downloadFromServer() {
     let result = await loadJSONFromServer();
-    jsonFromServer = JSON.parse(result);
-    console.log('Loaded', result);
+    if(result == '' || result == null){
+        // json have no input, make nothing
+    }
+    else{
+        jsonFromServer = JSON.parse(result);
+    }
 }
 
 function setURL(url) {
