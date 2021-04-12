@@ -8,13 +8,17 @@ let tasks = [];
  */
 function addToTask() {
     let newTitle = document.getElementById('title-value');
-    let newCategory = document.getElementById('category-value');
-    let newDescription = document.getElementById('desrciption-value');
+    let newCategory = document.getElementById('select-category');
+    let newDescription = document.getElementById('description');
+    let urgency = document.getElementById('select-urgency');
+
 
     let task = {
         'title': newTitle.value,
         'category': newCategory.value,
-        'description': newDescription.value
+        'description': newDescription.value,
+        'date': new Date().getTime(),
+        'urgency': urgency.value
     }
     tasks.push(task);
     console.log(tasks);
@@ -22,20 +26,27 @@ function addToTask() {
     newCategory.value = '';
     newDescription.value = '';
 
-    saveArrayToLocalStorage(tasks, tasks);
+    let tasksAsString = JSON.stringify(tasks);
+    localStorage.setItem('tasks', tasksAsString);
 };
+
+function loadTasks() {
+    let tasksAsString = localStorage.getItem('tasks');
+    tasks = JSON.parse(tasksAsString);
+    console.log('loaded all taskd', tasks)
+}
 
 
 
 /**
  * function to save to local storage
- * @param {tasks} key 
- * @param {tasks} array 
+ * @param {tasks} key
+ * @param {tasks} array
  */
-function saveArrayToLocalStorage(key, tasks){
-    localStorage.setItem(key, JSON.stringify(tasks));
-}
+// function saveArrayToLocalStorage(key, tasks){
+//     localStorage.setItem(key, JSON.stringify(tasks));
+// }
 
-function getArray(key){
-    return JSON.parse(localStorage.getItem(key));
-}
+// function getArray(key){
+//     return JSON.parse(localStorage.getItem(key));
+// }

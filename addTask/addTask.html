@@ -13,6 +13,7 @@
     <title id="web-title">KanBan_Group69</title>
     <link rel="icon" href="../img/logo.png">
     <link rel="stylesheet" href="../main/main.css" />
+    <link rel="stylesheet" href="addTask.css">
     <script src="../main/main.js"></script>
     <script src="../smallest_backend_ever-master/mini_backend.js"></script>
     <!-- include font pt sans -->
@@ -20,37 +21,69 @@
     <link href="https://fonts.googleapis.com/css2?family=PT+Sans&display=swap" rel="stylesheet">
 
     <!-- please only insert your tags and links you need: START: -->
-    <script src="../addTask/addTask.js"></script> 
+    <script src="../addTask/addTask.js"></script>
     <!-- please only insert your tags and links you need: End: -->
 
 </head>
 
-<body onload="main_init()">
+<body onload="main_init() loadTasks()" >
     <div class="app-container">
         <div w3-include-html="../main/navBar.html" class="navBar-container"></div>
         <div class="content-container">
 
             <!-- please insert your content: START: -->
+            <h1>Add Task</h1>
+            <!------------container left-->
+            <div class="task-container">
+                <div class="task-container-left">
 
-            <!-- <form onsubmit="addToTask()"> -->
-            <div>
-                <h2>TITLE</h2>
-                <input required placeholder="title" type="text" id="title-value">
+
+                    <div>
+                        <h2>TITLE</h2>
+                        <!-- <form onsubmit="addToTask()"> -->
+                        <input required placeholder="title" type="text" id="title-value">
+                    </div>
+                    <div>
+                        <h2>CATEGORY</h2>
+                        <select name="category" id="select-category">
+                            <option value="marketing">Marketin</option>
+                            <option value="it">IT</option>
+                            <option value="accounting">Accounting</option>
+                            <option value="organisation">Organisation</option>
+                        </select>
+                    </div>
+                    <div>
+                        <h2>description</h2>
+                        <textarea name="description" id="description" cols="30" rows="10"></textarea>
+                    </div>
+                </div>
+                <!------------container right----------->
+                <div class="task-container-right">
+
+
+                    <div>
+                        date <!--date noch bearbeiten-->
+                    </div>
+                    <div>
+                        <h2>URGENCY</h2>
+                        <select name="urgency" id="select-urgency">
+                            <option value="high">High</option>
+                            <option value="medium">Medium</option>
+                            <option value="low">Low</option>
+                        </select>
+                    </div>
+                    <div>
+                        <h2>ASSIGNED TO</h2>
+                        ? <!--noch bearbeiten-->
+                    </div>
+
+                    <button onclick="addToTask()">CREATE TASK</button>
+
+                    <!-- </form> -->
+
+                    <!-- please insert your content: END-->
+                </div>
             </div>
-            <div>
-                <h2>CATEGORY</h2>
-                <input required placeholder="category" type="text" id="category-value">
-            </div>
-            <div>
-                <h2>description</h2>
-                <input required name="description" cols="30" rows="10" id="desrciption-value">
-            </div>
-            <button onclick="addToTask()">CREATE TASK</button>
-
-            <!-- </form> -->
-
-            <!-- please insert your content: END-->
-
         </div>
     </div>
 </body>
