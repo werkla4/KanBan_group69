@@ -4,3 +4,6 @@ KanBan project: add tasks, show task-state, move in categories and finish it.
 my state -> Klaus Werner
 
 test test
+
+test conflict
+
