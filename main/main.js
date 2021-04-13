@@ -59,23 +59,60 @@ async function backend_init() {
   await downloadFromServer();
 }
 
+/**
+ * set currentPage in local store
+ * 
+ * @param {string} item -> name from next page you want to visit 
+ */
 function setBarLeft(item) {
   localStorage.setItem('currentPage', item);
 }
 
+/**
+ * - load from localStorage: currentPage
+ * - update bar on left side, display on / off
+ */
 function updateLeftBarInNavBar() {
+  // load current page
   let currentPage = localStorage.getItem('currentPage');
+  // current page is unset - first load of this webside -> index.html
   if (currentPage == null) {
     localStorage.setItem('currentPage', 'index');
   }
   else{
+    // loop all items in navbar
     for(let i = 0; i < NAVBAR_TITLES.length; i++){
+      // show current bar
       if(currentPage == NAVBAR_TITLES[i]){
         document.getElementById(`${NAVBAR_TITLES[i]}-bar`).classList.remove('opacity-0');
       }
+      // dont show other bars
       else{
         document.getElementById(`${NAVBAR_TITLES[i]}-bar`).classList.add('opacity-0');
       }
     }
   }
+}
+
+/**
+ * 
+ * create next unique id, and save it in web-storage
+ * 
+ * @returns nextTicketNumber
+ */
+function getTicket(){
+  // load JSON
+  let ticket = backend.getItem('temp');
+  // create JSON file if not exist
+  if(ticket == null || ticket['nextTicket'] == null){
+    let temp = {'nextTicket': 1};
+    backend.setItem('temp', temp);
+    return 0;
+  }
+  // get next ticket
+  let nextTicket = ticket['nextTicket'];
+  // save next ticket, for next call
+  ticket['nextTicket'] = nextTicket + 1;
+  // return ticket id
+  return nextTicket;
 }
