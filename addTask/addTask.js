@@ -36,17 +36,45 @@ function loadTasks() {
     console.log('loaded all taskd', tasks)
 }
 
+let users = [
+    {
+        'name': 'Katja'
+    },
+    {
+        'name': 'Felicitas'
+    },
+    {
+        'name': 'Klaus'
+    }
+];
 
+let selectedUsers = [];
 
 /**
- * function to save to local storage
- * @param {tasks} key
- * @param {tasks} array
+ * this function creates html items with the content of users array
  */
-// function saveArrayToLocalStorage(key, tasks){
-//     localStorage.setItem(key, JSON.stringify(tasks));
-// }
-
-// function getArray(key){
-//     return JSON.parse(localStorage.getItem(key));
-// }
+function showUsers() {
+    let userList = document.getElementById('users');
+    userList.innerHTML = '';
+    for (let i = 0; i < users.length; i++) {
+        let newUser = users[i];
+        userList.innerHTML += `
+        <p>${newUser['name']}</p>
+        <input onchange="updateSelectedUser(${i})" type="checkbox" name="" id="${i}">
+        `;        
+    }
+}
+/**
+ * 
+ * this function pushes a user that was selected by checkbox in showUsers() to the array selectedUsers, or deletes the user if unchecked
+ * @param {*} i 
+ */
+function updateSelectedUser(i) {
+    if(document.getElementById(i).checked) {
+        selectedUsers.push(users[i]);
+    }else {
+        let indexOfSelectedUser = selectedUsers.indexOf(users[i]);//Was macht indexOf?
+        selectedUsers.splice(indexOfSelectedUser, 1);
+    }
+    showUsers();
+}
