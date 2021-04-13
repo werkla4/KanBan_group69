@@ -25,6 +25,7 @@ async function downloadFromServer() {
     let result = await loadJSONFromServer();
     if(result == '' || result == null){
         // json have no input, make nothing
+        jsonFromServer = {};
     }
     else{
         jsonFromServer = JSON.parse(result);

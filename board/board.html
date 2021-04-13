@@ -34,18 +34,19 @@
             <!-- please insert your content: START: -->
             <div class="grid-container">
                 <div id="toDo-grid" class="four-grids toDo-grid">
-                    <div id="bg-toDo-grid" class="toDo-color"></div>
+                    <!-- <div id="bg-toDo-grid" class="toDo-color"></div> -->
                     <h1>TO DO</h1>
                     <div id="toDo-tasks" class="tasks-grid">
 
 
-                        <div class="task">
+                        <div id="task0" class="task" draggable="true" ondragstart="drag(event)">
                             <div class="row-category-urgency">
                                 <div class="task-category"></div>
                                 <div class="task-urgency"></div>
                             </div>
                             <h2>TEST</h2>
-                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio fugiat libero commodi expedita, sint autem dolorem asperiores quidem laborum quos atque!</p>
+                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio fugiat libero commodi
+                                expedita, sint autem dolorem asperiores quidem laborum quos atque!</p>
                             <div class="task-expiration-date-row">
                                 <span class="task-expiration-date">16.05.1987</span>
                                 <img src="../img/icons8-calendar-150.png" class="task-calender-icon">
@@ -66,15 +67,20 @@
                     <div class="add-task"><img src="../img/plus-icon.png" class="plus-logo"></div>
                 </div>
                 <div id="inProgress-grid" class="four-grids inProgress-grid">
-                    <div id="bg-inProgress-grid"  class="inProgress-color"></div>
+                    <!-- <div id="bg-inProgress-grid" class="inProgress-color"></div> -->
                     <h1>IN PROGRESS</h1>
+
+                    <!-- TEST -->
+                    <div id="inProgress-tasks" class="tasks-grid" ondrop="drop(event)" ondragover="allowDrop(event)">
+                    </div>
+                    <!-- TEST END -->
                 </div>
                 <div id="testing-grid" class="four-grids testing-grid">
-                    <div id="bg-testing-grid"  class="testing-color"></div>
+                    <div id="bg-testing-grid" class="testing-color"></div>
                     <h1>TESTING</h1>
                 </div>
                 <div id="done-grid" class="four-grids done-grid">
-                    <div id="bg-done-grid"  class="done-color"></div>
+                    <div id="bg-done-grid" class="done-color"></div>
                     <h1>DONE</h1>
                 </div>
             </div>
