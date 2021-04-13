@@ -23,21 +23,27 @@
 }
 
 .four-grids h1 {
-    transition: color 225ms ease-in-out;
+    /* transition: color 225ms ease-in-out; */
     color: white;
     margin-top: 5px;
 }
 
-.four-grids:hover h1 {
+/* .four-grids:hover h1 {
     transition: color 225ms ease-in-out;
     color: rgba(211, 211, 211, 0.761);
-}
+} */
 
 .toDo-color {
     position: absolute;
     height: 100%;
     width: 100%;
     background-color: var(--toDo_color);
+    transition: opacity 225ms ease-in-out;
+    opacity: 0%;
+}
+
+.toDo-color:hover {
+    transition: opacity 225ms ease-in-out;
     opacity: 10%;
 }
 
@@ -46,6 +52,11 @@
     height: 100%;
     width: 100%;
     background-color: var(--inProgress_color);
+    opacity: 0%;
+}
+
+.inProgress-color:hover {
+    transition: opacity 225ms ease-in-out;
     opacity: 20%;
 }
 
@@ -54,6 +65,11 @@
     height: 100%;
     width: 100%;
     background-color: var(--testing_color);
+    opacity: 0%;
+}
+
+.testing-color:hover {
+    transition: opacity 225ms ease-in-out;
     opacity: 20%;
 }
 
@@ -62,6 +78,11 @@
     height: 100%;
     width: 100%;
     background-color: var(--done_color);
+    opacity: 0%;
+}
+
+.done-color:hover {
+    transition: opacity 225ms ease-in-out;
     opacity: 20%;
 }
 
