@@ -26,7 +26,7 @@
 
 </head>
 
-<body onload="main_init()">
+<body onload="main_init(), showBacklogTask()">
     <div class="app-container">
         <div w3-include-html="../main/navBar.html" class="navBar-container"></div>
         <div class="content-container">
@@ -43,8 +43,14 @@
             </div>
             <!-- Content Backlog Tasks -->
 
-            <div class="bl-task">
-                <div class="color-category"></div>
+           
+
+            <div id="taskContainer"></div>
+
+            <!--
+
+
+         <div class="color-category"></div>
                 <div class="bl-name">Felicitas Mock</div>
                 <div class="bl-category">IT</div>
                 <div class="bl-description">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Pariatur harum
@@ -52,17 +58,10 @@
                     possimus. Ea, ullam vitae. Sed commodi aliquam incidunt expedita, pariatur, iusto accusamus
                     odit,
                     autem quia ipsa numquam.</div>
-            </div>
-
+                    
             <div class="bl-task">
-                <div id="color" class="color-category"></div>
-                <div class="bl-name">Thomas Müller</div>
-                <div id="category" class="bl-category">Marketing</div>
-                <div class="bl-description">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Pariatur harum
-                    animi qui deserunt
-                    possimus. Ea, ullam vitae. Sed commodi aliquam incidunt expedita, pariatur, iusto accusamus odit,
-                    autem quia ipsa numquam.</div>
-            </div>
+               
+        
 
             <div class="bl-task">
                 <div id="color" class="color-category"></div>
@@ -74,7 +73,7 @@
                     autem quia ipsa numquam.</div>
             </div>
 
-
+            -->
             <!-- please insert your content: END-->
 
         </div>
