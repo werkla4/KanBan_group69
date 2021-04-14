@@ -18,7 +18,8 @@ function addToTask() {
         'category': newCategory.value,
         'description': newDescription.value,
         'date': new Date().getTime(),
-        'urgency': urgency.value
+        'urgency': urgency.value,
+        'assignedTo': selectedUsers
     }
     tasks.push(task);
     console.log(tasks);
@@ -34,7 +35,7 @@ function loadTasks() {
     let tasksAsString = localStorage.getItem('tasks');
     tasks = JSON.parse(tasksAsString);
     console.log('loaded all taskd', tasks)
-}
+};
 
 let users = [
     {
@@ -60,8 +61,8 @@ function showUsers() {
         let newUser = users[i];
         userList.innerHTML += `
         <p>${newUser['name']}</p>
-        <input onchange="updateSelectedUser(${i})" type="checkbox" name="" id="${i}">
-        `;        
+        <input onchange="updateTaskUser(${i})" type="checkbox" name="" id="${i}">
+        `;
     }
 }
 /**
@@ -69,12 +70,11 @@ function showUsers() {
  * this function pushes a user that was selected by checkbox in showUsers() to the array selectedUsers, or deletes the user if unchecked
  * @param {*} i 
  */
-function updateSelectedUser(i) {
-    if(document.getElementById(i).checked) {
+function updateTaskUser(i) {
+    if (document.getElementById(i).checked) {
         selectedUsers.push(users[i]);
-    }else {
+    } else {
         let indexOfSelectedUser = selectedUsers.indexOf(users[i]);//Was macht indexOf?
         selectedUsers.splice(indexOfSelectedUser, 1);
     }
-    showUsers();
 }
