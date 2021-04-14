@@ -44,7 +44,7 @@ function showBacklogTask() {
     for (let i = 0; i < backlogTasks.length; i++) {
         let task = backlogTasks[i];
         taskContainer.innerHTML += `
-        <div class="bl-task">
+        <div onclick="openTaskDetail()" class="bl-task">
             <div id="color${i}" class="color-category"></div>
             <div class="bl-name">${task['name']}</div>
             <div id="category${i}" class="bl-category">${task['category']}</div>
@@ -75,4 +75,26 @@ function showCategory() {
         }
     }
 }
+/**
+ * function to open Details of Tasks
+ */
 
+function openTaskDetail() {
+    let detailLayer = document.getElementById('taskDetails');
+    
+    detailLayer.innerHTML = `
+    <div class="details-layer-background">
+        <div class="details-layer">
+        <span onclick="closeTaskDetail()">Schließen</span>
+        </div>
+    </div>
+    `;
+}
+
+/**
+ * function to close Detail layer
+ */
+function closeTaskDetail() {
+    let detailLayer = document.getElementById('taskDetails');
+    detailLayer.innerHTML = '';
+}
