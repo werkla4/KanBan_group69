@@ -40,37 +40,42 @@ let backlogTasks = [
 /**
  * function to show all tasks of JSON
  */
-
-function showBacklogTask() {
-    document.getElementById('taskContainer').innerHTML = '';
+ function showBacklogTask() {
     let taskContainer = document.getElementById('taskContainer');
+    taskContainer.innerHTML = '';
 
-    if (backlogTasks == '') {
-        taskContainer.innerHTML = `
-            <div class="no-tasks">Es wurden bisher keine Tasks angelegt.
-            </div>
-        `;
+    if (backlogTasks.length == 0) {
+        generateNoTaskHTML();
     } else {
-        for (let i = 0; i < backlogTasks.length; i++) {
-            let task = backlogTasks[i];
-            taskContainer.innerHTML += `
+        generateShowTaskHTML();
+        
+    }
+    showCategory();
+}
+
+function generateNoTaskHTML() {
+     document.getElementById('taskContainer').innerHTML = `<div class="no-tasks">Es wurden bisher keine Tasks angelegt.</div>`;
+}
+
+function generateShowTaskHTML() {
+    for (let i = 0; i < backlogTasks.length; i++) {
+        let task = backlogTasks[i];
+        document.getElementById('taskContainer').innerHTML += `
         <div onclick="openTaskDetail(${i})" class="bl-task">
             <div id="color${i}" class="color-category"></div>
             <div class="bl-name">${task['name']}</div>
             <div id="category${i}" class="bl-category">${task['category']}</div>
             <div class="bl-description">${task['description']}</div>
         </div>
-        `;
-        }
-        showCategory();
+        `;         
     }
 }
+
 /**
  * function to define the color of the different categories
  */
 function showCategory() {
     for (let i = 0; i < backlogTasks.length; i++) {
-        //let category = document.getElementById(`category${i}`).innerHTML;
         let category = backlogTasks[i]['category'];
         let color = document.getElementById(`color${i}`);
 
