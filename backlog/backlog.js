@@ -39,11 +39,17 @@ let backlogTasks = [
 
 function showBacklogTask() {
     document.getElementById('taskContainer').innerHTML = '';
-
     let taskContainer = document.getElementById('taskContainer');
-    for (let i = 0; i < backlogTasks.length; i++) {
-        let task = backlogTasks[i];
-        taskContainer.innerHTML += `
+
+    if (backlogTasks == '') {
+        taskContainer.innerHTML = `
+            <div class="no-tasks">Es wurden bisher keine Tasks angelegt.
+            </div>
+        `;
+    } else {
+        for (let i = 0; i < backlogTasks.length; i++) {
+            let task = backlogTasks[i];
+            taskContainer.innerHTML += `
         <div onclick="openTaskDetail(${i})" class="bl-task">
             <div id="color${i}" class="color-category"></div>
             <div class="bl-name">${task['name']}</div>
@@ -51,10 +57,10 @@ function showBacklogTask() {
             <div class="bl-description">${task['description']}</div>
         </div>
         `;
+        }
+        showCategory();
     }
-    showCategory();
 }
-
 /**
  * function to define the color of the different categories
  */
@@ -75,13 +81,14 @@ function showCategory() {
         }
     }
 }
-/**
- * function to open Details of Tasks
- */
 
+/**
+ * 
+ * @param {string} i - function to open Details of Tasks
+ */
 function openTaskDetail(i) {
     let detailLayer = document.getElementById('taskDetails');
-  
+
     let title = backlogTasks[i]['title'];
     let blName = backlogTasks[i]['name'];
     let category = backlogTasks[i]['category'];
@@ -90,30 +97,47 @@ function openTaskDetail(i) {
     let prio = backlogTasks[i]['urgency'];
 
     detailLayer.innerHTML = `
-    <div class="details-layer-background">
+    <div onclick="closeTaskDetail()" class="details-layer-background">
         <div class="details-layer">
-        <span onclick="closeTaskDetail()">Schließen</span>
-        <div>Titel ${title}
+        <span class="close-detail-layer" onclick="closeTaskDetail()">Schließen</span>
+        <div class="details"><b>Titel:</b> ${title}
         </div>
-        <div>Name ${blName}
+        <div class="details"><b>Name:</b> ${blName}
         </div>
-        <div>Kategorie ${category}
+        <div class="details"><b>Prio:</b> ${prio}
         </div>
-        <div>Description ${description}
+        <div class="details"><b>Datum:</b> ${date}
         </div>
-        <div>Date ${date}
+        <div class="details"><b>Kategorie:</b> ${category}
         </div>
-        <div>Prio ${prio}
+        <div class="horizontal-line"></div>
+        <div class="details"><b>Beschreibung:</b> <br>${description}
         </div>
+        
+       
+       <div class="btn-container">
+        <button class="btn-move" onclick="moveToBoard(${i})">Task starten</button>
         </div>
     </div>
     `;
 }
 
+let boardArray = [];
+
 /**
  * function to close Detail layer
  */
 function closeTaskDetail() {
-    let detailLayer = document.getElementById('taskDetails');
-    detailLayer.innerHTML = '';
+    document.getElementById('taskDetails').innerHTML = '';
+}
+
+/**
+ * 
+ * @param {string} i - function to move Task from Backlog onto Board 
+ */
+function moveToBoard(i){
+    let moveTask = backlogTasks[i];
+    backlogTasks.splice(i, 1);
+    boardArray.push(moveTask);
+    showBacklogTask();
 }

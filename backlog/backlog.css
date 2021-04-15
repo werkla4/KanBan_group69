@@ -1,7 +1,8 @@
-.content-container{
+.content-container {
     display: initial;
 }
-h1{
+
+h1 {
     text-align: center;
 }
 
@@ -14,19 +15,23 @@ h1{
     font-weight: bold;
     font-size: 1em;
 }
-.bl-headline-name{
+
+.bl-headline-name {
     width: 140px;
     padding: 10px;
     padding-left: 20px;
 }
-.bl-headline-category{
+
+.bl-headline-category {
     width: 100px;
     padding: 10px;
 }
-.bl-headline-description{
+
+.bl-headline-description {
     width: 550px;
     padding: 10px;
 }
+
 .bl-task {
     border: 1px solid black;
     border-radius: 2px;
@@ -34,25 +39,29 @@ h1{
     margin-left: 50px;
     margin-right: 50px;
     display: flex;
-    background:rgba(255,255,255, 0.8);
+    background: rgba(255, 255, 255, 0.8);
     margin-bottom: 5px;
 }
 
-.bl-inner-task{
+.bl-inner-task {
     display: flex;
 }
+
 .color-category {
     width: 20px;
     height: auto;
     background-color: blue;
 }
-.color-1{
+
+.color-1 {
     background-color: red;
 }
-.color-2{
+
+.color-2 {
     background-color: green;
 }
-.color-3{
+
+.color-3 {
     background-color: yellow;
 }
 
@@ -77,10 +86,10 @@ h1{
     padding-bottom: 10px;
 }
 
-.details-layer-background{
+.details-layer-background {
     background-color: #808080d6;
     width: 100%;
-    height: 100vh; 
+    height: 100vh;
     position: fixed;
     top: 0;
     left: 0;
@@ -90,9 +99,55 @@ h1{
     justify-content: center;
 }
 
-.details-layer{
+.details-layer {
     background-color: white;
     width: 500px;
-    height:500px;
+    height: 500px;
+    padding: 20px;
+    box-shadow: white 0px 0px 1px 0px;
+    z-index: 3;
+}
+
+.close-detail-layer{
+    display: flex;
+    justify-content: flex-end;
+    padding-bottom: 10px;
+    cursor: pointer;
+}
+
+.no-tasks {
+    display: flex;
+    justify-content: center;
+    font-size: 1.5em;
+    padding: 20px;
+}
+
+.details {
+    padding-bottom: 5px;
+    padding-top: 5px;
+}
+.horizontal-line{
+    width: 480px;
+    padding-left: 20px;
+    border-top: 1px solid #cecbcb;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.btn-move{
+    margin: 20px;
+    background-color: teal;
+    border: none;
+    padding: 10px;
+    color: white;
+    display: flex;
+    justify-content: center;
+    cursor: pointer;
+}
+.btn-move:hover{
+    background-color: thistle;
+}
+.btn-container{
+    display: flex;
+    justify-content: center;
 
 }
