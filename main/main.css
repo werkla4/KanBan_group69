@@ -5,6 +5,11 @@
     --inProgress_color: #F3B381;
     --testing_color: #81e8f3;
     --done_color: #fc9191;
+    
+    --marketing_color: red;
+    --it_color: yellow;
+    --accounting_color: blue;
+    --organisation_color: green;
 
     --urgency_high_color: rgb(255, 41, 41);
     --urgency_medium_color: rgb(255, 128, 78);

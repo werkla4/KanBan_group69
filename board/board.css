@@ -216,6 +216,7 @@
     display: flex;
     justify-content: space-between;
     border-top: 1px solid white;
+    padding-top: 5px;
 }
 
 .hide-commands-txt{
@@ -223,22 +224,27 @@
     font-style: oblique;
     font-weight: bolder;
     cursor: pointer;
+    margin-top: 5px;
+    margin-bottom: 5px;
 }
 
 .commands-container{
     display: flex;
     flex-direction: column;
+    transition: all 225ms ease-in-out;
 }
 
 .add-command-container{
     display: flex;
     justify-content: space-between;
+    align-items: center;
 }
 
 .add-command-container textarea{
     width: 100%;
     resize: none;
     border-radius: 5px;
+    margin-top: 8px;
 }
 
 .command-check-icon{
@@ -247,4 +253,8 @@
     margin-left: 2px;
     filter: invert(1);
     cursor: pointer;
+}
+
+.d-none{
+    display: none;
 }
