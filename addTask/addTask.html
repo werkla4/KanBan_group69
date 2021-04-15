@@ -32,6 +32,16 @@
         <div class="content-container">
 
             <!-- please insert your content: START: -->
+            <div class="pop-up d-none" id="popUp">
+                <div class="complete-screen">
+                    <div class="pop-up-window" id="popUpWindow">
+                      
+                    </div>
+                    
+
+                </div>
+
+            </div>
             <h1>Add Task</h1>
             <!------------container left-->
             <div class="task-container">
@@ -76,12 +86,12 @@
                     <div>
                         <h2>ASSIGNED TO</h2>
                         <div id="users">
-                           
+
                         </div>
                         <!--noch bearbeiten-->
                     </div>
 
-                    <button>CREATE TASK</button>
+                    <button onclick="createPopUp()">CREATE TASK</button>
 
                     </form>
 

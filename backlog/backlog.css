@@ -1,3 +1,7 @@
+body {
+    font-family: var(--font_pt_sans);
+}
+
 .content-container {
     display: initial;
 }
@@ -54,8 +58,9 @@ h1 {
 .color-category {
     width: 20px;
     height: auto;
-    background-color: blue;
-}
+} 
+
+/* !!!!!!!category colors needs to be adjusted from main.css!!!!!!!!! */
 
 .color-1 {
     background-color: red;
@@ -140,6 +145,8 @@ h1 {
     margin-top: 10px;
     margin-bottom: 10px;
 }
+
+/* !!!!!categbutton CSS needs to be adjusted from main.css!!!!!!!!! */
 .btn-move{
     margin: 20px;
     background-color: teal;
@@ -157,6 +164,7 @@ h1 {
 .btn-move:focus {
     outline: none;
 }
+
 .btn-container{
     display: flex;
     justify-content: center;

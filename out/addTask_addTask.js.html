@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: addTask/addTask.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: addTask/addTask.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * Arry to save the values of add Task
+ */
+let tasks = [];
+let selectedUsers = [];
+let users = [
+    {
+        'name': 'Katja'
+    },
+    {
+        'name': 'Felicitas'
+    },
+    {
+        'name': 'Klaus'
+    }
+];
+
+/**
+ * funktion to push the values of input fields in addTask.html into Array tasks
+ */
+function addToTask() {
+    let newTitle = document.getElementById('title-value');
+    let newCategory = document.getElementById('select-category');
+    let newDescription = document.getElementById('description');
+    let urgency = document.getElementById('select-urgency');
+
+
+    let task = {
+        'title': newTitle.value,
+        'category': newCategory.value,
+        'description': newDescription.value,
+        'date': new Date().getTime(),
+        'urgency': urgency.value,
+        'assignedTo': selectedUsers
+    }
+    tasks.push(task);
+    console.log(tasks);
+    newTitle.value = '';
+    newCategory.value = '';
+    newDescription.value = '';
+
+    let tasksAsString = JSON.stringify(tasks);
+    localStorage.setItem('tasks', tasksAsString);
+    showTask();
+};
+
+/**
+ * this funktion saves the array tasks in local storage
+ * 
+ */
+function loadTasks() {
+    let tasksAsString = localStorage.getItem('tasks');
+    tasks = JSON.parse(tasksAsString);
+    console.log('loaded all taskd', tasks)
+};
+
+/**
+ * this function creates html items with the content of users array
+ */
+function showUsers() {
+    let userList = document.getElementById('users');
+    userList.innerHTML = '';
+    for (let i = 0; i &lt; users.length; i++) {
+        let newUser = users[i];
+        userList.innerHTML += `
+        &lt;p>${newUser['name']}&lt;/p>
+        &lt;input onchange="updateTaskUser(${i})" type="checkbox" name="" id="${i}">
+        `;
+    }
+}
+/**
+ * 
+ * this function pushes a user that was selected by checkbox in showUsers() to the array selectedUsers, or deletes the user if unchecked
+ * 
+ * @param {variable} i - this is the index of the elements of the users array
+ */
+function updateTaskUser(i) {
+    if (document.getElementById(i).checked) {
+        selectedUsers.push(users[i]);
+    } else {
+        let indexOfSelectedUser = selectedUsers.indexOf(users[i]);//Was macht indexOf?
+        selectedUsers.splice(indexOfSelectedUser, 1);
+    }
+}
+
+/**
+ * this function greats a pop up to show the task that was created
+ * it will be active onlick on create task button
+ */
+function createPopUp() {
+    document.getElementById('popUp').classList.remove('d-none');
+    showTask();
+};
+/**
+ * This 
+ * 
+ */
+
+function showTask() {
+    document.getElementById('popUpWindow').innerHTML = '';
+    for (let i = 0; i &lt; tasks.length; i++) {
+        let task = tasks[i];
+
+        document.getElementById('popUpWindow').innerHTML = `
+    &lt;div>
+    &lt;h2>Current Task&lt;/h2>
+    &lt;p>${task['title']}&lt;/p>
+    &lt;p>${task['category']}&lt;/p>
+    &lt;p>${task['description']}&lt;/p>
+    &lt;p>${task['date']}&lt;/p>
+    &lt;p>${task['urgency']}&lt;/p>
+    &lt;p>${task['assignedTo']}&lt;/p>
+    &lt;button>Save Task&lt;/button>
+&lt;/div>
+    `;
+    }
+
+};</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#addToTask">addToTask</a></li><li><a href="global.html#backend_init">backend_init</a></li><li><a href="global.html#boardTask">boardTask</a></li><li><a href="global.html#closeTaskDetail">closeTaskDetail</a></li><li><a href="global.html#createPopUp">createPopUp</a></li><li><a href="global.html#getTestTasks">getTestTasks</a></li><li><a href="global.html#getTicket">getTicket</a></li><li><a href="global.html#includeHTML">includeHTML</a></li><li><a href="global.html#loadJSONFromServer">loadJSONFromServer</a></li><li><a href="global.html#loadTasks">loadTasks</a></li><li><a href="global.html#main_init">main_init</a></li><li><a href="global.html#moveToBoard">moveToBoard</a></li><li><a href="global.html#openTaskDetail">openTaskDetail</a></li><li><a href="global.html#saveJSONToServer">saveJSONToServer</a></li><li><a href="global.html#setBarLeft">setBarLeft</a></li><li><a href="global.html#showBacklogTask">showBacklogTask</a></li><li><a href="global.html#showCategory">showCategory</a></li><li><a href="global.html#showTask">showTask</a></li><li><a href="global.html#showUsers">showUsers</a></li><li><a href="global.html#tasks">tasks</a></li><li><a href="global.html#updateLeftBarInNavBar">updateLeftBarInNavBar</a></li><li><a href="global.html#updateTaskUser">updateTaskUser</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Thu Apr 15 2021 18:20:49 GMT+0200 (Mitteleuropäische Sommerzeit)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
