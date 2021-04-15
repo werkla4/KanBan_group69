@@ -33,16 +33,20 @@ h1 {
 }
 
 .bl-task {
-    border: 1px solid black;
-    border-radius: 2px;
+    /* border: 1px solid black; */
+    border-radius: 5px;
     width: 700px;
     margin-left: 50px;
     margin-right: 50px;
     display: flex;
     background: rgba(255, 255, 255, 0.8);
     margin-bottom: 5px;
+    box-shadow: white 0px 0px 1px 0px;
+    cursor: pointer;
 }
-
+.bl-task:hover{
+    opacity: 0.8;
+}
 .bl-inner-task {
     display: flex;
 }
@@ -114,6 +118,9 @@ h1 {
     padding-bottom: 10px;
     cursor: pointer;
 }
+.close-detail-layer:hover{
+    opacity: 0.6;
+}
 
 .no-tasks {
     display: flex;
@@ -145,6 +152,10 @@ h1 {
 }
 .btn-move:hover{
     background-color: thistle;
+}
+
+.btn-move:focus {
+    outline: none;
 }
 .btn-container{
     display: flex;
