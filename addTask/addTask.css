@@ -2,3 +2,25 @@
     display: flex;
  
 }
+.complete-screen {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: lightgrey;
+    opacity: 90%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+}
+.pop-up-window {
+    background-color: white;
+    border: solid 2px gray;
+    width: 600px;
+    height: 500px;
+}
+.d-none {
+    display: none;
+}

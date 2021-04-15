@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: board/board.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: board/board.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>let current_drag_elm;
+let tasks;
+
+function allowDrop(ev) {
+    ev.preventDefault();
+}
+
+function drag(elm_id) {
+    current_drag_elm = elm_id;
+}
+
+function drop(id) {
+}
+
+function board_init() {
+    loadTasks();
+
+    // removeAllTestTasks();
+
+    // addNewTask(0);
+    // addNewTask(1);
+
+    console.log(getTicket());
+}
+
+function removeAllTestTasks(){
+    document.getElementById('toDo-tasks').innerHTML = ``;
+    document.getElementById('inProgress-tasks').innerHTML = ``;
+    document.getElementById('testing-tasks').innerHTML = ``;
+    document.getElementById('done-tasks').innerHTML = ``;
+}
+
+function addNewTask(num){
+    let codeBefore = document.getElementById('toDo-tasks').innerHTML;
+    let codeBehind = getBlancTask(num) + codeBefore;
+    document.getElementById('toDo-tasks').innerHTML = codeBehind;
+}
+
+function goToAddTask(columnName){
+    console.log(getTicket());
+    return;
+
+    // localStorage.setItem('newTaskFromBoard', columnName);
+    // location.href = "../addTask/addTask.html";
+}
+
+function getBlancTask(ticket) {
+    let htmlCode = `
+        &lt;div id="task1" class="task" draggable="true" ondragstart="drag('task1')">
+            &lt;div class="row-category-urgency">
+                &lt;div class="task-category">&lt;/div>
+                &lt;div class="task-urgency">&lt;/div>
+            &lt;/div>
+            &lt;h2>TEST2&lt;/h2>
+            &lt;p>Noch ein Text zum testen&lt;/p>
+            &lt;div class="task-expiration-date-row">
+                &lt;span class="task-expiration-date">16.05.1987&lt;/span>
+                &lt;img src="../img/icons8-calendar-150.png" class="task-calender-icon">
+            &lt;/div>
+            &lt;div class="user-pics-container">
+                &lt;img src="../img/KlausWerner.jpg" class="task-user-pic">
+                &lt;img src="../img/KlausWerner.jpg" class="task-user-pic">
+                &lt;img src="../img/KlausWerner.jpg" class="task-user-pic">
+                &lt;img src="../img/KlausWerner.jpg" class="task-user-pic">
+                &lt;img src="../img/KlausWerner.jpg" class="task-user-pic">
+                &lt;img src="../img/KlausWerner.jpg" class="task-user-pic">
+                &lt;img src="../img/KlausWerner.jpg" class="task-user-pic">
+            &lt;/div>
+        &lt;/div>
+    `;
+    return htmlCode;
+}
+/**
+ * &lt;div id="task0" class="task" draggable="true" ondragstart="drag('task0')">
+                        &lt;div class="row-category-urgency">
+                            &lt;div class="task-category">&lt;/div>
+                            &lt;div class="task-urgency">&lt;/div>
+                        &lt;/div>
+                        &lt;h2>TEST&lt;/h2>
+                        &lt;p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio fugiat libero commodi
+                            expedita, sint autem dolorem asperiores quidem laborum quos atque!&lt;/p>
+                        &lt;div class="task-expiration-date-row">
+                            &lt;span class="task-expiration-date">16.05.1987&lt;/span>
+                            &lt;img src="../img/icons8-calendar-150.png" class="task-calender-icon">
+                        &lt;/div>
+                        &lt;div class="user-pics-container">
+                            &lt;img src="../img/KlausWerner.jpg" class="task-user-pic">
+                            &lt;img src="../img/KlausWerner.jpg" class="task-user-pic">
+                            &lt;img src="../img/KlausWerner.jpg" class="task-user-pic">
+                            &lt;img src="../img/KlausWerner.jpg" class="task-user-pic">
+                            &lt;img src="../img/KlausWerner.jpg" class="task-user-pic">
+                            &lt;img src="../img/KlausWerner.jpg" class="task-user-pic">
+                            &lt;img src="../img/KlausWerner.jpg" class="task-user-pic">
+                        &lt;/div>
+                    &lt;/div>
+ */
+
+function loadTasks() {
+    tasks = backend.getItem('tasks');
+    if (tasks == null) {
+        tasks = getTestTasks();
+    }
+}
+
+/**
+ * create 3 pseudo tasks
+ * @returns returns pseudo test tasks for testing prozess
+ */
+function getTestTasks() {
+    tasks = [
+        {
+            'title': 'Erstelle Init',
+            'category': 'main',
+            'description': 'diese init wird benötigt um die ersten tests machen zu können',
+            'date': new Date().getTime(),
+            'urgency': 'wichtig',
+            'ticket': 0,
+            'state': 'toDo',
+            'users': 'Klaus',
+            'comments': ['command0', 'command1'],
+            'comments_id': [123, 235]
+        },
+
+        {
+            'title': 'erste tests',
+            'category': 'board',
+            'description': 'board boarder am boardesten',
+            'date': new Date().getTime(),
+            'urgency': 'mittel',
+            'ticket': 1,
+            'state': 'toDo',
+            'users': 'Klaus',
+            'comments': []
+        },
+
+        {
+            'title': 'board spalten',
+            'category': 'board',
+            'description': 'ohne spalte kein platz zum dzurchklettern',
+            'date': new Date().getTime(),
+            'urgency': 'nicht dringend',
+            'ticket': 2,
+            'state': 'toDo',
+            'users': 'Klaus',
+            'comments': []
+        }
+    ];
+    backend.setItem('tasks', tasks);
+    return tasks;
+}</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#addToTask">addToTask</a></li><li><a href="global.html#backend_init">backend_init</a></li><li><a href="global.html#boardTask">boardTask</a></li><li><a href="global.html#closeTaskDetail">closeTaskDetail</a></li><li><a href="global.html#createPopUp">createPopUp</a></li><li><a href="global.html#getTestTasks">getTestTasks</a></li><li><a href="global.html#getTicket">getTicket</a></li><li><a href="global.html#includeHTML">includeHTML</a></li><li><a href="global.html#loadJSONFromServer">loadJSONFromServer</a></li><li><a href="global.html#loadTasks">loadTasks</a></li><li><a href="global.html#main_init">main_init</a></li><li><a href="global.html#moveToBoard">moveToBoard</a></li><li><a href="global.html#openTaskDetail">openTaskDetail</a></li><li><a href="global.html#saveJSONToServer">saveJSONToServer</a></li><li><a href="global.html#setBarLeft">setBarLeft</a></li><li><a href="global.html#showBacklogTask">showBacklogTask</a></li><li><a href="global.html#showCategory">showCategory</a></li><li><a href="global.html#showTask">showTask</a></li><li><a href="global.html#showUsers">showUsers</a></li><li><a href="global.html#tasks">tasks</a></li><li><a href="global.html#updateLeftBarInNavBar">updateLeftBarInNavBar</a></li><li><a href="global.html#updateTaskUser">updateTaskUser</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Thu Apr 15 2021 18:20:49 GMT+0200 (Mitteleuropäische Sommerzeit)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
