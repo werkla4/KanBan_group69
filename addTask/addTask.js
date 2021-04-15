@@ -31,7 +31,9 @@ function addToTask() {
         'description': newDescription.value,
         'date': new Date().getTime(),
         'urgency': urgency.value,
-        'assignedTo': selectedUsers
+        'assignedTo': selectedUsers,
+        'state' : 'backlog',
+        'comments': ''
     }
     tasks.push(task);
     console.log(tasks);
@@ -41,7 +43,7 @@ function addToTask() {
 
     let tasksAsString = JSON.stringify(tasks);
     localStorage.setItem('tasks', tasksAsString);
-    showTask();
+    // showTask();
 };
 
 /**
