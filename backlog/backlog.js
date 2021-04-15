@@ -1,3 +1,7 @@
+/**
+ * JSON of created Tasks
+ */
+// NEEDS TO BE FILLED from AddTask
 let backlogTasks = [
     {
         'title': 'It Infrastruktur erstellen',
@@ -122,7 +126,11 @@ function openTaskDetail(i) {
     `;
 }
 
-let boardArray = [];
+/**
+ * JSON for moved Task from Backlog to Board
+ */
+// BOARD GETS ITS TASK FROM HERE
+let boardTask = [];
 
 /**
  * function to close Detail layer
@@ -138,6 +146,6 @@ function closeTaskDetail() {
 function moveToBoard(i){
     let moveTask = backlogTasks[i];
     backlogTasks.splice(i, 1);
-    boardArray.push(moveTask);
+    boardTask.push(moveTask);
     showBacklogTask();
 }
