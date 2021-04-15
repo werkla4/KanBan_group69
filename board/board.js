@@ -15,10 +15,10 @@ function drop(id) {
 function board_init() {
     loadTasks();
 
-    removeAllTestTasks();
+    // removeAllTestTasks();
 
-    addNewTask(0);
-    addNewTask(1);
+    // addNewTask(0);
+    // addNewTask(1);
 
     console.log(getTicket());
 }

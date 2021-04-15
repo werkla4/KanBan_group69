@@ -121,7 +121,7 @@
     border-color: var(--time_1_day_color);
     border-radius: 5px;
     padding: 5px;
-    background-color: rgba(255, 0, 0, 20%);
+    background-color: var(--time_1_day_color);
     margin-bottom: 10px;
 }
 
@@ -179,14 +179,72 @@
     margin-bottom: 10px;
 }
 
+.n-commands-container{
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    cursor: pointer;
+}
+
+.task-expiration-date-row span{
+    color: white;
+    font-style: oblique;
+    font-weight: bolder;
+}
+
 .task-calender-icon{
     height: 20px;
     margin-left: 10px;
     filter: brightness(2);
 }
 
-.task-expiration-date{
+.task-feedback-icon{
+    height: 20px;
+    margin-left: 5px;
+    filter: invert(1);
+    margin-right: 5px;
+}
+
+.task-recycle-icon{
+    height: 15px;
+    margin-top: 2px;
+    margin-left: 5px;
+    filter: invert(1);
+}
+
+.command-attributes{
+    display: flex;
+    justify-content: space-between;
+    border-top: 1px solid white;
+}
+
+.hide-commands-txt{
     color: white;
     font-style: oblique;
     font-weight: bolder;
+    cursor: pointer;
+}
+
+.commands-container{
+    display: flex;
+    flex-direction: column;
+}
+
+.add-command-container{
+    display: flex;
+    justify-content: space-between;
+}
+
+.add-command-container textarea{
+    width: 100%;
+    resize: none;
+    border-radius: 5px;
+}
+
+.command-check-icon{
+    height: 15px;
+    margin-top: 2px;
+    margin-left: 2px;
+    filter: invert(1);
+    cursor: pointer;
 }

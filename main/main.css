@@ -10,15 +10,10 @@
     --urgency_medium_color: rgb(255, 128, 78);
     --urgency_low_color: rgb(144, 255, 253);
 
-    --time_1_day_color: red;
-    --time_2_day_color: rgb(255, 72, 72);
-    --time_3_4_5_day_color: rgb(255, 157, 29);
-    --time_6plus_day_color: rgb(255, 225, 0);
-
-    --time_1_day_color_opacity20: rgba(255, 0, 0, 20%);
-    --time_2_day_color_opacity20: rgba(255, 72, 72, 20%);
-    --time_3_4_5_day_color_opacity20: rgba(255, 157, 29, 20%);
-    --time_6plus_day_color_opacity20: rgba(255, 225, 0, 20%);
+    --time_1_day_color: rgb(202, 70, 70, 80%) !important;
+    --time_2_day_color: rgb(228, 120, 43, 80%) !important;
+    --time_35_day_color: rgb(181, 150, 62, 80%) !important;
+    --time_6p_day_color: rgb(109, 152, 101, 80%) !important;
 }
 
 body {
