@@ -2,7 +2,7 @@
  * Arry to save the values of add Task
  */
 let tasks = [];
-let selectedUsers = [];
+
 let users = [
     {
         'name': 'Katja'
@@ -14,8 +14,10 @@ let users = [
         'name': 'Klaus'
     }
 ];
+let selectedUsers = [];
 
 /**
+ * 
  * funktion to push the values of input fields in addTask.html into Array tasks
  */
 function addToTask() {
@@ -32,7 +34,7 @@ function addToTask() {
         'date': new Date().getTime(),
         'urgency': urgency.value,
         'assignedTo': selectedUsers,
-        'state' : 'backlog',
+        'state': 'backlog',
         'comments': ''
     }
     tasks.push(task);
@@ -43,7 +45,27 @@ function addToTask() {
 
     let tasksAsString = JSON.stringify(tasks);
     localStorage.setItem('tasks', tasksAsString);
-    // showTask();
+    showSuccsess();
+};
+
+/**
+ * This function opens a pop window to show the user that the task has been saved
+ * 
+ */
+
+function showSuccsess() {
+    document.getElementById('popUp').classList.remove('d-none');
+    for (let i = 0; i < tasks.length; i++) {
+        let task = tasks[i];
+        document.getElementById('popUpWindow').innerHTML = `
+        <div>
+        <h2>Your Task ${task['title']} has been saved to backlog</h2>
+        <button">CREATE NEW TASK</button>
+        <button">GO TO BACKLOG</button>
+        <button">GO TO BOARD</button>
+        </div>
+    `;
+    }
 };
 
 /**
@@ -85,36 +107,4 @@ function updateTaskUser(i) {
     }
 }
 
-/**
- * this function greats a pop up to show the task that was created
- * it will be active onlick on create task button
- */
-function createPopUp() {
-    document.getElementById('popUp').classList.remove('d-none');
-    showTask();
-};
-/**
- * This 
- * 
- */
 
-function showTask() {
-    document.getElementById('popUpWindow').innerHTML = '';
-    for (let i = 0; i < tasks.length; i++) {
-        let task = tasks[i];
-
-        document.getElementById('popUpWindow').innerHTML = `
-    <div>
-    <h2>Current Task</h2>
-    <p>${task['title']}</p>
-    <p>${task['category']}</p>
-    <p>${task['description']}</p>
-    <p>${task['date']}</p>
-    <p>${task['urgency']}</p>
-    <p>${task['assignedTo']}</p>
-    <button>Save Task</button>
-</div>
-    `;
-    }
-
-};
