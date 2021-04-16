@@ -44,8 +44,9 @@ function addToTask() {
     newDescription.value = '';
 
     let tasksAsString = JSON.stringify(tasks);
-    localStorage.setItem('tasks', tasksAsString);
-    showSuccsess();
+    backend.setItem('tasks', tasksAsString);
+    // showSuccsess();
+    loadTasks();
 };
 
 /**
@@ -60,9 +61,9 @@ function showSuccsess() {
         document.getElementById('popUpWindow').innerHTML = `
         <div>
         <h2>Your Task ${task['title']} has been saved to backlog</h2>
-        <button">CREATE NEW TASK</button>
-        <button">GO TO BACKLOG</button>
-        <button">GO TO BOARD</button>
+        <button class="btn btn-primary"> <span class="mdc-button__label">CREATE NEW TASK</span></button>
+        <button class="btn btn-primary"><span class="mdc-button__label">GO TO BACKLOG</span></button>
+        <button class="btn btn-primary"><span class="mdc-button__label">GO TO BOARD</span></button>
         </div>
     `;
     }
@@ -72,10 +73,11 @@ function showSuccsess() {
  * this funktion saves the array tasks in local storage
  * 
  */
-function loadTasks() {
-    let tasksAsString = localStorage.getItem('tasks');
+async function loadTasks() {
+  
+    let tasksAsString = backend.getItem('tasks');
     tasks = JSON.parse(tasksAsString);
-    console.log('loaded all taskd', tasks)
+    console.log('loaded all tasks', tasks)
 };
 
 /**
@@ -87,9 +89,16 @@ function showUsers() {
     for (let i = 0; i < users.length; i++) {
         let newUser = users[i];
         userList.innerHTML += `
-        <p>${newUser['name']}</p>
-        <input onchange="updateTaskUser(${i})" type="checkbox" name="" id="${i}">
-        `;
+
+        <div class="form-check">
+         <input onchange="updateTaskUser(${i})" class="form-check-input" type="checkbox" value="" id="${i}">
+         <label class="form-check-label" for="defaultCheck1">
+         ${newUser['name']}
+        </label>
+
+        
+        `
+            ;
     }
 }
 /**
@@ -105,6 +114,11 @@ function updateTaskUser(i) {
         let indexOfSelectedUser = selectedUsers.indexOf(users[i]);//Was macht indexOf?
         selectedUsers.splice(indexOfSelectedUser, 1);
     }
+}
+async function initAddTask() {
+    await main_init();  
+ 
+    showUsers();
 }
 
 

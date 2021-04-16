@@ -26,7 +26,7 @@
 
 </head>
 
-<body onload="main_init(), showBacklogTask()">
+<body onload="initBacklog()">
     <div class="app-container">
         <div w3-include-html="../main/navBar.html" class="navBar-container"></div>
         <div class="content-container">
@@ -43,12 +43,18 @@
             </div>
             <!-- Content Backlog Tasks -->
 
-            <div id="taskContainer"></div>
+            <div id="taskContainer">
+
+                <!-- displays all tasks of backlog -->
+            </div>
 
             <div id="taskDetails">
                 
-
+                <!-- container for detail layer of one task -->
+            
             </div>
+            
+            <div id="notificationContainer"></div>
 
             <!-- please insert your content: END-->
 
