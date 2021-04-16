@@ -44,7 +44,7 @@ function addToTask() {
     newDescription.value = '';
 
     let tasksAsString = JSON.stringify(tasks);
-    backend.setItem('tasks', tasksAsString);
+    localStorage.setItem('tasks', tasksAsString);
     showSuccsess();
 };
 
@@ -73,7 +73,7 @@ function showSuccsess() {
  * 
  */
 function loadTasks() {
-    let tasksAsString = backend.getItem('tasks');
+    let tasksAsString = localStorage.getItem('tasks');
     tasks = JSON.parse(tasksAsString);
     console.log('loaded all taskd', tasks)
 };
