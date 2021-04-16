@@ -24,3 +24,25 @@
 .d-none {
     display: none;
 }
+.task-container-left {
+    margin: 20px;
+    width: 50%;
+    border: solid white 3px;
+}
+.task-container {
+    display: flex;
+}
+.task-container-right {
+    width: 50%;
+    border: solid white 3px;
+    margin: 20px;
+}
+.task-container-wrap {
+    width: 50vw;
+    border: solid 2px lightgray;
+    border-radius: 5px;
+    background-color: white;
+}
+h1 {
+    margin: 20px;
+}

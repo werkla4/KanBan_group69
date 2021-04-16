@@ -87,9 +87,16 @@ function showUsers() {
     for (let i = 0; i < users.length; i++) {
         let newUser = users[i];
         userList.innerHTML += `
-        <p>${newUser['name']}</p>
-        <input onchange="updateTaskUser(${i})" type="checkbox" name="" id="${i}">
-        `;
+
+        <div class="form-check">
+         <input onchange="updateTaskUser(${i})" class="form-check-input" type="checkbox" value="" id="${i}">
+         <label class="form-check-label" for="defaultCheck1">
+         ${newUser['name']}
+        </label>
+
+        
+        `
+            ;
     }
 }
 /**

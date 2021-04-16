@@ -12,6 +12,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title id="web-title">KanBan_Group69</title>
     <link rel="icon" href="../img/logo.png">
+    <!--bootstrap-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
+    <!---->
     <link rel="stylesheet" href="../main/main.css" />
     <link rel="stylesheet" href="addTask.css">
     <script src="../main/main.js"></script>
@@ -19,7 +23,6 @@
     <!-- include font pt sans -->
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=PT+Sans&display=swap" rel="stylesheet">
-
     <!-- please only insert your tags and links you need: START: -->
     <script src="../addTask/addTask.js"></script>
     <!-- please only insert your tags and links you need: End: -->
@@ -35,67 +38,110 @@
             <div class="pop-up d-none" id="popUp">
                 <div class="complete-screen">
                     <div class="pop-up-window" id="popUpWindow">
-                      
+
                     </div>
-                    
+
 
                 </div>
 
             </div>
-            <h1>Add Task</h1>
+
             <!------------container left-->
-            <div class="task-container">
-                <div class="task-container-left">
+            <div class="task-container-wrap">
+                <h1>Add Task</h1>
+                <div class="task-container">
+                   
+                    <div class="task-container-left">
 
 
-                    <div>
-                        <h2>TITLE</h2>
-                        <form onsubmit="addToTask(); return false;">
-                            <input required placeholder="title" type="text" id="title-value">
-                    </div>
-                    <div>
-                        <h2>CATEGORY</h2>
-                        <select name="category" id="select-category">
-                            <option value="marketing">Marketing</option>
-                            <option value="it">IT</option>
-                            <option value="accounting">Accounting</option>
-                            <option value="organisation">Organisation</option>
-                        </select>
-                    </div>
-                    <div>
-                        <h2>description</h2>
-                        <textarea name="description" id="description" cols="30" rows="10"></textarea>
-                    </div>
-                </div>
-                <!------------container right----------->
-                <div class="task-container-right">
+                        <div>
+                            <form onsubmit="addToTask(); return false;">
+                                <!--wichtig!!!!-->
+                        </div>
+                        <div class="mb-3">
+                            <h2>TITLE</h2>
 
-
-                    <div>
-                        date
-                        <!--date noch bearbeiten-->
-                    </div>
-                    <div>
-                        <h2>URGENCY</h2>
-                        <select name="urgency" id="select-urgency">
-                            <option value="high">High</option>
-                            <option value="medium">Medium</option>
-                            <option value="low">Low</option>
-                        </select>
-                    </div>
-                    <div>
-                        <h2>ASSIGNED TO</h2>
-                        <div id="users">
+                            <input required placeholder="title" id="title-value" type="text" class="form-control">
+                        </div>
+                        <div>
+                            <h2>CATEGORY</h2>
+                            <select name="category" id="select-category" class="form-select"
+                                aria-label="Default select example">
+                                <option selected>Select Category </option>
+                                <option value="marketing">Marketing</option>
+                                <option value="it">IT</option>
+                                <option value="organisation">Organisation</option>
+                            </select>
 
                         </div>
-                        <!--noch bearbeiten-->
+
+                        <div class="form-floating">
+                            <h2>description</h2>
+                            <textarea name="description" id="description" class="form-control" id="floatingTextarea2"
+                                style="height: 200px"></textarea>
+                            <label for="floatingTextarea2"></label>
+                        </div>
+
                     </div>
+                    <!------------container right----------->
+                    <div class="task-container-right">
 
-                    <button onclick="showSuccsess()">CREATE TASK</button>
 
-                    </form>
+                        <div>
+                            <h2>DATE</h2>
+                            <!--date noch bearbeiten-->
+                        </div>
 
-                    <!-- please insert your content: END-->
+
+                        <div>
+                            <h2>URGENCY</h2>
+                            <select name="urgency" class="form-select" aria-label="Default select example"
+                                id="select-urgency">
+                                <option selected>Select Urgency here</option>
+                                <option value="high">High</option>
+                                <option value="medium">Medium</option>
+                                <option value="low">Low</option>
+                            </select>
+
+                        </div>
+                        <div>
+                            <h2>ASSIGNED TO</h2>
+                            <div id="users">
+
+                            </div>
+
+                            <!--noch bearbeiten-->
+                        </div>
+                        <!--mt-button-->
+                        <button onclick="showSuccsess()" class="btn btn-primary">
+                            <span class="mdc-button__label">CREATE TASK</span>
+                        </button>
+
+                        <!-- <button onclick="showSuccsess()">CREATE TASK</button> -->
+
+                        </form>
+
+                        <!-- bootstrap form
+                    <form>
+                        <div class="mb-3">
+                            <label for="exampleInputEmail1" class="form-label">Email address</label>
+                            <input type="email" class="form-control" id="exampleInputEmail1"
+                                aria-describedby="emailHelp">
+                            <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="exampleInputPassword1" class="form-label">Password</label>
+                            <input type="password" class="form-control" id="exampleInputPassword1">
+                        </div>
+                        <div class="mb-3 form-check">
+                            <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                            <label class="form-check-label" for="exampleCheck1">Check me out</label>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </form> -->
+
+                        <!-- please insert your content: END-->
+                    </div>
                 </div>
             </div>
         </div>
