@@ -43,9 +43,9 @@ function addToTask() {
     newCategory.value = '';
     newDescription.value = '';
 
-    // let tasksAsString = JSON.stringify(tasks);
-    // backend.setItem('tasks', tasksAsString);
-    showSuccsess();
+    let tasksAsString = JSON.stringify(tasks);
+    backend.setItem('tasks', tasksAsString);
+    // showSuccsess();
     loadTasks();
 };
 
@@ -74,9 +74,9 @@ function showSuccsess() {
  * 
  */
 async function loadTasks() {
-    await downloadFromServer();
-    tasks = backend.getItem('tasks');
-    // tasks = JSON.parse(tasksAsString);
+  
+    let tasksAsString = backend.getItem('tasks');
+    tasks = JSON.parse(tasksAsString);
     console.log('loaded all tasks', tasks)
 };
 
