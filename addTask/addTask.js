@@ -43,9 +43,10 @@ function addToTask() {
     newCategory.value = '';
     newDescription.value = '';
 
-    let tasksAsString = JSON.stringify(tasks);
-    localStorage.setItem('tasks', tasksAsString);
+    // let tasksAsString = JSON.stringify(tasks);
+    // backend.setItem('tasks', tasksAsString);
     showSuccsess();
+    loadTasks();
 };
 
 /**
@@ -60,9 +61,9 @@ function showSuccsess() {
         document.getElementById('popUpWindow').innerHTML = `
         <div>
         <h2>Your Task ${task['title']} has been saved to backlog</h2>
-        <button">CREATE NEW TASK</button>
-        <button">GO TO BACKLOG</button>
-        <button">GO TO BOARD</button>
+        <button class="btn btn-primary"> <span class="mdc-button__label">CREATE NEW TASK</span></button>
+        <button class="btn btn-primary"><span class="mdc-button__label">GO TO BACKLOG</span></button>
+        <button class="btn btn-primary"><span class="mdc-button__label">GO TO BOARD</span></button>
         </div>
     `;
     }
@@ -72,10 +73,11 @@ function showSuccsess() {
  * this funktion saves the array tasks in local storage
  * 
  */
-function loadTasks() {
-    let tasksAsString = localStorage.getItem('tasks');
-    tasks = JSON.parse(tasksAsString);
-    console.log('loaded all taskd', tasks)
+async function loadTasks() {
+    await downloadFromServer();
+    tasks = backend.getItem('tasks');
+    // tasks = JSON.parse(tasksAsString);
+    console.log('loaded all tasks', tasks)
 };
 
 /**
@@ -112,6 +114,11 @@ function updateTaskUser(i) {
         let indexOfSelectedUser = selectedUsers.indexOf(users[i]);//Was macht indexOf?
         selectedUsers.splice(indexOfSelectedUser, 1);
     }
+}
+async function initAddTask() {
+    await main_init();  
+ 
+    showUsers();
 }
 
 

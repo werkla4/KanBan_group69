@@ -29,13 +29,13 @@
 
 </head>
 
-<body onload="main_init(); loadTasks(); showUsers()">
+<body onload="initAddTask()">
     <div class="app-container">
         <div w3-include-html="../main/navBar.html" class="navBar-container"></div>
         <div class="content-container">
 
             <!-- please insert your content: START: -->
-            <div class="pop-up d-none" id="popUp">
+            <div class="pop-up d-none task-container-wrap" id="popUp">
                 <div class="complete-screen">
                     <div class="pop-up-window" id="popUpWindow">
 
@@ -50,37 +50,37 @@
             <div class="task-container-wrap">
                 <h1>Add Task</h1>
                 <div class="task-container">
-                   
+
                     <div class="task-container-left">
 
 
-                        <div>
-                            <form onsubmit="addToTask(); return false;">
-                                <!--wichtig!!!!-->
-                        </div>
-                        <div class="mb-3">
-                            <h2>TITLE</h2>
 
-                            <input required placeholder="title" id="title-value" type="text" class="form-control">
-                        </div>
-                        <div>
-                            <h2>CATEGORY</h2>
-                            <select name="category" id="select-category" class="form-select"
-                                aria-label="Default select example">
-                                <option selected>Select Category </option>
-                                <option value="marketing">Marketing</option>
-                                <option value="it">IT</option>
-                                <option value="organisation">Organisation</option>
-                            </select>
+                        <form onsubmit="addToTask(); return false;">
+                            <!--wichtig!!!!-->
 
-                        </div>
+                            <div class="mb-3">
+                                <h2>TITLE</h2>
 
-                        <div class="form-floating">
-                            <h2>description</h2>
-                            <textarea name="description" id="description" class="form-control" id="floatingTextarea2"
-                                style="height: 200px"></textarea>
-                            <label for="floatingTextarea2"></label>
-                        </div>
+                                <input required placeholder="title" id="title-value" type="text" class="form-control">
+                            </div>
+                            <div>
+                                <h2>CATEGORY</h2>
+                                <select name="category" id="select-category" class="form-select"
+                                    aria-label="Default select example">
+                                    <option selected>Select Category </option>
+                                    <option value="marketing">Marketing</option>
+                                    <option value="it">IT</option>
+                                    <option value="organisation">Organisation</option>
+                                </select>
+
+                            </div>
+
+                            <div class="form-floating">
+                                <h2>description</h2>
+                                <textarea name="description" id="description" class="form-control"
+                                    id="floatingTextarea2" style="height: 200px"></textarea>
+                                <label for="floatingTextarea2"></label>
+                            </div>
 
                     </div>
                     <!------------container right----------->
@@ -113,7 +113,7 @@
                             <!--noch bearbeiten-->
                         </div>
                         <!--mt-button-->
-                        <button onclick="showSuccsess()" class="btn btn-primary">
+                        <button class="btn btn-primary">
                             <span class="mdc-button__label">CREATE TASK</span>
                         </button>
 
