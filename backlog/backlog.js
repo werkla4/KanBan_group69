@@ -1,7 +1,7 @@
 /**
  * JSON of created Tasks
  */
-// NEEDS TO BE FILLED from AddTask
+// JSON will BE FILLED from AddTask - just for testing
 let backlogTasks = [
     {
         'title': 'It Infrastruktur erstellen',
@@ -36,6 +36,15 @@ let backlogTasks = [
         'urgency': 'low'
     }
 ];
+/**
+ * function to load main init and get JSON from Server and show tasks
+ */
+async function initBacklog() {
+    await main_init();
+    //to get JSON from Server
+    backlogTasks = JSON.parse(backend.getItem('tasks'));
+    showBacklogTask();
+}
 
 /**
  * function to show all tasks of JSON
@@ -164,7 +173,7 @@ function generateOpenTaskHTML(title, blName, prio, date, category, description, 
  * JSON for moved Task from Backlog to Board
  */
 // BOARD GETS ITS TASK FROM HERE
-let boardTask = [];
+let boardTasks = [];
 
 /**
  * function to close Detail layer
@@ -180,18 +189,17 @@ function closeTaskDetail() {
 function moveToBoard(i) {
     let moveTask = backlogTasks[i];
     backlogTasks.splice(i, 1);
-    boardTask.push(moveTask);
+    boardTasks.push(moveTask);
     showBacklogTask();
     console.log('seleced Task', moveTask)
 }
 
-function pushDates(i) {
-    let item = {
-        'startdate': new Date().getTime(),
-        'enddate': document.getElementById(`date${i}`).value
-    };
-    boardTask.push(item);
 
+function pushDates(i) {
+    boardTasks[i].enddate = document.getElementById(`date${i}`).value;
+    boardTasks[i].startdate =  new Date().getTime();
+
+  console.log('pushed Dates', boardTasks[i].enddate , boardTasks[i].startdate);
 }
 
 /**
