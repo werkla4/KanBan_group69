@@ -9,9 +9,7 @@ let backlogTasks = [
         'category': 'IT',
         'description': 'Infrastruktur erstellen. Lorem ipsum, dolor sit amet consectetur adipisicing elit. Pariatur harumanimi qui deseruntpossimus. Ea, ullam vitae. Sed commodi aliquam incidunt expedita, pariatur, iusto accusamus odit,autem quia ipsa numquam.',
         'createdDate': '11.04.2021',
-        'urgency': 'high',
-        'startdate': new Date().getTime(),
-        'dueto': '01.01.2022'
+        'urgency': 'high'
     },
     {
         'title': 'Werbekampagne aufsetzen',
@@ -19,9 +17,7 @@ let backlogTasks = [
         'category': 'Marketing',
         'description': 'Werbekampagne aufsetzen. Lorem ipsum, dolor sit amet consectetur adipisicing elit. Pariatur harumanimi qui deseruntpossimus. Ea, ullam vitae. Sed commodi aliquam incidunt expedita, pariatur, iusto accusamus odit,autem quia ipsa numquam.',
         'createdDate': '18.03.2021',
-        'urgency': 'medium',
-        'startdate': new Date().getTime(),
-        'dueto': '01.01.2022'
+        'urgency': 'medium'
     },
     {
         'title': 'Layout erstellen',
@@ -29,9 +25,7 @@ let backlogTasks = [
         'category': 'Design',
         'description': 'Layout erstellen. Lorem ipsum, dolor sit amet consectetur adipisicing elit. Pariatur harumanimi qui deseruntpossimus. Ea, ullam vitae. Sed commodi aliquam incidunt expedita, pariatur, iusto accusamus odit,autem quia ipsa numquam.',
         'createdDate': '13.04.2021',
-        'urgency': 'low',
-        'startdate': new Date().getTime(),
-        'dueto': '01.01.2022'
+        'urgency': 'low'
     },
     {
         'title': 'Werbekampagne Kickof Vorbereiten',
@@ -39,16 +33,14 @@ let backlogTasks = [
         'category': 'Marketing',
         'description': 'Kickof Vorbereiten. Lorem ipsum, dolor sit amet consectetur adipisicing elit. Pariatur harumanimi qui deseruntpossimus. Ea, ullam vitae. Sed commodi aliquam incidunt expedita, pariatur, iusto accusamus odit,autem quia ipsa numquam.',
         'createdDate': '10.04.2021',
-        'urgency': 'low',
-        'startdate': new Date().getTime(),
-        'dueto': '01.01.2022'
+        'urgency': 'low'
     }
 ];
 
 /**
  * function to show all tasks of JSON
  */
- function showBacklogTask() {
+function showBacklogTask() {
     let taskContainer = document.getElementById('taskContainer');
     taskContainer.innerHTML = '';
 
@@ -56,7 +48,7 @@ let backlogTasks = [
         generateNoTaskHTML();
     } else {
         generateShowTaskHTML();
-        
+
     }
     showCategory();
 }
@@ -64,7 +56,7 @@ let backlogTasks = [
  * function to generate HTML if there is no task
  */
 function generateNoTaskHTML() {
-     document.getElementById('taskContainer').innerHTML = `<div class="no-tasks">Es wurden bisher keine Tasks angelegt.</div>`;
+    document.getElementById('taskContainer').innerHTML = `<div class="no-tasks">Es wurden bisher keine Tasks angelegt.</div>`;
 }
 /**
  * function to generate HTML to show task
@@ -79,7 +71,7 @@ function generateShowTaskHTML() {
             <div id="category${i}" class="bl-category">${task['category']}</div>
             <div class="bl-description">${task['description']}</div>
         </div>
-        `;         
+        `;
     }
 }
 ///category colors needs to be adjusted from main.css!!!!!!!!!
@@ -118,9 +110,9 @@ function openTaskDetail(i) {
     let prio = backlogTasks[i]['urgency'];
 
     let startdate = backlogTasks[i]['startdate'];
-    let dueto =backlogTasks[i]['dueto'];
 
     detailLayer.innerHTML = generateOpenTaskHTML(title, blName, prio, date, category, description, i);
+
 }
 
 /**
@@ -137,8 +129,8 @@ function openTaskDetail(i) {
  */
 function generateOpenTaskHTML(title, blName, prio, date, category, description, i) {
     return `
-    <div onclick="closeTaskDetail()" class="details-layer-background">
-        <div class="details-layer">
+    <div class="details-layer-background">
+        <div id="layer" class="details-layer">
             <span class="close-detail-layer" onclick="closeTaskDetail()">Schließen</span>
             <div class="details"><b>Titel:</b> ${title}
             </div>
@@ -150,13 +142,19 @@ function generateOpenTaskHTML(title, blName, prio, date, category, description, 
             </div>
             <div class="details"><b>Kategorie:</b> ${category}
             </div>
-            <div>Fällig am: ${date}</div>
+            <label for="enddate">Fällig am:</label>
+            <input type="date" id="date${i}" name="end-date"
+                value="2021-04-01"
+                min="2021-01-01" max="2025-12-31">
+</input>
+
             <div class="horizontal-line"></div>
             <div class="details"><b>Beschreibung:</b> <br>${description}
             </div>       
             <div class="btn-container">
-                <button class="btn-move" onclick="moveToBoard(${i})">Task starten</button>
+                <button class="btn-move" onclick="moveToBoard(${i}), pushDates(${i}), closeTaskDetail()">Task starten</button>
             </div>
+            <button onclick="deleteBacklogTask(${i}), showDeleteNotification(${i})">Löschen</button>
         </div>
     </div>
     `;
@@ -179,9 +177,49 @@ function closeTaskDetail() {
  * 
  * @param {string} i - function to move Task from Backlog onto Board 
  */
-function moveToBoard(i){
+function moveToBoard(i) {
     let moveTask = backlogTasks[i];
     backlogTasks.splice(i, 1);
     boardTask.push(moveTask);
     showBacklogTask();
+    console.log('seleced Task', moveTask)
 }
+
+function pushDates(i) {
+    let item = {
+        'startdate': new Date().getTime(),
+        'enddate': document.getElementById(`date${i}`).value
+    };
+    boardTask.push(item);
+
+}
+
+/**
+ * 
+ * @param {string} position - function to delete task of backlog (forever)
+ */
+function deleteBacklogTask(position) {
+    backlogTasks.splice(position, 1);
+    showBacklogTask();
+}
+
+/**
+ * function to show delete notification of deleted task
+ */
+function showDeleteNotification(i) {
+    let title = backlogTasks[i]['title'];
+    console.log('Task gelöscht:', title);
+    document.getElementById('layer').classList.add('hide');
+
+    document.getElementById('notificationContainer').innerHTML = `
+    <div id="notification" class="delete-note">
+    Der Task <span class="text-highlight">"${title}"</span> wurde erfolgreich gelöscht!
+    </div>`;
+    setTimeout(function () {
+        closeTaskDetail();
+        document.getElementById('notificationContainer').innerHTML = '';
+    }, 1000);
+
+}
+
+

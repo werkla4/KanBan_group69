@@ -2,6 +2,9 @@ body {
     font-family: var(--font_pt_sans);
 }
 
+.hide {
+    display: none;
+}
 .content-container {
     display: initial;
 }
@@ -48,9 +51,11 @@ h1 {
     box-shadow: white 0px 0px 1px 0px;
     cursor: pointer;
 }
-.bl-task:hover{
+
+.bl-task:hover {
     opacity: 0.8;
 }
+
 .bl-inner-task {
     display: flex;
 }
@@ -58,7 +63,7 @@ h1 {
 .color-category {
     width: 20px;
     height: auto;
-} 
+}
 
 /* !!!!!!!category colors needs to be adjusted from main.css!!!!!!!!! */
 
@@ -117,13 +122,14 @@ h1 {
     z-index: 3;
 }
 
-.close-detail-layer{
+.close-detail-layer {
     display: flex;
     justify-content: flex-end;
     padding-bottom: 10px;
     cursor: pointer;
 }
-.close-detail-layer:hover{
+
+.close-detail-layer:hover {
     opacity: 0.6;
 }
 
@@ -138,7 +144,8 @@ h1 {
     padding-bottom: 5px;
     padding-top: 5px;
 }
-.horizontal-line{
+
+.horizontal-line {
     width: 480px;
     padding-left: 20px;
     border-top: 1px solid #cecbcb;
@@ -147,7 +154,8 @@ h1 {
 }
 
 /* !!!!!categbutton CSS needs to be adjusted from main.css!!!!!!!!! */
-.btn-move{
+
+.btn-move {
     margin: 20px;
     background-color: teal;
     border: none;
@@ -157,7 +165,8 @@ h1 {
     justify-content: center;
     cursor: pointer;
 }
-.btn-move:hover{
+
+.btn-move:hover {
     background-color: thistle;
 }
 
@@ -165,8 +174,34 @@ h1 {
     outline: none;
 }
 
-.btn-container{
+.btn-container {
     display: flex;
     justify-content: center;
+}
 
+.delete-note{
+    background-color: white;
+    width: 500px;
+    height: 50px;
+    position: fixed;
+    top: 100px;
+    left: 100px;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+/* !!!!! modify color of text */
+.text-highlight{
+    color: red;
+}
+
+/* CSS for datepicker */
+label {
+    display: block;
+}
+
+input,
+label {
+    margin: .4rem 0;
 }
