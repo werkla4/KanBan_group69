@@ -9,7 +9,8 @@ const URGENCY_NAMES = ['High', 'Medium', 'Low'];
 const USER_NAMES = ['Klaus', 'Katja', 'Feli'];
 const USER_Pic = ['../img/KlausWerner.jpg', '../img/KlausWerner.jpg', '../img/KlausWerner.jpg'];
 
-let current_drag_elm;
+let current_drag_colName;
+let current_drag_taskId;
 let tasks;
 
 /**
@@ -27,11 +28,48 @@ function allowDrop(ev) {
     ev.preventDefault();
 }
 
-function drag(elm_id) {
-    current_drag_elm = elm_id;
+function drag(colName, taskId) {
+    current_drag_colName = colName;
+    current_drag_taskId = taskId;
 }
 
-function drop(id) {
+function drop(colName) {
+    // help variable
+    let targetColumn = colName;
+    // get tasks indx
+    let mainTaskIndx = tasksIndxOf(current_drag_colName, current_drag_taskId);
+    // update data
+    tasks[mainTaskIndx]['state'] = targetColumn;
+    // update backend
+    updateTasksBackend();
+    // update board
+    updateBoard();
+    // clear dragHoverEffects
+    hideDragHoverEffects();
+}
+
+/**
+ * hide hover effects after drop event
+ */
+function hideDragHoverEffects(){
+    for(colName of COLUMN_NAMES){
+        document.getElementById(`${colName}-grid`).classList.remove('dragHoverEffect');
+    }
+}
+
+/**
+ * add dragHoverEffect to a column
+ * 
+ * @param {string} colName 
+ * @param {string} start_end -> 'start' || 'end' 
+ */
+function dragHoverEffect(colName, start_end){
+    if(start_end == 'start'){
+        document.getElementById(`${colName}-grid`).classList.add('dragHoverEffect');
+    }  
+    if(start_end == 'end'){
+        document.getElementById(`${colName}-grid`).classList.remove('dragHoverEffect');
+    }    
 }
 //#endregion
 
@@ -52,10 +90,12 @@ function deleteComment(colName, taskId, commentId){
     existComments.splice(commentId, 1);
     // update array
     tasks[mainTaskIndx]['comments'] = existComments;
-    // update commands
-    updateHTML_addComments(colName, mainTaskIndx, tasks);
     // update backend
     updateTasksBackend();
+    // update board
+    updateBoard();
+    // comments hold open
+    showCommands(colName, taskId, 'show');
 }
 
 /**
@@ -71,22 +111,19 @@ function addCommand(colName, taskId){
     let existComments = tasks[mainTaskIndx]['comments'];
     // push comment
     let textAreaInput = document.getElementById(`${colName}-task-${taskId}-textarea`).value.trim();
-
-    console.log(textAreaInput);
-    console.log(colName);
-    console.log(taskId);
-    console.log(mainTaskIndx);
-
+    // if input ok:
     if(textAreaInput.length > 0){
         // add comment
         let newComments = existComments
         newComments.push(textAreaInput);
         // update array
         tasks[mainTaskIndx]['comments'] = newComments;
-        // update commands
-        updateHTML_addComments(colName, taskId, tasks);
         // update backend
         updateTasksBackend();
+        // update board
+        updateBoard();
+        // comments hold open
+        showCommands(colName, taskId, 'show');
     }
 }
 
@@ -95,7 +132,7 @@ function addCommand(colName, taskId){
  */
 function updateTasksBackend(){
     let stringTasks = JSON.stringify(tasks);
-    backend.setItem('tasks', stringTasks);
+    backend.setItem('test_tasks_board_jklaf', stringTasks);
 }
 
 /**
@@ -146,12 +183,12 @@ function updateBoard() {
  * @returns 
  */
 function upDateColumn(colName, tasks) {
+    // clear column
+    document.getElementById(`${colName}-tasks`).innerHTML = ``;
     // exist data?
     if (tasks.length == 0) {
         return;
-    }
-    // clear column
-    document.getElementById(`${colName}-tasks`).innerHTML = ``;
+    }    
     // loop tasks and look for column elements
     for (let taskId = 0; taskId < tasks.length; taskId++) {
         createHTML_TaskGrid(colName, taskId);
@@ -184,7 +221,7 @@ function goToAddTask(columnName) {
 async function loadTasks() {
     // load from server
     await downloadFromServer();
-    tasks = backend.getItem('tasks');
+    tasks = backend.getItem('test_tasks_board_jklaf');
     // nothing exist?
     if (tasks == null) {
         // set test tasks
@@ -261,7 +298,7 @@ function getTestTasks() {
         }
     ];
     let strgTasks = JSON.stringify(tasks);
-    backend.setItem('tasks', strgTasks);
+    backend.setItem('test_tasks_board_jklaf', strgTasks);
 
     // let backendfile = backend.getItem('tasks');
     // console.log("backendfile : " + backendfile);
@@ -303,43 +340,6 @@ function getTestTasks() {
         }
     }
 }
-
-/**
- * create comments and the input textarea
- * 
- * @param {string} colName 
- * @param {int} taskId 
- * @param {JSON} tasks 
- * @returns 
- */
- function updateHTML_addComments(colName, taskId, tasks){
-     // reset comments
-    document.getElementById(`${colName}-task-${taskId}-commands-container`).innerHTML = ``;
-    // add new comments
-    for(let commentId = 0; commentId < tasks[taskId]['comments'].length; commentId++){
-        document.getElementById(`${colName}-task-${taskId}-commands-container`).innerHTML += `
-
-        <div id="${colName}-task-${taskId}-command-${commentId}" class="command-attributes">
-            <span class="command">
-            ${tasks[taskId]['comments'][commentId]}
-            </span>
-            <img src="../img/recycle-bin.png" class="task-recycle-icon" onclick="deleteComment('${colName}', ${taskId}, ${commentId})">
-        </div>
-        
-        `;
-    }
-    // write new comments and hide comments
-    document.getElementById(`${colName}-task-${taskId}-commands-container`).innerHTML += `
-        <div class="add-command-container">
-            <textarea id="${colName}-task-${taskId}-textarea" placeholder="write a command..." type="text" minlength="10"></textarea>
-            <img src="../img/check-mark.png" class="command-check-icon" onclick="addCommand('${colName}', ${taskId})">
-        </div>  
-        <span class="hide-commands-txt" onclick="showCommands('${colName}', ${taskId}, 'hide')"> | close commands |</span>
-    `; 
-    // set n-comments
-    document.getElementById(`${colName}-task-${taskId}-n-commands`).innerHTML = tasks[taskId]['comments'].length;
-}
-
 
 /**
  * create comments and the input textarea
@@ -451,7 +451,7 @@ function createHTML_dateTimeAndCommentsLogo(colName, taskId, tasks){
  function createHTML_TaskGrid(colName, taskId) {
     // clear column
     document.getElementById(`${colName}-tasks`).innerHTML += `
-        <div id="${colName}-task-${taskId}" class="task" draggable="true" ondragstart="drag('${colName}-task-${taskId}')"></div>
+        <div id="${colName}-task-${taskId}" class="task" draggable="true" ondragstart="drag('${colName}', ${taskId})" ></div>
         `;
 }   
 //#endregion

@@ -33,10 +33,10 @@
 
             <!-- please insert your content: START: -->
             <div class="grid-container">
-                <div id="toDo-grid" class="four-grids">
+                <div id="toDo-grid" class="four-grids" ondrop="drop('toDo')" ondragover="allowDrop(event); ondragenter=dragHoverEffect('toDo', 'start');" ondragleave="dragHoverEffect('toDo', 'end');">
                     <!-- <div id="bg-toDo-grid" class="toDo-color"></div> -->
                     <h1>TO DO</h1>
-                    <div id="toDo-tasks" class="tasks-grid" ondrop="drop('toDo')" ondragover="allowDrop(event)">
+                    <div id="toDo-tasks" class="tasks-grid">
 
                         <div id="task0" class="task" draggable="true" ondragstart="drag('task0')">
                             <div class="row-category-urgency">
@@ -85,27 +85,28 @@
                     </div>
                     <div class="add-task"><img src="../img/plus-icon.png" class="plus-logo" onclick="goToAddTask('toDo')"></div>
                 </div>
-                <div id="inProgress-grid" class="four-grids inProgress-grid">
+                <div id="inProgress-grid" class="four-grids inProgress-grid" ondrop="drop('inProgress')" ondragover="allowDrop(event); ondragenter=dragHoverEffect('inProgress', 'start');" ondragleave="dragHoverEffect('inProgress', 'end');">
                     <!-- <div id="bg-inProgress-grid" class="inProgress-color"></div> -->
                     <h1>IN PROGRESS</h1>
 
-                    <div id="inProgress-tasks" class="tasks-grid" ondrop="drop('inProgress')" ondragover="allowDrop(event)">
+                    <div id="inProgress-tasks" class="tasks-grid">
                     </div>
                     <div class="add-task"><img src="../img/plus-icon.png" class="plus-logo" onclick="goToAddTask('inProgress')"></div>
 
                 </div>
-                <div id="testing-grid" class="four-grids testing-grid">
+                <div id="testing-grid" class="four-grids testing-grid" ondrop="drop('testing')" ondragover="allowDrop(event); ondragenter=dragHoverEffect('testing', 'start');" ondragleave="dragHoverEffect('testing', 'end');">
                     <h1>TESTING</h1>
 
-                    <div id="testing-tasks" class="tasks-grid" ondrop="drop('testing')" ondragover="allowDrop(event)">
+                    <div id="testing-tasks" class="tasks-grid">
                     </div>
                     <div class="add-task"><img src="../img/plus-icon.png" class="plus-logo" onclick="goToAddTask('testing')"></div>
 
                 </div>
-                <div id="done-grid" class="four-grids done-grid">
+                <div id="done-grid" class="four-grids done-grid" ondrop="drop('done')" ondragover="allowDrop(event); 
+                ondragenter=dragHoverEffect('done', 'start');" ondragleave="dragHoverEffect('done', 'end');">
                     <h1>DONE</h1>
 
-                    <div id="done-tasks" class="tasks-grid" ondrop="drop('done')" ondragover="allowDrop(event)">
+                    <div id="done-tasks" class="tasks-grid">
                     </div>
                     <div class="add-task"><img src="../img/plus-icon.png" class="plus-logo" onclick="goToAddTask('done')"></div>
 
