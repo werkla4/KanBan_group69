@@ -2,6 +2,7 @@
  * JSON of created Tasks
  */
 // JSON will BE FILLED from AddTask - just for testing
+/*
 let backlogTasks = [
     {
         'title': 'It Infrastruktur erstellen',
@@ -36,13 +37,14 @@ let backlogTasks = [
         'urgency': 'low'
     }
 ];
+*/
 /**
  * function to load main init and get JSON from Server and show tasks
  */
 async function initBacklog() {
     await main_init();
     //to get JSON from Server
-    //backlogTasks = JSON.parse(backend.getItem('tasks'));
+    backlogTasks = JSON.parse(backend.getItem('tasks'));
     showBacklogTask();
 }
 
@@ -73,8 +75,8 @@ function generateNoTaskHTML() {
 function generateShowTaskHTML() {
     for (let i = 0; i < backlogTasks.length; i++) {
         let task = backlogTasks[i];
-        
-    
+
+
         document.getElementById('taskContainer').innerHTML += `
         <div onclick="openTaskDetail(${i})" class="bl-task">
             <div id="color${i}" class="color-category"></div>
@@ -91,8 +93,8 @@ function generateShowTaskHTML() {
  * @param {string} names  - function to show user names 
  * @returns - names of users
  */
-/*
-function showNames(names){
+
+function showNames(names) {
     let html = '';
     for (let i = 0; i < names.length; i++) {
         let n = names[i];
@@ -100,9 +102,9 @@ function showNames(names){
 
         console.log('name', n);
     }
-  return html;
+    return html;
 }
-*/
+
 
 
 ///category colors needs to be adjusted from main.css!!!!!!!!!
@@ -206,13 +208,24 @@ function closeTaskDetail() {
  * 
  * @param {string} i - function to move Task from Backlog onto Board 
  */
-function moveToBoard(i) {
-    let moveTask = backlogTasks[i];
-    backlogTasks.splice(i, 1);
+function moveToBoard(position) {
+    //moves task to board task JSON
+    let moveTask = backlogTasks[position];
+    backlogTasks.splice(position, 1);
     boardTasks.push(moveTask);
-    showBacklogTask();
+
+    // saves boardtask on server
+    setArray('boardTask', boardTasks);
+
+    // deletes tasks out of task JSON on server
+    backlogTasks.splice(position, 1);
+    let tasksAsString = JSON.stringify(backlogTasks);
+    backend.setItem('tasks', tasksAsString);
+   
     console.log('seleced Task', moveTask)
+    showBacklogTask();
 }
+
 
 /**
  * 
@@ -221,14 +234,14 @@ function moveToBoard(i) {
 function pushDates(i) {
     for (let a = 0; a < boardTasks.length; a++) {
         boardTasks[a].enddate = document.getElementById(`date${i}`).value;
-        boardTasks[a].startdate =  new Date().getTime();   
+        boardTasks[a].startdate = new Date().getTime();
     }
 }
 
 /**
  * function to change the state from bakclog to board
  */
-function changeState(){
+function changeState() {
     for (let i = 0; i < boardTasks.length; i++) {
         boardTasks[i]['state'] = 'board';
     }
@@ -239,10 +252,9 @@ function changeState(){
  * @param {string} position - function to delete task of backlog (forever)
  */
 function deleteBacklogTask(position) {
-    //let deletednote = '';
     deletednote = backlogTasks.splice(position, 1);
-    let tasksAsString = JSON.stringify(backlogTasks);
-    backend.setItem('tasks', tasksAsString);
+    setArray('tasks', backlogTasks);
+    
     showBacklogTask();
     console.log('deleted task', deletednote);
 }
@@ -267,3 +279,12 @@ function showDeleteNotification(i) {
 }
 
 
+function setArray(key, array) {
+    backend.setItem(key, JSON.stringify(array));
+}
+/*
+function getArray(key) {
+    return JSON.parse(localStorage.getItem(key)) || [];
+    // gibt mir das was im local storage steht, ODER (||) gibt mir nichts ([])
+}
+*/
