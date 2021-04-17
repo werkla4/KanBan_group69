@@ -8,7 +8,7 @@ let backlogTasks = [
         'name': 'Felicitas Mock',
         'category': 'IT',
         'description': 'Infrastruktur erstellen. Lorem ipsum, dolor sit amet consectetur adipisicing elit. Pariatur harumanimi qui deseruntpossimus. Ea, ullam vitae. Sed commodi aliquam incidunt expedita, pariatur, iusto accusamus odit,autem quia ipsa numquam.',
-        'createdDate': '11.04.2021',
+        'date': '11.04.2021',
         'urgency': 'high'
     },
     {
@@ -16,7 +16,7 @@ let backlogTasks = [
         'name': 'Thomas Müller',
         'category': 'Marketing',
         'description': 'Werbekampagne aufsetzen. Lorem ipsum, dolor sit amet consectetur adipisicing elit. Pariatur harumanimi qui deseruntpossimus. Ea, ullam vitae. Sed commodi aliquam incidunt expedita, pariatur, iusto accusamus odit,autem quia ipsa numquam.',
-        'createdDate': '18.03.2021',
+        'date': '18.03.2021',
         'urgency': 'medium'
     },
     {
@@ -24,7 +24,7 @@ let backlogTasks = [
         'name': 'Hans Peter',
         'category': 'Design',
         'description': 'Layout erstellen. Lorem ipsum, dolor sit amet consectetur adipisicing elit. Pariatur harumanimi qui deseruntpossimus. Ea, ullam vitae. Sed commodi aliquam incidunt expedita, pariatur, iusto accusamus odit,autem quia ipsa numquam.',
-        'createdDate': '13.04.2021',
+        'date': '13.04.2021',
         'urgency': 'low'
     },
     {
@@ -32,7 +32,7 @@ let backlogTasks = [
         'name': 'Claudia Vogt',
         'category': 'Marketing',
         'description': 'Kickof Vorbereiten. Lorem ipsum, dolor sit amet consectetur adipisicing elit. Pariatur harumanimi qui deseruntpossimus. Ea, ullam vitae. Sed commodi aliquam incidunt expedita, pariatur, iusto accusamus odit,autem quia ipsa numquam.',
-        'createdDate': '10.04.2021',
+        'date': '10.04.2021',
         'urgency': 'low'
     }
 ];
@@ -42,7 +42,7 @@ let backlogTasks = [
 async function initBacklog() {
     await main_init();
     //to get JSON from Server
-    backlogTasks = JSON.parse(backend.getItem('tasks'));
+    //backlogTasks = JSON.parse(backend.getItem('tasks'));
     showBacklogTask();
 }
 
@@ -73,16 +73,38 @@ function generateNoTaskHTML() {
 function generateShowTaskHTML() {
     for (let i = 0; i < backlogTasks.length; i++) {
         let task = backlogTasks[i];
+        
+    
         document.getElementById('taskContainer').innerHTML += `
         <div onclick="openTaskDetail(${i})" class="bl-task">
             <div id="color${i}" class="color-category"></div>
-            <div class="bl-name">${task['name']}</div>
+            <div class="bl-name">${task['assignedTo']}</div>
             <div id="category${i}" class="bl-category">${task['category']}</div>
             <div class="bl-description">${task['description']}</div>
         </div>
         `;
     }
 }
+
+/**
+ * 
+ * @param {string} names  - function to show user names 
+ * @returns - names of users
+ */
+/*
+function showNames(names){
+    let html = '';
+    for (let i = 0; i < names.length; i++) {
+        let n = names[i];
+        html = n;
+
+        console.log('name', n);
+    }
+  return html;
+}
+*/
+
+
 ///category colors needs to be adjusted from main.css!!!!!!!!!
 /**
  * function to define the color of the different categories
@@ -112,23 +134,21 @@ function openTaskDetail(i) {
     let detailLayer = document.getElementById('taskDetails');
 
     let title = backlogTasks[i]['title'];
-    let blName = backlogTasks[i]['name'];
+    let assignedTo = backlogTasks[i]['assignedTo'];
+    //let name = assignedTo[i]['name'];
     let category = backlogTasks[i]['category'];
     let description = backlogTasks[i]['description'];
-    let date = backlogTasks[i]['createdDate'];
+    let date = new Date(backlogTasks[i]['date']);
     let prio = backlogTasks[i]['urgency'];
 
-    let startdate = backlogTasks[i]['startdate'];
-
-    detailLayer.innerHTML = generateOpenTaskHTML(title, blName, prio, date, category, description, i);
-
+    detailLayer.innerHTML = generateOpenTaskHTML(title, name, prio, date, category, description, i);
 }
 
 /**
  * function to generate HTML of Detail Layer
  * 
  * @param {string} title  - parameter to show titel of Task
- * @param {string} blName - parameter to show Name of Task
+ * @param {string} name - parameter to show Name of Task
  * @param {string} prio - parameter to show prio
  * @param {string} date - paramter tp show date
  * @param {string} category - parameter to show category
@@ -136,14 +156,14 @@ function openTaskDetail(i) {
  * @param {string} i - defines i
  * @returns 
  */
-function generateOpenTaskHTML(title, blName, prio, date, category, description, i) {
+function generateOpenTaskHTML(title, name, prio, date, category, description, i) {
     return `
     <div class="details-layer-background">
         <div id="layer" class="details-layer">
             <span class="close-detail-layer" onclick="closeTaskDetail()">Schließen</span>
             <div class="details"><b>Titel:</b> ${title}
             </div>
-            <div class="details"><b>Name:</b> ${blName}
+            <div class="details"><b>Name:</b> ${name}
             </div>
             <div class="details"><b>Prio:</b> ${prio}
             </div>
@@ -161,7 +181,7 @@ function generateOpenTaskHTML(title, blName, prio, date, category, description, 
             <div class="details"><b>Beschreibung:</b> <br>${description}
             </div>       
             <div class="btn-container">
-                <button class="btn-move" onclick="moveToBoard(${i}), pushDates(${i}), closeTaskDetail()">Task starten</button>
+                <button class="btn-move" onclick="moveToBoard(${i}), pushDates(${i}), changeState(${i}), closeTaskDetail()">Task starten</button>
             </div>
             <button onclick="deleteBacklogTask(${i}), showDeleteNotification(${i})">Löschen</button>
         </div>
@@ -194,12 +214,24 @@ function moveToBoard(i) {
     console.log('seleced Task', moveTask)
 }
 
-
+/**
+ * 
+ * @param {string} i - function to add start and enddate to JSON for board
+ */
 function pushDates(i) {
-    boardTasks[i].enddate = document.getElementById(`date${i}`).value;
-    boardTasks[i].startdate =  new Date().getTime();
+    for (let a = 0; a < boardTasks.length; a++) {
+        boardTasks[a].enddate = document.getElementById(`date${i}`).value;
+        boardTasks[a].startdate =  new Date().getTime();   
+    }
+}
 
-  console.log('pushed Dates', boardTasks[i].enddate , boardTasks[i].startdate);
+/**
+ * function to change the state from bakclog to board
+ */
+function changeState(){
+    for (let i = 0; i < boardTasks.length; i++) {
+        boardTasks[i]['state'] = 'board';
+    }
 }
 
 /**
@@ -207,8 +239,12 @@ function pushDates(i) {
  * @param {string} position - function to delete task of backlog (forever)
  */
 function deleteBacklogTask(position) {
-    backlogTasks.splice(position, 1);
+    //let deletednote = '';
+    deletednote = backlogTasks.splice(position, 1);
+    let tasksAsString = JSON.stringify(backlogTasks);
+    backend.setItem('tasks', tasksAsString);
     showBacklogTask();
+    console.log('deleted task', deletednote);
 }
 
 /**
