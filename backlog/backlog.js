@@ -2,7 +2,7 @@
  * JSON of created Tasks
  */
 // JSON will BE FILLED from AddTask - just for testing
-
+/*
 let backlogTasks = [
     {
         'title': 'It Infrastruktur erstellen',
@@ -38,6 +38,9 @@ let backlogTasks = [
     }
 ];
 
+*/
+
+let boardTasks = [];
 
 /**
  * function to load main init and get JSON from Server and show tasks
@@ -46,7 +49,7 @@ async function initBacklog() {
     await main_init();
     //to get JSON from Server
     backlogTasks = JSON.parse(backend.getItem('tasks'));
-    boardTasks = JSON.parse(backend.getItem('boardTask')); // BOARD GETS ITS TASK FROM HERE
+    boardTasks = JSON.parse(backend.getItem('boardTasks')); // BOARD GETS ITS TASK FROM HERE
     showBacklogTask();
 }
 
@@ -71,31 +74,34 @@ function showBacklogTask() {
 function generateNoTaskHTML() {
     document.getElementById('taskContainer').innerHTML = `<div class="no-tasks">Es wurden bisher keine Tasks angelegt.</div>`;
 }
+
 /**
  * function to generate HTML to show task
  */
 function generateShowTaskHTML() {
-    for (let i = 0; i < backlogTasks.length; i++) {
-        let task = backlogTasks[i];
-
-
-        document.getElementById('taskContainer').innerHTML += `
+    for (let j = 0; j < backlogTasks.length; j++) {
+        for (let i = 0; i < backlogTasks[j].assignedTo.length; i++) {
+            let task = backlogTasks[j];
+            let names = task['assignedTo'][i].name;
+            console.log(names);
+            document.getElementById('taskContainer').innerHTML += `
         <div onclick="openTaskDetail(${i})" class="bl-task">
             <div id="color${i}" class="color-category"></div>
-            <div class="bl-name">${task['assignedTo']}</div>
+            <div class="bl-name">${names}</div>
             <div id="category${i}" class="bl-category">${task['category']}</div>
             <div class="bl-description">${task['description']}</div>
         </div>
         `;
+        }
     }
 }
 
 /**
+ * function to show the user names the task is assigend to
  * 
- * @param {string} names  - function to show user names 
- * @returns - names of users
+ * @param {string} names - These are the names the task is assigend to
+ * @returns 
  */
-
 function showNames(names) {
     let html = '';
     for (let i = 0; i < names.length; i++) {
@@ -108,8 +114,8 @@ function showNames(names) {
 }
 
 
-
 ///category colors needs to be adjusted from main.css!!!!!!!!!
+
 /**
  * function to define the color of the different categories
  */
@@ -131,15 +137,15 @@ function showCategory() {
 }
 
 /**
+ * function to open details of the Task
  * 
- * @param {string} i - function to open Details of Tasks
+ * @param {number} i - This is the position of the selected task
  */
 function openTaskDetail(i) {
     let detailLayer = document.getElementById('taskDetails');
 
     let title = backlogTasks[i]['title'];
-    let assignedTo = backlogTasks[i]['assignedTo'];
-    //let name = assignedTo[i]['name'];
+    // let name = backlogTasks[i]['assignedTo']['name'];
     let category = backlogTasks[i]['category'];
     let description = backlogTasks[i]['description'];
     let date = new Date(backlogTasks[i]['date']);
@@ -151,13 +157,13 @@ function openTaskDetail(i) {
 /**
  * function to generate HTML of Detail Layer
  * 
- * @param {string} title  - parameter to show titel of Task
- * @param {string} name - parameter to show Name of Task
- * @param {string} prio - parameter to show prio
- * @param {string} date - paramter tp show date
- * @param {string} category - parameter to show category
- * @param {string} description - parameter to show description
- * @param {string} i - defines i
+ * @param {string} title  - This is the title of the task
+ * @param {string} name - These are the user names of the task
+ * @param {string} prio - This shows the priorities of the task
+ * @param {date} date - This is the created date of the task
+ * @param {string} category - This is the category the task belongs to
+ * @param {string} description - This is the description of the task
+ * @param {number} i - This is the position of the selected task
  * @returns 
  */
 function generateOpenTaskHTML(title, name, prio, date, category, description, i) {
@@ -202,8 +208,9 @@ function closeTaskDetail() {
 }
 
 /**
+ * function to move task from backlog to board
  * 
- * @param {string} i - function to move Task from Backlog onto Board 
+ * @param {number} position - This is the position of the selected task what will be push to board
  */
 function moveToBoard(position) {
     //moves task to board task JSON
@@ -212,21 +219,19 @@ function moveToBoard(position) {
     boardTasks.push(moveTask);
 
     // saves boardtask on server
-    setArray('boardTask', boardTasks);
+    setArray('boardTasks', boardTasks);
+     // deletes tasks out of task JSON on server
+    setArray('tasks', backlogTasks);
 
-    // deletes tasks out of task JSON on server
-    backlogTasks.splice(position, 1);
-    let tasksAsString = JSON.stringify(backlogTasks);
-    backend.setItem('tasks', tasksAsString);
-   
     console.log('seleced Task', moveTask)
     showBacklogTask();
 }
 
 
 /**
+ * function to add start and enddate to JSON for board
  * 
- * @param {string} i - function to add start and enddate to JSON for board
+ * @param {number} i - This is the position of the selected task where the dated get pushed in
  */
 function pushDates(i) {
     for (let a = 0; a < boardTasks.length; a++) {
@@ -245,21 +250,23 @@ function changeState() {
 }
 
 /**
+ * function to delete task of backlog (forever)
  * 
- * @param {string} position - function to delete task of backlog (forever)
+ * @param {number} position - This is the position of the deleted task
  */
 function deleteBacklogTask(position) {
     let deletedTask = backlogTasks.splice(position, 1);
     setArray('tasks', backlogTasks);
     showDeleteNotification(deletedTask[0]['title']);
     showBacklogTask();
-    
+
     console.log('deleted task', deletedTask[0]['title']);
 }
 
 /**
+ * function to show delete notification with title of deleted task
  * 
- * @param {string} deletedTask - function to show delete notification with title of deleted task
+ * @param {string} deletedTask - This is for the title of the deleted Task
  */
 function showDeleteNotification(deletedTask) {
     let title = deletedTask;
@@ -281,9 +288,9 @@ function showDeleteNotification(deletedTask) {
 function setArray(key, array) {
     backend.setItem(key, JSON.stringify(array));
 }
-/*
+
+
 function getArray(key) {
-    return JSON.parse(localStorage.getItem(key)) || [];
+    return JSON.parse(backend.getItem(key)) || [];
     // gibt mir das was im local storage steht, ODER (||) gibt mir nichts ([])
 }
-*/
