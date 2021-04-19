@@ -96,23 +96,6 @@ function generateShowTaskHTML() {
     }
 }
 
-/**
- * function to show the user names the task is assigend to
- * 
- * @param {string} names - These are the names the task is assigend to
- * @returns 
- */
-function showNames(names) {
-    let html = '';
-    for (let i = 0; i < names.length; i++) {
-        let n = names[i];
-        html = n;
-
-        console.log('name', n);
-    }
-    return html;
-}
-
 
 ///category colors needs to be adjusted from main.css!!!!!!!!!
 
@@ -191,7 +174,7 @@ function generateOpenTaskHTML(title, name, prio, date, category, description, i)
             <div class="details"><b>Beschreibung:</b> <br>${description}
             </div>       
             <div class="btn-container">
-                <button class="btn-move" onclick="moveToBoard(${i}), pushDates(${i}), changeState(${i}), closeTaskDetail()">Task starten</button>
+                <button class="btn-move" onclick="moveToBoard(${i}), closeTaskDetail()">Task starten</button>
             </div>
             <button onclick="deleteBacklogTask(${i})">Löschen</button>
         </div>
@@ -217,6 +200,9 @@ function moveToBoard(position) {
     let moveTask = backlogTasks[position];
     backlogTasks.splice(position, 1);
     boardTasks.push(moveTask);
+    
+    pushDates(position);
+    changeState(position);
 
     // saves boardtask on server
     setArray('boardTasks', boardTasks);
