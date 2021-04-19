@@ -2,7 +2,7 @@
  * JSON of created Tasks
  */
 // JSON will BE FILLED from AddTask - just for testing
-/*
+
 let backlogTasks = [
     {
         'title': 'It Infrastruktur erstellen',
@@ -37,7 +37,8 @@ let backlogTasks = [
         'urgency': 'low'
     }
 ];
-*/
+
+
 /**
  * function to load main init and get JSON from Server and show tasks
  */
@@ -45,6 +46,7 @@ async function initBacklog() {
     await main_init();
     //to get JSON from Server
     backlogTasks = JSON.parse(backend.getItem('tasks'));
+    boardTasks = JSON.parse(backend.getItem('boardTask')); // BOARD GETS ITS TASK FROM HERE
     showBacklogTask();
 }
 
@@ -185,17 +187,12 @@ function generateOpenTaskHTML(title, name, prio, date, category, description, i)
             <div class="btn-container">
                 <button class="btn-move" onclick="moveToBoard(${i}), pushDates(${i}), changeState(${i}), closeTaskDetail()">Task starten</button>
             </div>
-            <button onclick="deleteBacklogTask(${i}), showDeleteNotification(${i})">Löschen</button>
+            <button onclick="deleteBacklogTask(${i})">Löschen</button>
         </div>
     </div>
     `;
 }
 
-/**
- * JSON for moved Task from Backlog to Board
- */
-// BOARD GETS ITS TASK FROM HERE
-let boardTasks = [];
 
 /**
  * function to close Detail layer
@@ -239,7 +236,7 @@ function pushDates(i) {
 }
 
 /**
- * function to change the state from bakclog to board
+ * function to change the state from backlog to board
  */
 function changeState() {
     for (let i = 0; i < boardTasks.length; i++) {
@@ -252,18 +249,20 @@ function changeState() {
  * @param {string} position - function to delete task of backlog (forever)
  */
 function deleteBacklogTask(position) {
-    deletednote = backlogTasks.splice(position, 1);
+    let deletedTask = backlogTasks.splice(position, 1);
     setArray('tasks', backlogTasks);
-    
+    showDeleteNotification(deletedTask[0]['title']);
     showBacklogTask();
-    console.log('deleted task', deletednote);
+    
+    console.log('deleted task', deletedTask[0]['title']);
 }
 
 /**
- * function to show delete notification of deleted task
+ * 
+ * @param {string} deletedTask - function to show delete notification with title of deleted task
  */
-function showDeleteNotification(i) {
-    let title = backlogTasks[i]['title'];
+function showDeleteNotification(deletedTask) {
+    let title = deletedTask;
     console.log('Task gelöscht:', title);
     document.getElementById('layer').classList.add('hide');
 
