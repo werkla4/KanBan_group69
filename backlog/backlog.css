@@ -5,6 +5,7 @@ body {
 .hide {
     display: none;
 }
+
 .content-container {
     display: initial;
 }
@@ -13,13 +14,14 @@ h1 {
     text-align: center;
 }
 
-.task-container{
+.task-container {
     padding-bottom: 20px;
 }
+
 .bl-headlines {
     display: flex;
     flex-direction: row;
-    width: 700px;
+    width: 900px;
     margin-left: 50px;
     margin-right: 50px;
     font-weight: bold;
@@ -27,13 +29,13 @@ h1 {
 }
 
 .bl-headline-name {
-    width: 190px;
+    width: 160px;
     padding: 10px;
     padding-left: 20px;
 }
 
 .bl-headline-category {
-    width: 100px;
+    width: 150px;
     padding: 10px;
 }
 
@@ -44,7 +46,7 @@ h1 {
 
 .bl-task {
     /* border: 1px solid black; */
-    border-radius: 5px;
+    border-radius: 0 5px 5px 0;
     width: 900px;
     margin-left: 50px;
     margin-right: 50px;
@@ -68,8 +70,6 @@ h1 {
     height: auto;
 }
 
-/* !!!!!!!category colors needs to be adjusted from main.css!!!!!!!!! */
-
 .color-1 {
     background-color: var(--marketing_color);
 }
@@ -82,22 +82,26 @@ h1 {
     background-color: var(--it_color);
 }
 
+.color-4 {
+    background-color: var(--accounting_color);
+}
+
 .bl-name {
-    width: 140px;
+    width: 150px;
     padding: 10px;
     padding-top: 10px;
     padding-bottom: 10px;
 }
 
 .bl-category {
-    width: 100px;
+    width: 150px;
     padding: 10px;
     padding-top: 10px;
     padding-bottom: 10px;
 }
 
 .bl-description {
-    width: 540px;
+    width: 600px;
     padding: 10px;
     padding-top: 10px;
     padding-bottom: 10px;
@@ -148,9 +152,10 @@ h1 {
     padding-top: 5px;
 }
 
-.description-container{
+.description-container {
     height: 140px;
 }
+
 .horizontal-line {
     width: 480px;
     padding-left: 20px;
@@ -159,10 +164,8 @@ h1 {
     margin-bottom: 10px;
 }
 
-/* !!!!!categbutton CSS needs to be adjusted from main.css!!!!!!!!! */
-
 .btn-move {
-   margin-right: 10px;
+    margin-right: 10px;
 }
 
 .btn-move:hover {
@@ -178,29 +181,32 @@ h1 {
     justify-content: center;
 }
 
-.delete-note{
+.delete-notification {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.delete-note {
     background-color: white;
     width: 500px;
     height: 50px;
-    position: fixed;
-    top: 100px;
-    left: 100px;
     z-index: 2;
     display: flex;
     align-items: center;
     justify-content: center;
 }
-/* !!!!! modify color of text */
-.text-highlight{
-    color: red;
+
+.text-highlight {
+    color: rgb(42, 42, 187);
 }
 
 /* CSS for datepicker */
+
 label {
     display: block;
 }
 
-input,
-label {
+input, label {
     margin: .4rem 0;
 }

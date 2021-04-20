@@ -117,7 +117,7 @@ function showCategory() {
             color.classList.add('color-3')
         }
         if (category == 'Accounting') {
-            color.classList.add('var(--accounting_color)')
+            color.classList.add('color-4')
         }
     }
 }
@@ -204,13 +204,13 @@ function moveToBoard(position) {
     let moveTask = backlogTasks[position];
     backlogTasks.splice(position, 1);
     boardTasks.push(moveTask);
-    
+
     pushDates(position);
     changeState(position);
 
     // saves boardtask on server
     setArray('boardTasks', boardTasks);
-     // deletes tasks out of task JSON on server
+    // deletes tasks out of task JSON on server
     setArray('tasks', backlogTasks);
 
     console.log('seleced Task', moveTask)
@@ -265,13 +265,12 @@ function showDeleteNotification(deletedTask) {
 
     document.getElementById('notificationContainer').innerHTML = `
     <div id="notification" class="delete-note">
-    Der Task <span class="text-highlight">"${title}"</span> wurde erfolgreich gelöscht!
+    Der Task &nbsp;<span class="text-highlight">"${title}"</span>&nbsp; wurde erfolgreich gelöscht!
     </div>`;
     setTimeout(function () {
         closeTaskDetail();
         document.getElementById('notificationContainer').innerHTML = '';
     }, 1000);
-
 }
 
 
