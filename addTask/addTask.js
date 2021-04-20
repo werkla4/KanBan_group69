@@ -36,7 +36,7 @@ function addToTask() {
         'assignedTo': selectedUsers,
         'state': 'backlog',
         'comments': ''
-    }
+    };
     tasks.push(task);
     console.log(tasks);
     newTitle.value = '';
@@ -117,6 +117,7 @@ function updateTaskUser(i) {
 }
 async function initAddTask() {
     await main_init();  
+    tasks = JSON.parse(await backend.getItem('tasks'));
  
     showUsers();
 }
