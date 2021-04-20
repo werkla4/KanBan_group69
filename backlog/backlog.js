@@ -110,11 +110,14 @@ function showCategory() {
         if (category == 'Marketing') {
             color.classList.add('color-1')
         }
-        if (category == 'Design') {
+        if (category == 'Organisation') {
             color.classList.add('color-2')
         }
         if (category == 'IT') {
             color.classList.add('color-3')
+        }
+        if (category == 'Accounting') {
+            color.classList.add('var(--accounting_color)')
         }
     }
 }
@@ -169,15 +172,15 @@ function generateOpenTaskHTML(title, name, prio, date, category, description, i)
             <input type="date" id="date${i}" name="end-date"
                 value="2021-04-01"
                 min="2021-01-01" max="2025-12-31">
-</input>
-
+            </input>
             <div class="horizontal-line"></div>
-            <div class="details"><b>Beschreibung:</b> <br>${description}
+            <div class="details description-container"><b>Beschreibung:</b> <br>${description}
             </div>       
             <div class="btn-container">
-                <button class="btn-move" onclick="moveToBoard(${i}), closeTaskDetail()">Task starten</button>
+                <button class="btn btn-primary btn-move" onclick="moveToBoard(${i}), closeTaskDetail()">Task starten</button>
+                <button class="btn btn-secondary btn-delete" onclick="deleteBacklogTask(${i})">Löschen</button>
             </div>
-            <button onclick="deleteBacklogTask(${i})">Löschen</button>
+            
         </div>
     </div>
     `;
