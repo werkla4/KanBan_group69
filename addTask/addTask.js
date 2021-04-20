@@ -43,10 +43,10 @@ function addToTask() {
     newCategory.value = '';
     newDescription.value = '';
 
-    let tasksAsString = JSON.stringify(tasks);
-    backend.setItem('tasks', tasksAsString);
-    // showSuccsess();
-    loadTasks();
+    let tasksAsString = JSON.stringify(tasks);//wandelt das Array in einen String um
+    backend.setItem('tasks', tasksAsString);//speichert ins backend
+    showSuccsess();
+    loadTasks();//????
 };
 
 /**
@@ -60,14 +60,17 @@ function showSuccsess() {
         let task = tasks[i];
         document.getElementById('popUpWindow').innerHTML = `
         <div>
-        <h2>Your Task ${task['title']} has been saved to backlog</h2>
-        <button class="btn btn-primary"> <span class="mdc-button__label">CREATE NEW TASK</span></button>
-        <button class="btn btn-primary"><span class="mdc-button__label">GO TO BACKLOG</span></button>
-        <button class="btn btn-primary"><span class="mdc-button__label">GO TO BOARD</span></button>
+        <h2>Your Task ${task['title']} has been saved to backlog</h2><a href="#" onclick="closeSuccsess()">X</a>
+        <button onclick="closeSuccsess()" class="btn btn-primary"><span class="mdc-button__label">CREATE NEW TASK</span></button>
+        <button class="btn btn-primary"><span class="mdc-button__label"><a href="../backlog/backlog.html">GO TO BACKLOG</a></span></button>
+        <button class="btn btn-primary"><span class="mdc-button__label"><a href="../board/board.html">GO TO BOARD</a></span></button>
         </div>
     `;
     }
 };
+function closeSuccsess() {
+    document.getElementById('popUp').classList.add('d-none');
+}
 
 /**
  * this funktion saves the array tasks in local storage
@@ -75,8 +78,8 @@ function showSuccsess() {
  */
 async function loadTasks() {
   
-    let tasksAsString = backend.getItem('tasks');
-    tasks = JSON.parse(tasksAsString);
+    let tasksAsString = backend.getItem('tasks');//zieht daten aus dem Backend
+    tasks = JSON.parse(tasksAsString);//wandelt in json um
     console.log('loaded all tasks', tasks)
 };
 
@@ -117,7 +120,8 @@ function updateTaskUser(i) {
 }
 async function initAddTask() {
     await main_init();  
-    tasks = JSON.parse(await backend.getItem('tasks'));
+    await loadTasks();
+    //tasks = JSON.parse(await backend.getItem('tasks')); //füllt beim laden das Array aus dem Backend!!!
  
     showUsers();
 }
