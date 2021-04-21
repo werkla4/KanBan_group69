@@ -79,19 +79,20 @@ function generateNoTaskHTML() {
  * function to generate HTML to show task
  */
 function generateShowTaskHTML() {
+
     for (let i = 0; i < backlogTasks.length; i++) {
-            let task = backlogTasks[i];
-            let assignedTo = task['assignedTo'];
-            let names = assignedTo.join();
-            console.log(names);
-            document.getElementById('taskContainer').innerHTML += `
+        let task = backlogTasks[i];
+        //let names = task['assignedTo'];
+
+        document.getElementById('taskContainer').innerHTML += `
         <div onclick="openTaskDetail(${i})" class="bl-task">
             <div id="color${i}" class="color-category"></div>
-            <div class="bl-name">${names}</div>
+            <div class="bl-name">${task['assignedTo']}</div>
             <div id="category${i}" class="bl-category">${task['category']}</div>
             <div class="bl-description">${task['description']}</div>
         </div>
         `;
+
     }
 }
 
