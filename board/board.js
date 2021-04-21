@@ -1,13 +1,13 @@
 const COLUMN_NAMES = ['toDo', 'inProgress', 'testing', 'done'];
 
 const CATEGORY_COLORS = ['var(--marketing_color)', 'var(--it_color)', 'var(--accounting_color)', 'var(--organisation_color)'];
-const CATEGORY_NAMES = ['Marketing', 'IT', 'Accounting', 'Organisation'];
+const CATEGORY_NAMES = ['marketing', 'it', 'accounting', 'organisation'];
 
 const URGENCY_COLORS = ['var(--urgency_high_color)', 'var(--urgency_medium_color)', 'var(--urgency_low_color)'];
-const URGENCY_NAMES = ['High', 'Medium', 'Low'];
+const URGENCY_NAMES = ['high', 'medium', 'low'];
 
 const USER_NAMES = ['Klaus', 'Katja', 'Feli'];
-const USER_Pic = ['../img/KlausWerner.jpg', '../img/KlausWerner.jpg', '../img/KlausWerner.jpg'];
+const USER_Pic = ['../img/KlausWerner.jpg', '../img/KlausWerner.jpg', '../img/felimock.jpg'];
 
 let current_drag_colName;
 let current_drag_taskId;
@@ -16,7 +16,7 @@ let tasks;
 /**
  * called in body onload()
  */
- async function board_init() {
+async function board_init() {
     // get server or test data
     await loadTasks();
     // reload board
@@ -51,8 +51,8 @@ function drop(colName) {
 /**
  * hide hover effects after drop event
  */
-function hideDragHoverEffects(){
-    for(colName of COLUMN_NAMES){
+function hideDragHoverEffects() {
+    for (colName of COLUMN_NAMES) {
         document.getElementById(`${colName}-grid`).classList.remove('dragHoverEffect');
     }
 }
@@ -63,13 +63,13 @@ function hideDragHoverEffects(){
  * @param {string} colName 
  * @param {string} start_end -> 'start' || 'end' 
  */
-function dragHoverEffect(colName, start_end){
-    if(start_end == 'start'){
+function dragHoverEffect(colName, start_end) {
+    if (start_end == 'start') {
         document.getElementById(`${colName}-grid`).classList.add('dragHoverEffect');
-    }  
-    if(start_end == 'end'){
+    }
+    if (start_end == 'end') {
         document.getElementById(`${colName}-grid`).classList.remove('dragHoverEffect');
-    }    
+    }
 }
 //#endregion
 
@@ -81,7 +81,7 @@ function dragHoverEffect(colName, start_end){
  * @param {int} taskId 
  * @param {int} commentId 
  */
-function deleteComment(colName, taskId, commentId){
+function deleteComment(colName, taskId, commentId) {
     // get tasks indx
     let mainTaskIndx = tasksIndxOf(colName, taskId);
     // get comments
@@ -104,7 +104,7 @@ function deleteComment(colName, taskId, commentId){
  * @param {string} colName 
  * @param {int} taskId 
  */
-function addCommand(colName, taskId){
+function addCommand(colName, taskId) {
     // get tasks indx
     let mainTaskIndx = tasksIndxOf(colName, taskId);
     // get comments
@@ -112,7 +112,7 @@ function addCommand(colName, taskId){
     // push comment
     let textAreaInput = document.getElementById(`${colName}-task-${taskId}-textarea`).value.trim();
     // if input ok:
-    if(textAreaInput.length > 0){
+    if (textAreaInput.length > 0) {
         // add comment
         let newComments = existComments
         newComments.push(textAreaInput);
@@ -130,7 +130,7 @@ function addCommand(colName, taskId){
 /**
  * update 'tasks' on serverStorage 
  */
-function updateTasksBackend(){
+function updateTasksBackend() {
     let stringTasks = JSON.stringify(tasks);
     backend.setItem('test_tasks_board_jklaf', stringTasks);
 }
@@ -142,16 +142,16 @@ function updateTasksBackend(){
  * @param {int} taskId 
  * @returns 
  */
-function tasksIndxOf(colName, taskId){
+function tasksIndxOf(colName, taskId) {
     let mainTaskIndx = -1;
     let columnTaskIndx = -1;
 
-    for(task of tasks){
+    for (task of tasks) {
         mainTaskIndx++;
-        if(task['state'] == colName){
+        if (task['state'] == colName) {
 
             columnTaskIndx++;
-            if(columnTaskIndx == taskId){
+            if (columnTaskIndx == taskId) {
                 // element found
                 return mainTaskIndx;
             }
@@ -188,10 +188,10 @@ function upDateColumn(colName, tasks) {
     // exist data?
     if (tasks.length == 0) {
         return;
-    }    
+    }
     // loop tasks and look for column elements
     for (let taskId = 0; taskId < tasks.length; taskId++) {
-        createHTML_TaskGrid(colName, taskId);
+        createHTML_TaskGrid(colName, taskId, tasks);
         createHTML_CategoryUrgency(colName, taskId, tasks);
         createHTML_setTitleAndDescription(colName, taskId, tasks);
         createHTML_dateTimeAndCommentsLogo(colName, taskId, tasks);
@@ -207,12 +207,43 @@ function upDateColumn(colName, tasks) {
  * @param {string} columnName 
  */
 function goToAddTask(columnName) {
-    localStorage.setItem('newTaskFromBoard_columnName', columnName);
+    localStorage.setItem('newTaskFromBoard_columnName', columnName); // colNames: toDo, inProgress, testing, done
     localStorage.setItem('newTaskFromBoard_time', new Date().getTime());
     location.href = "../addTask/addTask.html";
-    
+
+    setBarLeft('addTask');
+
     console.log("goToAddTask: " + columnName);
     console.log("goToAddTask: " + new Date().getTime());
+}
+
+function addBoardTasksToTasks(){
+    boardTasks  = backend.getItem('boardTasks');
+    boardTasks = JSON.parse(boardTasks);
+    console.log(boardTasks);
+
+    for(let taskId = 0; taskId < boardTasks.length; taskId++){
+        newTask = {};
+        newTask['title'] = boardTasks[taskId]['title'];
+        newTask['assignedTo'] = ['Klaus', 'Feli'];
+        newTask['comments'] = [];
+        newTask['startTask'] = boardTasks[taskId]['startdate'];
+        newTask['state'] = 'toDo';
+        newTask['category'] = boardTasks[taskId]['category'].toLowerCase();
+        newTask['urgency'] = boardTasks[taskId]['urgency'].toLowerCase();
+        // convert time to timestamp
+        newTask['endTask'] = boardTasks[taskId]['enddate'];
+        newTask['endTask'] = new Date(newTask['endTask']).getTime();
+        // add to tasks
+        tasks.push(newTask);
+    }   
+
+    clearBoardTasks();
+}
+
+function clearBoardTasks(){
+    boardTasks = [];
+    backend.setItem('boardTasks', JSON.stringify(boardTasks));
 }
 
 /**
@@ -221,7 +252,13 @@ function goToAddTask(columnName) {
 async function loadTasks() {
     // load from server
     await downloadFromServer();
+
+    // TESTZWECKE
+    // backend.deleteItem('test_tasks_board_jklaf');
+    // TESTZWECKE
+
     tasks = backend.getItem('test_tasks_board_jklaf');
+
     // nothing exist?
     if (tasks == null) {
         // set test tasks
@@ -234,6 +271,9 @@ async function loadTasks() {
         console.log('load json from server');
     }
     console.log(tasks);
+    // add new tasks from backlog
+
+    addBoardTasksToTasks();
 }
 
 /**
@@ -254,20 +294,70 @@ function showCommands(colName, taskId, showState) {
 
 }
 
+function addTimestampDay(days) {
+    return days * 86400000;
+}
+
 /**
  * 3 predefined / test pseudo tasks
  * 
  * @returns returns 3 pseudo tasks
  */
 function getTestTasks() {
+    let startTaskTimestamp = new Date().getTime();
+
     tasks = [
         {
             'title': 'INPROGRESS 0',
-            'category': 'IT',
+            'category': 'IT'.toLowerCase(),
             'description': 'IT IT IT IT IT IT IT IT IT IT IT IT IT IT',
-            'startTask': new Date().getTime(),
-            'endTask': new Date().getTime(),
-            'urgency': 'High',
+            'startTask': startTaskTimestamp,
+            'endTask': startTaskTimestamp + addTimestampDay(1),
+            'urgency': 'High'.toLowerCase(),
+            'state': 'inProgress',
+            'comments': ['command0-0', 'command0-1'],
+            'assignedTo': ['Klaus', 'Katja']
+        },
+        {
+            'title': 'INPROGRESS 0',
+            'category': 'IT'.toLowerCase(),
+            'description': 'IT IT IT IT IT IT IT IT IT IT IT IT IT IT',
+            'startTask': startTaskTimestamp,
+            'endTask': startTaskTimestamp + addTimestampDay(1),
+            'urgency': 'High'.toLowerCase(),
+            'state': 'inProgress',
+            'comments': ['command0-0', 'command0-1'],
+            'assignedTo': ['Klaus', 'Katja']
+        },
+        {
+            'title': 'INPROGRESS 0',
+            'category': 'IT'.toLowerCase(),
+            'description': 'IT IT IT IT IT IT IT IT IT IT IT IT IT IT',
+            'startTask': startTaskTimestamp,
+            'endTask': startTaskTimestamp + addTimestampDay(1),
+            'urgency': 'High'.toLowerCase(),
+            'state': 'inProgress',
+            'comments': ['command0-0', 'command0-1'],
+            'assignedTo': ['Klaus', 'Katja']
+        },
+        {
+            'title': 'INPROGRESS 0',
+            'category': 'IT'.toLowerCase(),
+            'description': 'IT IT IT IT IT IT IT IT IT IT IT IT IT IT',
+            'startTask': startTaskTimestamp,
+            'endTask': startTaskTimestamp + addTimestampDay(1),
+            'urgency': 'High'.toLowerCase(),
+            'state': 'inProgress',
+            'comments': ['command0-0', 'command0-1'],
+            'assignedTo': ['Klaus', 'Katja']
+        },
+        {
+            'title': 'INPROGRESS 0',
+            'category': 'IT'.toLowerCase(),
+            'description': 'IT IT IT IT IT IT IT IT IT IT IT IT IT IT',
+            'startTask': startTaskTimestamp,
+            'endTask': startTaskTimestamp + addTimestampDay(1),
+            'urgency': 'High'.toLowerCase(),
             'state': 'inProgress',
             'comments': ['command0-0', 'command0-1'],
             'assignedTo': ['Klaus', 'Katja']
@@ -275,11 +365,11 @@ function getTestTasks() {
 
         {
             'title': 'TODO 1',
-            'category': 'Marketing',
+            'category': 'Marketing'.toLowerCase(),
             'description': 'Marketing Marketing Marketing Marketing Marketing Marketing Marketing Marketing Marketing Marketing',
-            'startTask': new Date().getTime(),
-            'endTask': new Date().getTime(),
-            'urgency': 'Medium',
+            'startTask': startTaskTimestamp,
+            'endTask': startTaskTimestamp + addTimestampDay(2),
+            'urgency': 'Medium'.toLowerCase(),
             'state': 'toDo',
             'comments': ['command1-0', 'command1-1'],
             'assignedTo': ['Feli', 'Katja']
@@ -287,11 +377,11 @@ function getTestTasks() {
 
         {
             'title': 'TODO 2',
-            'category': 'Marketing',
+            'category': 'Marketing'.toLowerCase(),
             'description': 'Marketing2 Marketing2 Marketing2 Marketing2 Marketing2 Marketing2 Marketing2 Marketing2 Marketing2 ',
-            'startTask': new Date().getTime(),
-            'endTask': new Date().getTime(),
-            'urgency': 'Low',
+            'startTask': startTaskTimestamp,
+            'endTask': startTaskTimestamp + addTimestampDay(3),
+            'urgency': 'Low'.toLowerCase(),
             'state': 'toDo',
             'comments': [],
             'assignedTo': ['Klaus']
@@ -315,7 +405,7 @@ function getTestTasks() {
  * @param {int} taskId 
  * @param {JSON} tasks 
  */
- function createHTML_assignedTo(colName, taskId, tasks){
+function createHTML_assignedTo(colName, taskId, tasks) {
     // get names
     let names = tasks[taskId]['assignedTo'];
     // create pics grid
@@ -325,15 +415,15 @@ function getTestTasks() {
     // clear pics grid
     document.getElementById(`${colName}-task-${taskId}-assignedTo-pics`).innerHTML += ``;
     // loop users
-    for(user of tasks[taskId]['assignedTo']){
+    for (user of tasks[taskId]['assignedTo']) {
         // get indx of users
         let indxForPic = USER_NAMES.indexOf(user);
         // user not exist - > exception
-        if(indxForPic == -1){ 
-            throw `${user} dont exist in USER_NAMES`; 
+        if (indxForPic == -1) {
+            throw `${user} dont exist in USER_NAMES`;
         }
         // set pic
-        else{
+        else {
             document.getElementById(`${colName}-task-${taskId}-assignedTo-pics`).innerHTML += `
                 <img src="${USER_Pic[indxForPic]}" class="task-user-pic">
             `;
@@ -349,12 +439,12 @@ function getTestTasks() {
  * @param {JSON} tasks 
  * @returns 
  */
-function createHTML_addComments(colName, taskId, tasks){
-    document.getElementById(`${colName}-task-${taskId}`).innerHTML += 
-        
+function createHTML_addComments(colName, taskId, tasks) {
+    document.getElementById(`${colName}-task-${taskId}`).innerHTML +=
+
         `<div id="${colName}-task-${taskId}-commands-container" class="commands-container d-none"></div>`;
 
-    for(let commentId = 0; commentId < tasks[taskId]['comments'].length; commentId++){
+    for (let commentId = 0; commentId < tasks[taskId]['comments'].length; commentId++) {
         document.getElementById(`${colName}-task-${taskId}-commands-container`).innerHTML += `
 
         <div id="${colName}-task-${taskId}-command-${commentId}" class="command-attributes">
@@ -373,7 +463,7 @@ function createHTML_addComments(colName, taskId, tasks){
             <img src="../img/check-mark.png" class="command-check-icon" onclick="addCommand('${colName}', ${taskId})">
         </div>  
         <span class="hide-commands-txt" onclick="showCommands('${colName}', ${taskId}, 'hide')"> | close commands |</span>
-    `; 
+    `;
 }
 
 /**
@@ -383,7 +473,7 @@ function createHTML_addComments(colName, taskId, tasks){
  * @param {int} taskId 
  * @param {JSON} tasks 
  */
-function createHTML_dateTimeAndCommentsLogo(colName, taskId, tasks){
+function createHTML_dateTimeAndCommentsLogo(colName, taskId, tasks) {
     document.getElementById(`${colName}-task-${taskId}`).innerHTML += `
 
     <div class="task-expiration-date-row">  
@@ -412,7 +502,7 @@ function createHTML_dateTimeAndCommentsLogo(colName, taskId, tasks){
  * @param {int} taskId 
  * @param {JSON} tasks 
  */
- function createHTML_setTitleAndDescription(colName, taskId, tasks){
+function createHTML_setTitleAndDescription(colName, taskId, tasks) {
     document.getElementById(`${colName}-task-${taskId}`).innerHTML += `
 
         <h2 id="${colName}-task-${taskId}-title">${tasks[taskId]['title']}</h2>
@@ -428,7 +518,7 @@ function createHTML_dateTimeAndCommentsLogo(colName, taskId, tasks){
  * @param {int} taskId 
  * @param {JSON} tasks 
  */
- function createHTML_CategoryUrgency(colName, taskId, tasks){
+function createHTML_CategoryUrgency(colName, taskId, tasks) {
     // set code snippet
     document.getElementById(`${colName}-task-${taskId}`).innerHTML = `
     <div class="row-category-urgency">
@@ -448,10 +538,41 @@ function createHTML_dateTimeAndCommentsLogo(colName, taskId, tasks){
  * @param {string} colName 
  * @param {int} taskId 
  */
- function createHTML_TaskGrid(colName, taskId) {
+function createHTML_TaskGrid(colName, taskId, tasks) {
     // clear column
     document.getElementById(`${colName}-tasks`).innerHTML += `
         <div id="${colName}-task-${taskId}" class="task" draggable="true" ondragstart="drag('${colName}', ${taskId})" ></div>
         `;
-}   
+    setColorOfTask(colName, taskId, tasks);
+}
+
+/**
+ * set bg-color of task to see the urgency
+ * 
+ * @param {string} colName 
+ * @param {int} taskId 
+ * @param {tasks} tasks 
+ */
+function setColorOfTask(colName, taskId, tasks) {
+    // set urgency bg-color
+    let dif = tasks[taskId]['endTask'] - tasks[taskId]['startTask'];
+    // set colors
+    if (dif >= addTimestampDay(6)) {
+        document.getElementById(`${colName}-task-${taskId}`).style.backgroundColor = 'var(--time_6p_day_color)';
+        document.getElementById(`${colName}-task-${taskId}`).style.borderColor = 'var(--time_6p_day_color)';
+    }
+    else if (dif >= addTimestampDay(3)) {
+        document.getElementById(`${colName}-task-${taskId}`).style.backgroundColor = 'var(--time_35_day_color)';
+        document.getElementById(`${colName}-task-${taskId}`).style.borderColor = 'var(--time_35_day_color)';
+    }
+    else if (dif >= addTimestampDay(2)) {
+        document.getElementById(`${colName}-task-${taskId}`).style.backgroundColor = 'var(--time_2_day_color)';
+        document.getElementById(`${colName}-task-${taskId}`).style.borderColor = 'var(--time_2_day_color)';
+    }
+    else if (dif >= addTimestampDay(1)) {
+        document.getElementById(`${colName}-task-${taskId}`).style.backgroundColor = 'var(--time_1_day_color)';
+        document.getElementById(`${colName}-task-${taskId}`).style.borderColor = 'var(--time_1_day_color)';
+    }
+}
+
 //#endregion

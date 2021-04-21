@@ -106,6 +106,8 @@
     border: 2px solid white;
     transition: opacity 225ms ease-in-out;
     opacity: 70%;
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
 
 .add-task:hover {
@@ -115,6 +117,8 @@
 
 .tasks-grid {
     width: 95%;
+    overflow-x: hidden;
+    overflow-y: scroll;
 }
 
 .task {
@@ -159,6 +163,7 @@
     width: 20px;
     background-color: thistle;
     border-radius: 100%;
+    border: 2px solid white;
 }
 
 .user-pics-container{
@@ -260,4 +265,12 @@
 
 .d-none{
     display: none;
+}
+
+::-webkit-scrollbar {
+    width: 2px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.5);
 }
