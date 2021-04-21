@@ -80,9 +80,9 @@ function generateNoTaskHTML() {
  */
 function generateShowTaskHTML() {
     for (let i = 0; i < backlogTasks.length; i++) {
-        for (let j = 0; j < backlogTasks[i].assignedTo.length; j++) {
             let task = backlogTasks[i];
-            let names = task['assignedTo'][j].name;
+            let assignedTo = task['assignedTo'];
+            let names = assignedTo.join();
             console.log(names);
             document.getElementById('taskContainer').innerHTML += `
         <div onclick="openTaskDetail(${i})" class="bl-task">
@@ -92,12 +92,8 @@ function generateShowTaskHTML() {
             <div class="bl-description">${task['description']}</div>
         </div>
         `;
-        }
     }
 }
-
-
-///category colors needs to be adjusted from main.css!!!!!!!!!
 
 /**
  * function to define the color of the different categories
