@@ -236,6 +236,8 @@ function addBoardTasksToTasks(){
         newTask['endTask'] = new Date(newTask['endTask']).getTime();
         // add to tasks
         tasks.push(newTask);
+
+        console.log((newTask['endTask'] - newTask['startTask']));
     }   
 
     clearBoardTasks();
@@ -254,7 +256,7 @@ async function loadTasks() {
     await downloadFromServer();
 
     // TESTZWECKE
-    // backend.deleteItem('test_tasks_board_jklaf');
+    backend.deleteItem('test_tasks_board_jklaf');
     // TESTZWECKE
 
     tasks = backend.getItem('test_tasks_board_jklaf');
@@ -323,7 +325,7 @@ function getTestTasks() {
             'category': 'IT'.toLowerCase(),
             'description': 'IT IT IT IT IT IT IT IT IT IT IT IT IT IT',
             'startTask': startTaskTimestamp,
-            'endTask': startTaskTimestamp + addTimestampDay(1),
+            'endTask': startTaskTimestamp + addTimestampDay(7),
             'urgency': 'High'.toLowerCase(),
             'state': 'inProgress',
             'comments': ['command0-0', 'command0-1'],
@@ -334,7 +336,7 @@ function getTestTasks() {
             'category': 'IT'.toLowerCase(),
             'description': 'IT IT IT IT IT IT IT IT IT IT IT IT IT IT',
             'startTask': startTaskTimestamp,
-            'endTask': startTaskTimestamp + addTimestampDay(1),
+            'endTask': startTaskTimestamp + addTimestampDay(6),
             'urgency': 'High'.toLowerCase(),
             'state': 'inProgress',
             'comments': ['command0-0', 'command0-1'],
@@ -345,7 +347,7 @@ function getTestTasks() {
             'category': 'IT'.toLowerCase(),
             'description': 'IT IT IT IT IT IT IT IT IT IT IT IT IT IT',
             'startTask': startTaskTimestamp,
-            'endTask': startTaskTimestamp + addTimestampDay(1),
+            'endTask': startTaskTimestamp + addTimestampDay(5),
             'urgency': 'High'.toLowerCase(),
             'state': 'inProgress',
             'comments': ['command0-0', 'command0-1'],
@@ -356,7 +358,7 @@ function getTestTasks() {
             'category': 'IT'.toLowerCase(),
             'description': 'IT IT IT IT IT IT IT IT IT IT IT IT IT IT',
             'startTask': startTaskTimestamp,
-            'endTask': startTaskTimestamp + addTimestampDay(1),
+            'endTask': startTaskTimestamp + addTimestampDay(4),
             'urgency': 'High'.toLowerCase(),
             'state': 'inProgress',
             'comments': ['command0-0', 'command0-1'],
@@ -555,7 +557,7 @@ function createHTML_TaskGrid(colName, taskId, tasks) {
  */
 function setColorOfTask(colName, taskId, tasks) {
     // set urgency bg-color
-    let dif = tasks[taskId]['endTask'] - tasks[taskId]['startTask'];
+    let dif = tasks[taskId]['endTask'] - new Date().getTime();
     // set colors
     if (dif >= addTimestampDay(6)) {
         document.getElementById(`${colName}-task-${taskId}`).style.backgroundColor = 'var(--time_6p_day_color)';
@@ -576,3 +578,14 @@ function setColorOfTask(colName, taskId, tasks) {
 }
 
 //#endregion
+
+function changeStateCheckBox(id){
+    let checked = document.getElementById(id).checked;
+    
+    if(checked){
+        document.getElementById(id).checked = false;
+    }
+    else{
+        document.getElementById(id).checked = true;
+    }
+}

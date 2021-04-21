@@ -18,6 +18,9 @@
     <!-- include font pt sans -->
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=PT+Sans&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
+
 
     <!-- please only insert your tags and links you need: START: -->
     <link rel="stylesheet" href="../board/board.css" />
@@ -30,86 +33,153 @@
     <div class="app-container">
         <div w3-include-html="../main/navBar.html" class="navBar-container"></div>
         <div class="content-container">
-
             <!-- please insert your content: START: -->
-            <div class="grid-container">
-                <div id="toDo-grid" class="four-grids" ondrop="drop('toDo')" ondragover="allowDrop(event); ondragenter=dragHoverEffect('toDo', 'start');" ondragleave="dragHoverEffect('toDo', 'end');">
-                    <!-- <div id="bg-toDo-grid" class="toDo-color"></div> -->
-                    <h1>TO DO</h1>
-                    <div id="toDo-tasks" class="tasks-grid">
 
-                        <div id="task0" class="task" draggable="true" ondragstart="drag('task0')">
-                            <div class="row-category-urgency">
-                                <div id="task-category" class="task-category"></div>
-                                <div id="task-urgency" class="task-urgency"></div>
-                            </div>
-                            <h2 id="task-title">TEST</h2>
-                            <p id="task-discreption">Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio fugiat libero commodi
-                                expedita, sint autem dolorem asperiores quidem laborum quos atque!</p>
-                                
-                            <div class="task-expiration-date-row">  
-                                <div class="n-commands-container" onclick="showCommands(0, 0, 'show')">
-                                    <span id="n-commands">2</span>
-                                    <img src="../img/feedback.png" class="task-feedback-icon">
-                                </div>                             
-                                <span id="task-date">16.05.1987</span>
-                                <img src="../img/icons8-calendar-150.png" class="task-calender-icon">
-                            </div>
+            <div class="board-container">
+                <div class="search-filter-container">
+                    <img src="../img/menu-icon.png" class="menu-icon">
+                    <div class="dropdown dropstart">
+                        <button class="btn btn-secondary dropdown-toggle show" type="button" id="dropdownMenuButton1"
+                            data-bs-toggle="dropdown" aria-expanded="true">
+                            <img src="../img/filter-icon.png" class="filter-icon">
+                        </button>
+                        <ul class="dropdown-menu show" aria-labelledby="dropdownMenuButton1">
+                            <li>
+                                <input class="form-control me-2 search-field" type="search" placeholder="Search" aria-label="Search">
+                            </li>
+                            <li>
+                                <div> <input type="checkbox" id="cB-1-day" onchange="checkBoxChange()" checked> <label >Time 1 Day</label> </div>
+                            </li>
+                            <li>
+                                <div> <input type="checkbox" id="cB-2-day" onchange="checkBoxChange()" checked> <label >Time 2 Day</label> </div>
+                            </li>
+                            <li>
+                                <div> <input type="checkbox" id="cB-35-day" onchange="checkBoxChange()" checked> <label >Time 3-5 Days</label> </div>
+                            </li>
+                            <li>
+                                <div> <input type="checkbox" id="cB-6p-day" onchange="checkBoxChange()" checked> <label >Time 6+ Days</label> </div>
+                            </li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li>
+                                <div onclick="changeStateCheckBox('cB-high')"> <input type="checkbox" id="cB-high" onchange="checkBoxChange()"> <label >Urgency High</label> </div>
+                            </li>
+                            <li>
+                                <div> <input type="checkbox" id="cB-medium" onchange="checkBoxChange()"> <label >Urgency Medium</label> </div>
+                            </li>
+                            <li>
+                                <div> <input type="checkbox" id="cB-low" onchange="checkBoxChange()"> <label >Urgency Low</label> </div>
+                            </li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li>
+                                <div> <input type="checkbox" id="cB-marketing" onchange="checkBoxChange()"> <label >Marketing</label> </div>
+                            </li>
+                            <li>
+                                <div> <input type="checkbox" id="cB-it" onchange="checkBoxChange()"> <label >IT</label> </div>
+                            </li>
+                            <li>
+                                <div> <input type="checkbox" id="cB-organisation" onchange="checkBoxChange()"> <label >Organisation</label> </div>
+                            </li>
+                            <li>
+                                <label class="list-group-item">
+                                    <input class="form-check-input me-1" type="checkbox" value="">
+                                    TestCheckBox
+                                  </label>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                </div>
+                <div class="grid-container">
+                    <div id="toDo-grid" class="four-grids" ondrop="drop('toDo')"
+                        ondragover="allowDrop(event); ondragenter=dragHoverEffect('toDo', 'start');"
+                        ondragleave="dragHoverEffect('toDo', 'end');">
+                        <!-- <div id="bg-toDo-grid" class="toDo-color"></div> -->
+                        <h1>TO DO</h1>
+                        <div id="toDo-tasks" class="tasks-grid">
 
-                            <div id="commands-container-0-0" class="commands-container d-none">
-                                <div id="commands-0-0" class="command-attributes">
-                                    <span id="command-0-0" class="command">
-                                        <b>Klaus Werner: </b>
-                                        das hier ist ein kommentar
-                                        das hier ist ein kommentar
-                                        das hier ist ein kommentar
-                                        das hier ist ein kommentar
-                                        das hier ist ein kommentar
-                                    </span>
-                                    <img src="../img/recycle-bin.png" class="task-recycle-icon">
+                            <div id="task0" class="task" draggable="true" ondragstart="drag('task0')">
+                                <div class="row-category-urgency">
+                                    <div id="task-category" class="task-category"></div>
+                                    <div id="task-urgency" class="task-urgency"></div>
                                 </div>
-                                
-                                <div class="add-command-container">
-                                    <textarea placeholder="write a command..."></textarea>
-                                    <img src="../img/check-mark.png" class="command-check-icon">
-                                </div>
-                                <span class="hide-commands-txt" onclick="showCommands(0, 0, 'hide')"> | close commands |</span>
-                            </div>                                
+                                <h2 id="task-title">TEST</h2>
+                                <p id="task-discreption">Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio
+                                    fugiat libero commodi
+                                    expedita, sint autem dolorem asperiores quidem laborum quos atque!</p>
 
-                            <div id="assignedTo-pics-0-0" class="user-pics-container">
-                                <img src="../img/KlausWerner.jpg" class="task-user-pic">
+                                <div class="task-expiration-date-row">
+                                    <div class="n-commands-container" onclick="showCommands(0, 0, 'show')">
+                                        <span id="n-commands">2</span>
+                                        <img src="../img/feedback.png" class="task-feedback-icon">
+                                    </div>
+                                    <span id="task-date">16.05.1987</span>
+                                    <img src="../img/icons8-calendar-150.png" class="task-calender-icon">
+                                </div>
+
+                                <div id="commands-container-0-0" class="commands-container d-none">
+                                    <div id="commands-0-0" class="command-attributes">
+                                        <span id="command-0-0" class="command">
+                                            <b>Klaus Werner: </b>
+                                            das hier ist ein kommentar
+                                            das hier ist ein kommentar
+                                            das hier ist ein kommentar
+                                            das hier ist ein kommentar
+                                            das hier ist ein kommentar
+                                        </span>
+                                        <img src="../img/recycle-bin.png" class="task-recycle-icon">
+                                    </div>
+
+                                    <div class="add-command-container">
+                                        <textarea placeholder="write a command..."></textarea>
+                                        <img src="../img/check-mark.png" class="command-check-icon">
+                                    </div>
+                                    <span class="hide-commands-txt" onclick="showCommands(0, 0, 'hide')"> | close
+                                        commands |</span>
+                                </div>
+
+                                <div id="assignedTo-pics-0-0" class="user-pics-container">
+                                    <img src="../img/KlausWerner.jpg" class="task-user-pic">
+                                </div>
                             </div>
+
+
                         </div>
+                        <div class="add-task"><img src="../img/plus-icon.png" class="plus-logo"
+                                onclick="goToAddTask('toDo')"></div>
+                    </div>
+                    <div id="inProgress-grid" class="four-grids inProgress-grid" ondrop="drop('inProgress')"
+                        ondragover="allowDrop(event); ondragenter=dragHoverEffect('inProgress', 'start');"
+                        ondragleave="dragHoverEffect('inProgress', 'end');">
+                        <!-- <div id="bg-inProgress-grid" class="inProgress-color"></div> -->
+                        <h1>IN PROGRESS</h1>
 
+                        <div id="inProgress-tasks" class="tasks-grid">
+                        </div>
+                        <div class="add-task"><img src="../img/plus-icon.png" class="plus-logo"
+                                onclick="goToAddTask('inProgress')"></div>
 
                     </div>
-                    <div class="add-task"><img src="../img/plus-icon.png" class="plus-logo" onclick="goToAddTask('toDo')"></div>
-                </div>
-                <div id="inProgress-grid" class="four-grids inProgress-grid" ondrop="drop('inProgress')" ondragover="allowDrop(event); ondragenter=dragHoverEffect('inProgress', 'start');" ondragleave="dragHoverEffect('inProgress', 'end');">
-                    <!-- <div id="bg-inProgress-grid" class="inProgress-color"></div> -->
-                    <h1>IN PROGRESS</h1>
+                    <div id="testing-grid" class="four-grids testing-grid" ondrop="drop('testing')"
+                        ondragover="allowDrop(event); ondragenter=dragHoverEffect('testing', 'start');"
+                        ondragleave="dragHoverEffect('testing', 'end');">
+                        <h1>TESTING</h1>
 
-                    <div id="inProgress-tasks" class="tasks-grid">
+                        <div id="testing-tasks" class="tasks-grid">
+                        </div>
+                        <div class="add-task"><img src="../img/plus-icon.png" class="plus-logo"
+                                onclick="goToAddTask('testing')"></div>
+
                     </div>
-                    <div class="add-task"><img src="../img/plus-icon.png" class="plus-logo" onclick="goToAddTask('inProgress')"></div>
+                    <div id="done-grid" class="four-grids done-grid" ondrop="drop('done')" ondragover="allowDrop(event); 
+                    ondragenter=dragHoverEffect('done', 'start');" ondragleave="dragHoverEffect('done', 'end');">
+                        <h1>DONE</h1>
 
-                </div>
-                <div id="testing-grid" class="four-grids testing-grid" ondrop="drop('testing')" ondragover="allowDrop(event); ondragenter=dragHoverEffect('testing', 'start');" ondragleave="dragHoverEffect('testing', 'end');">
-                    <h1>TESTING</h1>
+                        <div id="done-tasks" class="tasks-grid">
+                        </div>
+                        <div class="add-task"><img src="../img/plus-icon.png" class="plus-logo"
+                                onclick="goToAddTask('done')"></div>
 
-                    <div id="testing-tasks" class="tasks-grid">
                     </div>
-                    <div class="add-task"><img src="../img/plus-icon.png" class="plus-logo" onclick="goToAddTask('testing')"></div>
-
-                </div>
-                <div id="done-grid" class="four-grids done-grid" ondrop="drop('done')" ondragover="allowDrop(event); 
-                ondragenter=dragHoverEffect('done', 'start');" ondragleave="dragHoverEffect('done', 'end');">
-                    <h1>DONE</h1>
-
-                    <div id="done-tasks" class="tasks-grid">
-                    </div>
-                    <div class="add-task"><img src="../img/plus-icon.png" class="plus-logo" onclick="goToAddTask('done')"></div>
-
                 </div>
             </div>
             <!-- please insert your content: END-->
