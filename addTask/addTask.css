@@ -15,13 +15,6 @@
     z-index: 99;
     
 }
-.pop-up-window {
-    background-color: white;
-    border: solid 2px gray;
-    width: 600px;
-    height: 500px;
-   
-}
 .d-none {
     display: none;
 }
@@ -48,3 +41,15 @@
 h1 {
     margin: 20px;
 }
+.link {
+    text-decoration: none;
+}
+.card-style {
+    height: 390px !important;
+    padding: 30px;
+}
+.close-button {
+    display: flex;
+    justify-content: end;
+}
+.

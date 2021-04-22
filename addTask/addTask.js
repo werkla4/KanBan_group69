@@ -59,12 +59,19 @@ function showSuccsess() {
     for (let i = 0; i < tasks.length; i++) {
         let task = tasks[i];
         document.getElementById('popUpWindow').innerHTML = `
-        <div>
-        <h2>Your Task ${task['title']} has been saved to backlog</h2><a href="#" onclick="closeSuccsess()">X</a>
-        <button onclick="closeSuccsess()" class="btn btn-primary"><span class="mdc-button__label">CREATE NEW TASK</span></button>
-        <button class="btn btn-primary"><span class="mdc-button__label"><a href="../backlog/backlog.html">GO TO BACKLOG</a></span></button>
-        <button class="btn btn-primary"><span class="mdc-button__label"><a href="../board/board.html">GO TO BOARD</a></span></button>
-        </div>
+        <div class="close-button"> <button type="button" class="close" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+            </button></div>
+            <div class="alert alert-success" role="alert">
+            <h4 class="alert-heading">Well done!</h4>
+            <h5 class="card-title">Your Task "${task['title']}" has been saved</h5>
+            <p>You can now create a new Task, or visit Board or Backlog to
+                continue working with this Task.</p>
+            <hr>
+            <a href="../addTask/addTask.html" class="card-link">New Task</a>
+            <a href="../backlog/backlog.html" class="card-link">Backlog</a>
+            <a href="../board/board.html" class="card-link">board</a>
+            </div>
     `;
     }
 };
@@ -112,9 +119,9 @@ function showUsers() {
  */
 function updateTaskUser(i) {
     if (document.getElementById(i).checked) {
-        selectedUsers.push(users[i]);
+        selectedUsers.push(users[i]['name']);
     } else {
-        let indexOfSelectedUser = selectedUsers.indexOf(users[i]);//Was macht indexOf?
+        let indexOfSelectedUser = selectedUsers.indexOf(users[i]['name']);//Was macht indexOf?
         selectedUsers.splice(indexOfSelectedUser, 1);
     }
 }
