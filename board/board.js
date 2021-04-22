@@ -16,6 +16,7 @@ let current_drag_taskId;
 let tasks;
 let checkedElements = [];
 
+
 /**
  * called in body onload()
  */
@@ -164,13 +165,14 @@ function tasksIndxOf(colName, taskId) {
 
 /**
  * loop tasks array and insert tasks in every column
+ * considered filters!
  */
 function updateBoard() {
     // loop columns and insert task
     for (currentColumnName of COLUMN_NAMES) {
         let currentTasks = [];
         for (let i = 0; i < tasks.length; i++) {
-            if (tasks[i]['state'] == currentColumnName && checkFilter(tasks[i])) {
+            if (tasks[i]['state'] == currentColumnName && checkFilter(tasks[i]) && searchWords(tasks[i])) {
                 currentTasks.push(tasks[i]);
             }
         }
@@ -220,11 +222,21 @@ function goToAddTask(columnName) {
     console.log("goToAddTask: " + new Date().getTime());
 }
 
+/**
+ * here is the connection point between backlog and board
+ * converts backlog keys to board keys
+ */
 function addBoardTasksToTasks() {
+    // get backlog tasks
     boardTasks = backend.getItem('boardTasks');
     boardTasks = JSON.parse(boardTasks);
-    console.log(boardTasks);
-
+    // not exist key
+    if (boardTasks == null) {
+        console.log("BOARD TASK IS NULL, NOTHING LOADED!!");
+        clearBoardTasks();
+        return;
+    }
+    // add boardTasks (from backlog) to tasks (board)
     for (let taskId = 0; taskId < boardTasks.length; taskId++) {
         newTask = {};
         newTask['title'] = boardTasks[taskId]['title'];
@@ -234,15 +246,16 @@ function addBoardTasksToTasks() {
         newTask['state'] = 'toDo';
         newTask['category'] = boardTasks[taskId]['category'].toLowerCase();
         newTask['urgency'] = boardTasks[taskId]['urgency'].toLowerCase();
+        newTask['description'] = boardTasks[taskId]['description'];
         // convert time to timestamp
         newTask['endTask'] = boardTasks[taskId]['enddate'];
         newTask['endTask'] = new Date(newTask['endTask']).getTime();
+        newTask['endTaskDate'] = timestampToDate(newTask['endTask']);
         // add to tasks
         tasks.push(newTask);
 
         console.log((newTask['endTask'] - newTask['startTask']));
     }
-
     clearBoardTasks();
 }
 
@@ -299,6 +312,24 @@ function showCommands(colName, taskId, showState) {
 
 }
 
+/**
+ * convert timestamp to this dateformat -> "16.5.1987"
+ * 
+ * @param {int} timestamp 
+ * @returns 
+ */
+function timestampToDate(timestamp){
+    let dateTime = new Date(timestamp);
+    const options = { year: 'numeric', month: 'numeric', day: 'numeric' }; // month: 'long' -> 'april'
+    return dateTime.toLocaleDateString('de-DE', options);
+}
+
+/**
+ * return n milliseconds per day
+ * 
+ * @param {int} days 
+ * @returns 
+ */
 function addTimestampDay(days) {
     return days * 86400000;
 }
@@ -353,8 +384,8 @@ function getTestTasks() {
             'endTask': startTaskTimestamp + addTimestampDay(5),
             'urgency': 'High'.toLowerCase(),
             'state': 'inProgress',
-            'comments': ['command0-0', 'command0-1'],
-            'assignedTo': ['Klaus', 'Katja']
+            'comments': ['command0-0', 'katja-1'],
+            'assignedTo': ['Katja']
         },
         {
             'title': 'INPROGRESS 0',
@@ -392,13 +423,25 @@ function getTestTasks() {
             'assignedTo': ['Klaus']
         }
     ];
+    // add Date format
+    addEndTaskDate(tasks);
+    // save on server
     let strgTasks = JSON.stringify(tasks);
     backend.setItem('test_tasks_board_jklaf', strgTasks);
-
-    // let backendfile = backend.getItem('tasks');
-    // console.log("backendfile : " + backendfile);
-
+    // return tasks
     return tasks;
+}
+
+/**
+ * add new key: endTaskDate -> 16.5.1987 (convert timestamp to dateformat)
+ * @param {JSON[]} tasks 
+ */
+function addEndTaskDate(tasks){
+    // loop all elements
+    for(task of tasks){
+        task['endTaskDate'] = timestampToDate(task['endTask']);
+        console.log(task);
+    }
 }
 
 //#region html creator:
@@ -650,7 +693,7 @@ function changeStateCheckBox() {
  */
 function checkTimes(task, checkboxNamesIndizes) {
     // no filter, show all
-    if(checkboxNamesIndizes.length == 0){ return true; }
+    if (checkboxNamesIndizes.length == 0) { return true; }
     // make this day and plus search days -> 1day filter = today and tomorrow!
     let timeNow = new Date().getTime();
     let timeOverOfDay = timeNow % addTimestampDay(1);
@@ -714,24 +757,24 @@ function checkTimes(task, checkboxNamesIndizes) {
  */
 function checkCategory(task, checkboxNamesIndizes) {
     // show all, if no filter activ
-    if(checkboxNamesIndizes.length == 0){ return true; }
+    if (checkboxNamesIndizes.length == 0) { return true; }
 
     for (checkBoxIndx of checkboxNamesIndizes) {
         // Marketing
         if (checkBoxIndx == 4) {
-            if(task['category'].toLowerCase() == 'marketing'){
+            if (task['category'].toLowerCase() == 'marketing') {
                 return true;
             }
         }
         // IT
         if (checkBoxIndx == 5) {
-            if(task['category'].toLowerCase() == 'it'){
+            if (task['category'].toLowerCase() == 'it') {
                 return true;
             }
         }
         // Organisation
         if (checkBoxIndx == 6) {
-            if(task['category'].toLowerCase() == 'organisation'){
+            if (task['category'].toLowerCase() == 'organisation') {
                 return true;
             }
         }
@@ -752,24 +795,24 @@ function checkCategory(task, checkboxNamesIndizes) {
  */
 function checkUrgency(task, checkboxNamesIndizes) {
     // no filter, show all
-    if(checkboxNamesIndizes.length == 0){ return true; }
+    if (checkboxNamesIndizes.length == 0) { return true; }
 
     for (checkBoxIndx of checkboxNamesIndizes) {
         // Marketing
         if (checkBoxIndx == 7) {
-            if(task['urgency'].toLowerCase() == 'high'){
+            if (task['urgency'].toLowerCase() == 'high') {
                 return true;
             }
         }
         // IT
         if (checkBoxIndx == 8) {
-            if(task['urgency'].toLowerCase() == 'medium'){
+            if (task['urgency'].toLowerCase() == 'medium') {
                 return true;
             }
         }
         // Organisation
         if (checkBoxIndx == 9) {
-            if(task['urgency'].toLowerCase() == 'low'){
+            if (task['urgency'].toLowerCase() == 'low') {
                 return true;
             }
         }
@@ -835,10 +878,59 @@ function showDropdownFilter() {
 /**
  * close filter dropdown if its open
  */
-function closeFilterDropdown(){
+function closeFilterDropdown() {
     document.getElementById('dropdownFilter').classList.remove('show');
 }
 
-function searchWords(){
-    console.log(document.getElementById('search-field').value);
+/**
+ * create an words array from filter input field
+ * 
+ * @returns string[]
+ */
+function getSearchWords() {
+    // get inpu
+    let entry = document.getElementById('search-field').value;
+    // split in words
+    let words = entry.split(' ');
+    // del empty elements of array, and make all to lower case
+    for (let i = words.length - 1; i >= 0; i--) {
+        // to lower case
+        words[i] = words[i].toLowerCase();
+        // del empty values
+        if (words[i] == "") {
+            words.splice(i, 1);
+        }
+    }
+    return words;
+}
+
+function wordInTask(word, task){
+    let strTask = JSON.stringify(task).toLowerCase();
+    let indx = strTask.search(word);
+
+    console.log("#############################");
+    console.log(strTask);
+    console.log("#############################");
+
+    // word exist, return true
+    if(indx != -1){ return true; }
+    // not found, return false
+    return false;
+}
+
+/**
+ * it is call every changing in search input field
+ */
+function searchWords(task) {
+    let searchWords = getSearchWords();
+    // nothing to search
+    if(searchWords.length == 0){ return true; }
+
+    // loop words
+    for(word of searchWords){
+        if(!wordInTask(word, task)){
+            return false;
+        }
+    }
+    return true;
 }
