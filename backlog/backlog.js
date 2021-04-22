@@ -172,14 +172,13 @@ function generateOpenTaskHTML(title, name, prio, date, category, description, i)
             </div>       
             <div class="btn-container">
                 <button class="btn btn-primary btn-move" onclick="moveToBoard(${i}), closeTaskDetail()">Start Task</button>
-                <button class="btn btn-secondary btn-delete" onclick="deleteBacklogTask(${i})">Delete</button>
+                <button class="btn btn-secondary btn-delete" onclick="confirmDelete(${i})">Delete</button>
             </div>
             
         </div>
     </div>
     `;
 }
-
 
 /**
  * function to close Detail layer
@@ -241,12 +240,38 @@ function changeState() {
  * @param {number} position - This is the position of the deleted task
  */
 function deleteBacklogTask(position) {
-    let deletedTask = backlogTasks.splice(position, 1);
-    setArray('tasks', backlogTasks);
-    showDeleteNotification(deletedTask[0]['title']);
-    showBacklogTask();
+        let deletedTask = backlogTasks.splice(position, 1);
+        setArray('tasks', backlogTasks);
+        showDeleteNotification(deletedTask[0]['title']);
+        showBacklogTask();
 
-    console.log('deleted task', deletedTask[0]['title']);
+        console.log('deleted task', deletedTask[0]['title']);
+    
+}
+/**
+ * function to confirm the delete
+ * 
+ * @param {number} i - This is the selected task
+ */
+function confirmDelete(i){
+    let ctitle = backlogTasks[i]['title'];
+
+    document.getElementById('notificationConfirm').innerHTML = `
+    <div id="notificationConfirm" class="delete-note-confirm">
+    <span>Are you sure you want to delete the task <br> &nbsp;<span class="text-highlight">"${ctitle}"</span>&nbsp;?</span>
+    <div class="btn-container-confirm">
+    <button class="btn btn-primary btn-move" onClick="noDelete()">No keep task</button>
+    <button class="btn btn-secondary btn-move" onclick="deleteBacklogTask(${i})">Yes delete task</button>
+    </div>
+    </div>
+    `;
+}
+
+/**
+ * function if the task shall not be deleted
+ */
+function noDelete() {
+    document.getElementById('notificationConfirm').innerHTML = '';
 }
 
 /**
@@ -257,7 +282,9 @@ function deleteBacklogTask(position) {
 function showDeleteNotification(deletedTask) {
     let title = deletedTask;
     console.log('Task gelöscht:', title);
-    document.getElementById('layer').classList.add('hide');
+    //document.getElementById('layer').classList.add('hide');
+
+    document.getElementById('notificationConfirm').innerHTML = '';
 
     document.getElementById('notificationContainer').innerHTML = `
     <div id="notification" class="delete-note">
@@ -269,6 +296,11 @@ function showDeleteNotification(deletedTask) {
     }, 2000);
 }
 
+/**
+ * function to show moved notification for the moved task
+ * 
+ * @param {string} movedTask - This is for the title of the moved Task
+ */
 function showMoveNotification(movedTask) {
     let mtitle = movedTask;
     document.getElementById('layer').classList.add('hide');
