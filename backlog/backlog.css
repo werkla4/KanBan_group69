@@ -29,7 +29,7 @@ h1 {
 }
 
 .bl-headline-name {
-    width: 160px;
+    width: 210px;
     padding: 10px;
     padding-left: 20px;
 }
@@ -40,7 +40,7 @@ h1 {
 }
 
 .bl-headline-description {
-    width: 550px;
+    width: 540px;
     padding: 10px;
 }
 
@@ -87,7 +87,7 @@ h1 {
 }
 
 .bl-name {
-    width: 150px;
+    width: 200px;
     padding: 10px;
     padding-top: 10px;
     padding-bottom: 10px;
@@ -101,7 +101,7 @@ h1 {
 }
 
 .bl-description {
-    width: 600px;
+    width: 560px;
     padding: 10px;
     padding-top: 10px;
     padding-bottom: 10px;

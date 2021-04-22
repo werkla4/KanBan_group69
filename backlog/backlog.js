@@ -128,8 +128,7 @@ function openTaskDetail(i) {
     let detailLayer = document.getElementById('taskDetails');
 
     let title = backlogTasks[i]['title'];
-    let assignedTo = backlogTasks[i]['assignedTo'];
-    let name = assignedTo[i]['name'];
+    let name = backlogTasks[i]['assignedTo'];
     let category = backlogTasks[i]['category'];
     let description = backlogTasks[i]['description'];
     let date = new Date(backlogTasks[i]['date']);
