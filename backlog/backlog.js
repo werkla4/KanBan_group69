@@ -72,7 +72,7 @@ function showBacklogTask() {
  * function to generate HTML if there is no task
  */
 function generateNoTaskHTML() {
-    document.getElementById('taskContainer').innerHTML = `<div class="no-tasks">Es wurden bisher keine Tasks angelegt.</div>`;
+    document.getElementById('taskContainer').innerHTML = `<div class="no-tasks">No tasks have been created yet.</div>`;
 }
 
 /**
@@ -82,7 +82,6 @@ function generateShowTaskHTML() {
 
     for (let i = 0; i < backlogTasks.length; i++) {
         let task = backlogTasks[i];
-        //let names = task['assignedTo'];
 
         document.getElementById('taskContainer').innerHTML += `
         <div onclick="openTaskDetail(${i})" class="bl-task">
@@ -92,7 +91,6 @@ function generateShowTaskHTML() {
             <div class="bl-description">${task['description']}</div>
         </div>
         `;
-
     }
 }
 
@@ -151,30 +149,30 @@ function openTaskDetail(i) {
  */
 function generateOpenTaskHTML(title, name, prio, date, category, description, i) {
     return `
-    <div class="details-layer-background">
+    <div onclick="closeTaskDetail()" class="details-layer-background">
         <div id="layer" class="details-layer">
-            <span class="close-detail-layer" onclick="closeTaskDetail()">Schließen</span>
+            <span class="close-detail-layer" onclick="closeTaskDetail()">Close</span>
             <div class="details"><b>Titel:</b> ${title}
             </div>
             <div class="details"><b>Name:</b> ${name}
             </div>
             <div class="details"><b>Prio:</b> ${prio}
             </div>
-            <div class="details"><b>Datum:</b> ${date}
+            <div class="details"><b>Date:</b> ${date}
             </div>
-            <div class="details"><b>Kategorie:</b> ${category}
+            <div class="details"><b>Category:</b> ${category}
             </div>
-            <label for="enddate">Fällig am:</label>
+            <label for="enddate">Due to:</label>
             <input type="date" id="date${i}" name="end-date"
                 value="2021-04-01"
                 min="2021-01-01" max="2025-12-31">
             </input>
             <div class="horizontal-line"></div>
-            <div class="details description-container"><b>Beschreibung:</b> <br>${description}
+            <div class="details description-container"><b>Description:</b> <br>${description}
             </div>       
             <div class="btn-container">
-                <button class="btn btn-primary btn-move" onclick="moveToBoard(${i}), closeTaskDetail()">Task starten</button>
-                <button class="btn btn-secondary btn-delete" onclick="deleteBacklogTask(${i})">Löschen</button>
+                <button class="btn btn-primary btn-move" onclick="moveToBoard(${i}), closeTaskDetail()">Start Task</button>
+                <button class="btn btn-secondary btn-delete" onclick="deleteBacklogTask(${i})">Delete</button>
             </div>
             
         </div>
@@ -208,6 +206,8 @@ function moveToBoard(position) {
     setArray('boardTasks', boardTasks);
     // deletes tasks out of task JSON on server
     setArray('tasks', backlogTasks);
+
+    showMoveNotification(moveTask['title']);
 
     console.log('seleced Task', moveTask)
     showBacklogTask();
@@ -261,14 +261,27 @@ function showDeleteNotification(deletedTask) {
 
     document.getElementById('notificationContainer').innerHTML = `
     <div id="notification" class="delete-note">
-    Der Task &nbsp;<span class="text-highlight">"${title}"</span>&nbsp; wurde erfolgreich gelöscht!
+    The task &nbsp;<span class="text-highlight">"${title}"</span>&nbsp; was successfully deleted
     </div>`;
     setTimeout(function () {
         closeTaskDetail();
         document.getElementById('notificationContainer').innerHTML = '';
-    }, 1000);
+    }, 2000);
 }
 
+function showMoveNotification(movedTask) {
+    let mtitle = movedTask;
+    document.getElementById('layer').classList.add('hide');
+
+    document.getElementById('notificationContainer').innerHTML = `
+        <div id="notification" class="delete-note">
+            The task &nbsp;<span class="text-highlight">"${mtitle}"</span>&nbsp;has been successfully moved to Board.
+        </div>`;
+    setTimeout(function () {
+        closeTaskDetail();
+        document.getElementById('notificationContainer').innerHTML = '';
+    }, 2000);
+}
 
 function setArray(key, array) {
     backend.setItem(key, JSON.stringify(array));
