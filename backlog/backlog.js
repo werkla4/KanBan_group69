@@ -149,7 +149,7 @@ function openTaskDetail(i) {
  */
 function generateOpenTaskHTML(title, name, prio, date, category, description, i) {
     return `
-    <div onclick="closeTaskDetail()" class="details-layer-background">
+    <div class="details-layer-background">
         <div id="layer" class="details-layer">
             <span class="close-detail-layer" onclick="closeTaskDetail()">Close</span>
             <div class="details"><b>Titel:</b> ${title}
@@ -162,14 +162,14 @@ function generateOpenTaskHTML(title, name, prio, date, category, description, i)
             </div>
             <div class="details"><b>Category:</b> ${category}
             </div>
-            <label for="enddate">Due to:</label>
+            <label for="enddate"><b>Due to:</b></label>
             <input type="date" id="date${i}" name="end-date"
                 value="2021-04-01"
                 min="2021-01-01" max="2025-12-31">
             </input>
             <div class="horizontal-line"></div>
-            <div class="details description-container"><b>Description:</b> <br>${description}
-            </div>       
+            <div class="details"><b>Description:</b> </div>
+            <div class="description-container">${description}</div>       
             <div class="btn-container">
                 <button class="btn btn-primary btn-move" onclick="moveToBoard(${i}), closeTaskDetail()">Start Task</button>
                 <button class="btn btn-secondary btn-delete" onclick="confirmDelete(${i})">Delete</button>
