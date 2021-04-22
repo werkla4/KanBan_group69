@@ -31,7 +31,7 @@
 
 <body onload="main_init(); board_init()">
     <div class="app-container">
-        <div w3-include-html="../main/navBar.html" class="navBar-container"></div>
+        <div w3-include-html="../main/navBar.html" class="navBar-container"  onclick="closeFilterDropdown()"></div>
         <div class="content-container">
             <!-- please insert your content: START: -->
 
@@ -42,9 +42,9 @@
                         <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" onclick="showDropdownFilter()" id="btn-filter">
                             <img src="../img/filter-icon.png" class="filter-icon">
                         </button>
-                        <ul class="dropdown-menu" aria-labelledby="dropdownFilter" id="dropdownFilter">
+                        <ul class="dropdown-menu" aria-labelledby="dropdownFilter" id="dropdownFilter" >
                             <li>
-                                <input class="form-control me-2 search-field" type="search" placeholder="Search" aria-label="Search">
+                                <input class="form-control me-2 search-field" type="search" placeholder="Search" aria-label="Search" onkeyup="searchWords()" id="search-field">
                             </li>
                             <li><hr class="dropdown-divider"></li>
                             <li>
@@ -113,7 +113,7 @@
                     </div>
                     
                 </div>
-                <div class="grid-container">
+                <div class="grid-container" onclick="closeFilterDropdown()">
                     <div id="toDo-grid" class="four-grids" ondrop="drop('toDo')"
                         ondragover="allowDrop(event); ondragenter=dragHoverEffect('toDo', 'start');"
                         ondragleave="dragHoverEffect('toDo', 'end');">

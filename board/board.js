@@ -370,7 +370,7 @@ function getTestTasks() {
 
         {
             'title': 'TODO 1',
-            'category': 'Marketing'.toLowerCase(),
+            'category': 'Organisation'.toLowerCase(),
             'description': 'Marketing Marketing Marketing Marketing Marketing Marketing Marketing Marketing Marketing Marketing',
             'startTask': startTaskTimestamp,
             'endTask': startTaskTimestamp + addTimestampDay(2),
@@ -637,8 +637,21 @@ function changeStateCheckBox() {
     updateBoard();
 }
 
+/**
+ * no checked criteria:
+ * if length == 0 -> return true
+ * 
+ * any checked criteria is successful:
+ * if one criteria of list is ok -> return true
+ * 
+ * @param {JSON} task 
+ * @param {int[]} checkboxNamesIndizes 
+ * @returns 
+ */
 function checkTimes(task, checkboxNamesIndizes) {
-    // 1day
+    // no filter, show all
+    if(checkboxNamesIndizes.length == 0){ return true; }
+    // make this day and plus search days -> 1day filter = today and tomorrow!
     let timeNow = new Date().getTime();
     let timeOverOfDay = timeNow % addTimestampDay(1);
     timeNow = timeNow - timeOverOfDay + addTimestampDay(1);
@@ -647,7 +660,6 @@ function checkTimes(task, checkboxNamesIndizes) {
     let dif = endTime - timeNow;
     let from, to;
 
-    let anyOK = false;
     for (checkBoxIndx of checkboxNamesIndizes) {
         // 1 day 
         if (checkBoxIndx == 0) {
@@ -689,6 +701,88 @@ function checkTimes(task, checkboxNamesIndizes) {
     return false;
 }
 
+/**
+ * no checked criteria:
+ * if length == 0 -> return true
+ * 
+ * any checked criteria is successful:
+ * if one criteria of list is ok -> return true
+ * 
+ * @param {JSON} task 
+ * @param {int[]} checkboxNamesIndizes 
+ * @returns 
+ */
+function checkCategory(task, checkboxNamesIndizes) {
+    // show all, if no filter activ
+    if(checkboxNamesIndizes.length == 0){ return true; }
+
+    for (checkBoxIndx of checkboxNamesIndizes) {
+        // Marketing
+        if (checkBoxIndx == 4) {
+            if(task['category'].toLowerCase() == 'marketing'){
+                return true;
+            }
+        }
+        // IT
+        if (checkBoxIndx == 5) {
+            if(task['category'].toLowerCase() == 'it'){
+                return true;
+            }
+        }
+        // Organisation
+        if (checkBoxIndx == 6) {
+            if(task['category'].toLowerCase() == 'organisation'){
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
+/**
+ * no checked criteria:
+ * if length == 0 -> return true
+ * 
+ * any checked criteria is successful:
+ * if one criteria of list is ok -> return true
+ * 
+ * @param {JSON} task 
+ * @param {int[]} checkboxNamesIndizes 
+ * @returns 
+ */
+function checkUrgency(task, checkboxNamesIndizes) {
+    // no filter, show all
+    if(checkboxNamesIndizes.length == 0){ return true; }
+
+    for (checkBoxIndx of checkboxNamesIndizes) {
+        // Marketing
+        if (checkBoxIndx == 7) {
+            if(task['urgency'].toLowerCase() == 'high'){
+                return true;
+            }
+        }
+        // IT
+        if (checkBoxIndx == 8) {
+            if(task['urgency'].toLowerCase() == 'medium'){
+                return true;
+            }
+        }
+        // Organisation
+        if (checkBoxIndx == 9) {
+            if(task['urgency'].toLowerCase() == 'low'){
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
+/**
+ * hide all tasks which are not in filter criteria
+ * 
+ * @param {JSON} task 
+ * @returns 
+ */
 function checkFilter(task) {
     // no filter set
     if (checkedElements.length == 0) { return true; }
@@ -713,7 +807,7 @@ function checkFilter(task) {
         }
     }
     // check all criterias
-    if (checkTimes(task, timesCheckList)) {
+    if (checkTimes(task, timesCheckList) && checkCategory(task, categoryCheckList) && checkUrgency(task, urgencyCheckList)) {
         return true;
     }
     return false;
@@ -736,4 +830,15 @@ function showDropdownFilter() {
     else {
         document.getElementById('dropdownFilter').classList.add('show');
     }
+}
+
+/**
+ * close filter dropdown if its open
+ */
+function closeFilterDropdown(){
+    document.getElementById('dropdownFilter').classList.remove('show');
+}
+
+function searchWords(){
+    console.log(document.getElementById('search-field').value);
 }
