@@ -10,6 +10,10 @@
     height: calc(100vh - 40px);
 }
 
+.board-container{
+    width: 100%;
+}
+
 .search-filter-container{
     height: 40px;
     background-color: rgba(0, 0, 0, 40%);
@@ -27,17 +31,31 @@
 .dropdown-menu{
     padding: 10px 10px !important;
     background-color: rgba(255, 255, 255, 0.8) !important;
-    min-width: 11rem;
+    min-width: 12rem;
 }
 
 .dropdown-menu li:hover{
     background-color: grey;
 }
 
+.list-group-item{
+    padding: 0px 5px;
+    cursor: pointer;
+}
+
+.list-group-item:hover{
+    transition: background-color 150ms ease-in-out;
+    background-color: aliceblue;
+}
+
 .filter-icon{
     filter: invert(1);
     width: 20px;
     height: 20px;
+}
+
+#btn-filter{
+    padding: 2px 9px;
 }
 
 .menu-icon{

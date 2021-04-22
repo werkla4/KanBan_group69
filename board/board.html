@@ -39,50 +39,74 @@
                 <div class="search-filter-container">
                     <img src="../img/menu-icon.png" class="menu-icon">
                     <div class="dropdown dropstart">
-                        <button class="btn btn-secondary dropdown-toggle show" type="button" id="dropdownMenuButton1"
-                            data-bs-toggle="dropdown" aria-expanded="true">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" onclick="showDropdownFilter()" id="btn-filter">
                             <img src="../img/filter-icon.png" class="filter-icon">
                         </button>
-                        <ul class="dropdown-menu show" aria-labelledby="dropdownMenuButton1">
+                        <ul class="dropdown-menu" aria-labelledby="dropdownFilter" id="dropdownFilter">
                             <li>
                                 <input class="form-control me-2 search-field" type="search" placeholder="Search" aria-label="Search">
                             </li>
-                            <li>
-                                <div> <input type="checkbox" id="cB-1-day" onchange="checkBoxChange()" checked> <label >Time 1 Day</label> </div>
-                            </li>
-                            <li>
-                                <div> <input type="checkbox" id="cB-2-day" onchange="checkBoxChange()" checked> <label >Time 2 Day</label> </div>
-                            </li>
-                            <li>
-                                <div> <input type="checkbox" id="cB-35-day" onchange="checkBoxChange()" checked> <label >Time 3-5 Days</label> </div>
-                            </li>
-                            <li>
-                                <div> <input type="checkbox" id="cB-6p-day" onchange="checkBoxChange()" checked> <label >Time 6+ Days</label> </div>
-                            </li>
                             <li><hr class="dropdown-divider"></li>
                             <li>
-                                <div onclick="changeStateCheckBox('cB-high')"> <input type="checkbox" id="cB-high" onchange="checkBoxChange()"> <label >Urgency High</label> </div>
-                            </li>
-                            <li>
-                                <div> <input type="checkbox" id="cB-medium" onchange="checkBoxChange()"> <label >Urgency Medium</label> </div>
-                            </li>
-                            <li>
-                                <div> <input type="checkbox" id="cB-low" onchange="checkBoxChange()"> <label >Urgency Low</label> </div>
-                            </li>
-                            <li><hr class="dropdown-divider"></li>
-                            <li>
-                                <div> <input type="checkbox" id="cB-marketing" onchange="checkBoxChange()"> <label >Marketing</label> </div>
-                            </li>
-                            <li>
-                                <div> <input type="checkbox" id="cB-it" onchange="checkBoxChange()"> <label >IT</label> </div>
-                            </li>
-                            <li>
-                                <div> <input type="checkbox" id="cB-organisation" onchange="checkBoxChange()"> <label >Organisation</label> </div>
+                                <label class="list-group-item">
+                                    <input class="form-check-input me-1" type="checkbox" id="cb-1-day" onchange="changeStateCheckBox()">
+                                    Time 1 Day
+                                  </label>
                             </li>
                             <li>
                                 <label class="list-group-item">
-                                    <input class="form-check-input me-1" type="checkbox" value="">
-                                    TestCheckBox
+                                    <input class="form-check-input me-1" type="checkbox" id="cb-2-day" onchange="changeStateCheckBox()">
+                                    Time 2 Day
+                                  </label>
+                            </li>
+                            <li>
+                                <label class="list-group-item">
+                                    <input class="form-check-input me-1" type="checkbox" id="cb-35-day" onchange="changeStateCheckBox()">
+                                    Time 3-5 Day
+                                  </label>
+                            </li>
+                            <li>
+                                <label class="list-group-item">
+                                    <input class="form-check-input me-1" type="checkbox" id="cb-6p-day" onchange="changeStateCheckBox()">
+                                    Time 6+ Day
+                                  </label>
+                            </li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li>
+                                <label class="list-group-item">
+                                    <input class="form-check-input me-1" type="checkbox" id="cb-marketing" onchange="changeStateCheckBox()">
+                                    Marketing
+                                  </label>
+                            </li>
+                            <li>
+                                <label class="list-group-item">
+                                    <input class="form-check-input me-1" type="checkbox" id="cb-it" onchange="changeStateCheckBox()">
+                                    IT
+                                  </label>
+                            </li>
+                            <li>
+                                <label class="list-group-item">
+                                    <input class="form-check-input me-1" type="checkbox" id="cb-organisation" onchange="changeStateCheckBox()">
+                                    Organisation
+                                  </label>
+                            </li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li>
+                                <label class="list-group-item">
+                                    <input class="form-check-input me-1" type="checkbox" id="cb-high" onchange="changeStateCheckBox()">
+                                    Urgency High
+                                  </label>
+                            </li>
+                            <li>
+                                <label class="list-group-item">
+                                    <input class="form-check-input me-1" type="checkbox" id="cb-medium" onchange="changeStateCheckBox()">
+                                    Urgency Medium
+                                  </label>
+                            </li>
+                            <li>
+                                <label class="list-group-item">
+                                    <input class="form-check-input me-1" type="checkbox" id="cb-low" onchange="changeStateCheckBox()">
+                                    Urgency Low
                                   </label>
                             </li>
                         </ul>

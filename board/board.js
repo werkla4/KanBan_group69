@@ -9,9 +9,12 @@ const URGENCY_NAMES = ['high', 'medium', 'low'];
 const USER_NAMES = ['Klaus', 'Katja', 'Feli'];
 const USER_Pic = ['../img/KlausWerner.jpg', '../img/KlausWerner.jpg', '../img/felimock.jpg'];
 
+const CHECKBOX_NAMES = ['cb-1-day', 'cb-2-day', 'cb-35-day', 'cb-6p-day', 'cb-marketing', 'cb-it', 'cb-organisation', 'cb-high', 'cb-medium', 'cb-low'];
+
 let current_drag_colName;
 let current_drag_taskId;
 let tasks;
+let checkedElements = [];
 
 /**
  * called in body onload()
@@ -167,7 +170,7 @@ function updateBoard() {
     for (currentColumnName of COLUMN_NAMES) {
         let currentTasks = [];
         for (let i = 0; i < tasks.length; i++) {
-            if (tasks[i]['state'] == currentColumnName) {
+            if (tasks[i]['state'] == currentColumnName && checkFilter(tasks[i])) {
                 currentTasks.push(tasks[i]);
             }
         }
@@ -217,12 +220,12 @@ function goToAddTask(columnName) {
     console.log("goToAddTask: " + new Date().getTime());
 }
 
-function addBoardTasksToTasks(){
-    boardTasks  = backend.getItem('boardTasks');
+function addBoardTasksToTasks() {
+    boardTasks = backend.getItem('boardTasks');
     boardTasks = JSON.parse(boardTasks);
     console.log(boardTasks);
 
-    for(let taskId = 0; taskId < boardTasks.length; taskId++){
+    for (let taskId = 0; taskId < boardTasks.length; taskId++) {
         newTask = {};
         newTask['title'] = boardTasks[taskId]['title'];
         newTask['assignedTo'] = ['Klaus', 'Feli'];
@@ -238,12 +241,12 @@ function addBoardTasksToTasks(){
         tasks.push(newTask);
 
         console.log((newTask['endTask'] - newTask['startTask']));
-    }   
+    }
 
     clearBoardTasks();
 }
 
-function clearBoardTasks(){
+function clearBoardTasks() {
     boardTasks = [];
     backend.setItem('boardTasks', JSON.stringify(boardTasks));
 }
@@ -556,36 +559,181 @@ function createHTML_TaskGrid(colName, taskId, tasks) {
  * @param {tasks} tasks 
  */
 function setColorOfTask(colName, taskId, tasks) {
-    // set urgency bg-color
-    let dif = tasks[taskId]['endTask'] - new Date().getTime();
+    // get end of day timestamp
+    let timeNow = new Date().getTime();
+    let timeOverOfDay = timeNow % addTimestampDay(1);
+    timeNow = timeNow - timeOverOfDay + addTimestampDay(1);
+    // calc dif
+    let dif = tasks[taskId]['endTask'] - timeNow;
     // set colors
-    if (dif >= addTimestampDay(6)) {
-        document.getElementById(`${colName}-task-${taskId}`).style.backgroundColor = 'var(--time_6p_day_color)';
-        document.getElementById(`${colName}-task-${taskId}`).style.borderColor = 'var(--time_6p_day_color)';
-    }
-    else if (dif >= addTimestampDay(3)) {
-        document.getElementById(`${colName}-task-${taskId}`).style.backgroundColor = 'var(--time_35_day_color)';
-        document.getElementById(`${colName}-task-${taskId}`).style.borderColor = 'var(--time_35_day_color)';
-    }
-    else if (dif >= addTimestampDay(2)) {
-        document.getElementById(`${colName}-task-${taskId}`).style.backgroundColor = 'var(--time_2_day_color)';
-        document.getElementById(`${colName}-task-${taskId}`).style.borderColor = 'var(--time_2_day_color)';
-    }
-    else if (dif >= addTimestampDay(1)) {
+    // if (dif >= addTimestampDay(5)) {
+    //     document.getElementById(`${colName}-task-${taskId}`).style.backgroundColor = 'var(--time_6p_day_color)';
+    //     document.getElementById(`${colName}-task-${taskId}`).style.borderColor = 'var(--time_6p_day_color)';
+    // }
+    // else if (dif < addTimestampDay(5)) {
+    //     document.getElementById(`${colName}-task-${taskId}`).style.backgroundColor = 'var(--time_35_day_color)';
+    //     document.getElementById(`${colName}-task-${taskId}`).style.borderColor = 'var(--time_35_day_color)';
+    // }
+    // else if (dif <= addTimestampDay(2)) {
+    //     document.getElementById(`${colName}-task-${taskId}`).style.backgroundColor = 'var(--time_2_day_color)';
+    //     document.getElementById(`${colName}-task-${taskId}`).style.borderColor = 'var(--time_2_day_color)';
+    // }
+
+    // day 1
+    if (dif <= addTimestampDay(1)) {
+
+        console.log(dif);
+        console.log(addTimestampDay(1));
+        console.log(colName);
+        console.log(taskId);
+        console.log("-----------");
+
         document.getElementById(`${colName}-task-${taskId}`).style.backgroundColor = 'var(--time_1_day_color)';
         document.getElementById(`${colName}-task-${taskId}`).style.borderColor = 'var(--time_1_day_color)';
+        return;
     }
+    // day 2
+    if (dif <= addTimestampDay(2)) {
+        document.getElementById(`${colName}-task-${taskId}`).style.backgroundColor = 'var(--time_2_day_color)';
+        document.getElementById(`${colName}-task-${taskId}`).style.borderColor = 'var(--time_2_day_color)';
+        return;
+    }
+    // day 3-5
+    if (dif <= addTimestampDay(5)) {
+        document.getElementById(`${colName}-task-${taskId}`).style.backgroundColor = 'var(--time_35_day_color)';
+        document.getElementById(`${colName}-task-${taskId}`).style.borderColor = 'var(--time_35_day_color)';
+        return;
+    }
+    // day 6+
+    document.getElementById(`${colName}-task-${taskId}`).style.backgroundColor = 'var(--time_6p_day_color)';
+    document.getElementById(`${colName}-task-${taskId}`).style.borderColor = 'var(--time_6p_day_color)';
+    return;
 }
 
 //#endregion
 
-function changeStateCheckBox(id){
-    let checked = document.getElementById(id).checked;
-    
-    if(checked){
-        document.getElementById(id).checked = false;
+/**
+ * return true / false if element is checked
+ * 
+ * @param {string} id 
+ * @returns 
+ */
+function isChecked(id) {
+    return document.getElementById(id).checked
+}
+
+/**
+ * fill checkedElements array with checked state
+ * inside of array are saved id name 
+ */
+function changeStateCheckBox() {
+    checkedElements = [];
+    // add items which are checked
+    for (id of CHECKBOX_NAMES) {
+        if (isChecked(id)) {
+            checkedElements.push(id);
+        }
     }
-    else{
-        document.getElementById(id).checked = true;
+    updateBoard();
+}
+
+function checkTimes(task, checkboxNamesIndizes) {
+    // 1day
+    let timeNow = new Date().getTime();
+    let timeOverOfDay = timeNow % addTimestampDay(1);
+    timeNow = timeNow - timeOverOfDay + addTimestampDay(1);
+
+    let endTime = task['endTask'];
+    let dif = endTime - timeNow;
+    let from, to;
+
+    let anyOK = false;
+    for (checkBoxIndx of checkboxNamesIndizes) {
+        // 1 day 
+        if (checkBoxIndx == 0) {
+            // set time area
+            from = 0, to = addTimestampDay(1);
+            // check is in time area
+            if (dif >= from && dif <= to) {
+                return true
+            }
+        }
+        // 2 day 
+        if (checkBoxIndx == 1) {
+            // set time area
+            from = addTimestampDay(1), to = addTimestampDay(2);
+            // check is in time area
+            if (dif >= from && dif <= to) {
+                return true
+            }
+        }
+        // 3-5 day 
+        if (checkBoxIndx == 2) {
+            // set time area
+            from = addTimestampDay(2), to = addTimestampDay(5);
+            // check is in time area
+            if (dif >= from && dif <= to) {
+                return true
+            }
+        }
+        // 6+ day 
+        if (checkBoxIndx == 3) {
+            // set time area
+            from = addTimestampDay(5);
+            // check is in time area
+            if (dif >= from) {
+                return true
+            }
+        }
+    }
+    return false;
+}
+
+function checkFilter(task) {
+    // no filter set
+    if (checkedElements.length == 0) { return true; }
+    // collect arrays to get a success report if only one is ok
+    let timesCheckList = [];
+    let categoryCheckList = [];
+    let urgencyCheckList = [];
+    // loop checked elements
+    for (id of checkedElements) {
+        let checkboxNamesIndx = CHECKBOX_NAMES.indexOf(id);
+        // check the time we have
+        if (checkboxNamesIndx <= 3) {
+            timesCheckList.push(checkboxNamesIndx);
+        }
+        // check for category
+        if (checkboxNamesIndx > 3 && checkboxNamesIndx <= 6) {
+            categoryCheckList.push(checkboxNamesIndx);
+        }
+        // check for urgency
+        if (checkboxNamesIndx > 6) {
+            urgencyCheckList.push(checkboxNamesIndx);
+        }
+    }
+    // check all criterias
+    if (checkTimes(task, timesCheckList)) {
+        return true;
+    }
+    return false;
+}
+
+/**
+ * show and hide dropdownFilter menu
+ */
+function showDropdownFilter() {
+    let existClass = document.getElementById('dropdownFilter').classList;
+    let showExist = false;
+
+    for (elm of existClass) {
+        if (elm == 'show') { showExist = true; }
+    }
+
+    if (showExist) {
+        document.getElementById('dropdownFilter').classList.remove('show');
+    }
+    else {
+        document.getElementById('dropdownFilter').classList.add('show');
     }
 }
