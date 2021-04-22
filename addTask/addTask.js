@@ -46,7 +46,7 @@ function addToTask() {
     let tasksAsString = JSON.stringify(tasks);//wandelt das Array in einen String um
     backend.setItem('tasks', tasksAsString);//speichert ins backend
     showSuccsess();
-    loadTasks();//????
+    loadTasks();
 };
 
 /**
@@ -56,28 +56,43 @@ function addToTask() {
 
 function showSuccsess() {
     document.getElementById('popUp').classList.remove('d-none');
+    document.getElementById('completeSreen').classList.remove('d-none');
+    document.getElementById('taskWrap').classList.add('d-none');
     for (let i = 0; i < tasks.length; i++) {
         let task = tasks[i];
-        document.getElementById('popUpWindow').innerHTML = `
-        <div class="close-button"> <button type="button" class="close" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-            </button></div>
-            <div class="alert alert-success" role="alert">
-            <h4 class="alert-heading">Well done!</h4>
-            <h5 class="card-title">Your Task "${task['title']}" has been saved</h5>
-            <p>You can now create a new Task, or visit Board or Backlog to
-                continue working with this Task.</p>
-            <hr>
-            <a href="../addTask/addTask.html" class="card-link">New Task</a>
-            <a href="../backlog/backlog.html" class="card-link">Backlog</a>
-            <a href="../board/board.html" class="card-link">board</a>
-            </div>
+        document.getElementById('popUp').innerHTML = `
+        <div class="pop-up-window p-4" id="popUp">
+        <div class="close-element">
+            <a onclick="closeSuccsess()" href="../addTask/addTask.html">close</a>
+        </div>
+
+
+        <h5 class="card-title">Your Task "${task['title']}" has been saved</h5>
+        <p>You can now create a new Task, or visit Board or Backlog to
+            continue working with this Task.</p>
+
+        <button class="btn btn-primary">
+            <span class="mdc-button__label"> <a class="text-light link"
+                    href="../addTask/addTask.html">New
+                    Task</a></span>
+        </button>
+        <button class="btn btn-primary">
+            <span class="mdc-button__label"> <a class="text-light link"
+                    href="../backlog/backlog.html">Backlog</a></span>
+        </button>
+        <button class="btn btn-primary">
+            <span class="mdc-button__label"> <a class="text-light link"
+                    href="../board/board.html">Board</a></span>
+        </button>
+    </div>
     `;
     }
 };
 function closeSuccsess() {
     document.getElementById('popUp').classList.add('d-none');
-}
+    document.getElementById('complete-screen').classList.add('d-none');
+    document.getElementById('taskWrap').classList.remove('d-none');
+};
 
 /**
  * this funktion saves the array tasks in local storage
