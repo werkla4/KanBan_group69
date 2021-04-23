@@ -1,4 +1,5 @@
 const NAVBAR_TITLES = ['board', 'backlog', 'addTask', 'help'];
+
 /**
  * this is a include function:
  * 
@@ -45,6 +46,8 @@ async function main_init() {
   await backend_init();
   // set selected item-bar in navBar
   updateLeftBarInNavBar();
+  // check if it is mobile device
+  bodySizeIsChanging();
 }
 
 /**
@@ -78,15 +81,15 @@ function updateLeftBarInNavBar() {
   if (currentPage == null) {
     localStorage.setItem('currentPage', 'index');
   }
-  else{
+  else {
     // loop all items in navbar
-    for(let i = 0; i < NAVBAR_TITLES.length; i++){
+    for (let i = 0; i < NAVBAR_TITLES.length; i++) {
       // show current bar
-      if(currentPage == NAVBAR_TITLES[i]){
+      if (currentPage == NAVBAR_TITLES[i]) {
         document.getElementById(`${NAVBAR_TITLES[i]}-bar`).classList.remove('opacity-0');
       }
       // dont show other bars
-      else{
+      else {
         document.getElementById(`${NAVBAR_TITLES[i]}-bar`).classList.add('opacity-0');
       }
     }
@@ -99,12 +102,12 @@ function updateLeftBarInNavBar() {
  * 
  * @returns nextTicketNumber
  */
-function getTicket(){
+function getTicket() {
   // load JSON
   let ticket = backend.getItem('temp');
   // create JSON file if not exist
-  if(ticket == null || ticket['nextTicket'] == null){
-    let temp = {'nextTicket': 1};
+  if (ticket == null || ticket['nextTicket'] == null) {
+    let temp = { 'nextTicket': 1 };
     backend.setItem('temp', temp);
     return 0;
   }
@@ -114,4 +117,55 @@ function getTicket(){
   ticket['nextTicket'] = nextTicket + 1;
   // return ticket id
   return nextTicket;
+}
+
+/**
+ * 
+ * @param {string} state  'show' || 'close'
+ */
+function showNavbar(state) { // show || close
+  if (state == "close") {
+    document.getElementById('content-container').classList.remove('opacity-20'); // show 100% color
+    document.getElementById('arrow-right-navbar').classList.remove('d-none');
+    document.getElementById('arrow-left-navbar').classList.add('d-none');
+    document.getElementById('navbar-container').classList.add('navbar-close');
+  }
+  if (state == "show") {
+    document.getElementById('content-container').classList.add('opacity-20'); // show 20% color
+    document.getElementById('arrow-right-navbar').classList.add('d-none');
+    document.getElementById('arrow-left-navbar').classList.remove('d-none');
+    document.getElementById('navbar-container').classList.remove('navbar-close');
+  }
+}
+
+function closeNavbarInMobileDevice(){
+  let width = document.body.clientWidth;
+  let height = document.body.clientHeight;
+
+  // show nacvbar if width is smaller than 1000px
+  if (width <= 1000) {
+    showNavbar('close');
+  }
+}
+
+function defaultAttributesLargeDevice() {
+  document.getElementById('content-container').classList.remove('opacity-20');
+  document.getElementById('arrow-right-navbar').classList.add('d-none');
+  document.getElementById('arrow-left-navbar').classList.add('d-none');
+  document.getElementById('navbar-container').classList.remove('navbar-close');
+}
+
+function bodySizeIsChanging() {
+  let width = document.body.clientWidth;
+  let height = document.body.clientHeight;
+
+  // show nacvbar if width is smaller than 1000px
+  if (width <= 1000) {
+    showNavbar('show');
+  }
+  // set default attributes
+  if (width > 1000) {
+    defaultAttributesLargeDevice();
+  }
+
 }

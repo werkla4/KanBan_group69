@@ -29,10 +29,10 @@
 
 </head>
 
-<body onload="initAddTask()">
+<body onload="initAddTask()" onresize="bodySizeIsChanging()">
     <div class="app-container">
-        <div w3-include-html="../main/navBar.html" class="navBar-container"></div>
-        <div class="content-container">
+        <div w3-include-html="../main/navBar.html" class="navBar-container" id="navbar-container"></div>
+        <div class="content-container" id="content-container" onclick="closeNavbarInMobileDevice()">
 
             <!-- please insert your content: START: -->
             <div class="complete-screen d-none" id="completeSreen"></div>

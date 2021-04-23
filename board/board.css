@@ -19,7 +19,7 @@
     background-color: rgba(0, 0, 0, 40%);
     color: white;
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-end;
     align-items: center;
 }
 
@@ -81,6 +81,7 @@
     /* transition: color 225ms ease-in-out; */
     color: white;
     margin-top: 5px;
+    text-align: center;
 }
 
 .dragHoverEffect{
@@ -266,6 +267,10 @@
     margin-left: 5px;
     filter: invert(1);
     margin-right: 5px;
+}
+
+h1{
+    font-size: 30px;
 }
 
 .task-recycle-icon{

@@ -29,15 +29,15 @@
 
 </head>
 
-<body onload="main_init(); board_init()">
+<body onload="main_init(); board_init()" onresize="bodySizeIsChanging()">
     <div class="app-container">
-        <div w3-include-html="../main/navBar.html" class="navBar-container"  onclick="closeFilterDropdown()"></div>
-        <div class="content-container">
+        <div w3-include-html="../main/navBar.html" class="navBar-container"  onclick="closeFilterDropdown()" id="navbar-container"></div>
+        <div class="content-container" id="content-container" onclick="closeNavbarInMobileDevice()">
             <!-- please insert your content: START: -->
 
             <div class="board-container">
                 <div class="search-filter-container">
-                    <img src="../img/menu-icon.png" class="menu-icon">
+                    <!-- <img src="../img/menu-icon.png" class="menu-icon"> -->
                     <div class="dropdown dropstart">
                         <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" onclick="showDropdownFilter()" id="btn-filter">
                             <img src="../img/filter-icon.png" class="filter-icon">
