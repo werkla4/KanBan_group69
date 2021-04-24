@@ -17,10 +17,15 @@ let tasks;
 let checkedElements = [];
 
 
+function test(){
+}
+
+
 /**
  * called in body onload()
  */
 async function board_init() {
+    test();
     // get server or test data
     await loadTasks();
     // reload board
@@ -219,7 +224,6 @@ function goToAddTask(columnName) {
     setBarLeft('addTask');
 
     console.log("goToAddTask: " + columnName);
-    console.log("goToAddTask: " + new Date().getTime());
 }
 
 /**
@@ -235,7 +239,7 @@ function addBoardTasksToTasks() {
         console.log("BOARD TASK IS NULL, NOTHING LOADED!!");
         clearBoardTasks();
         return;
-    }
+    }    
     // add boardTasks (from backlog) to tasks (board)
     for (let taskId = 0; taskId < boardTasks.length; taskId++) {
         newTask = {};
@@ -253,9 +257,9 @@ function addBoardTasksToTasks() {
         newTask['endTaskDate'] = timestampToDate(newTask['endTask']);
         // add to tasks
         tasks.push(newTask);
-
-        console.log((newTask['endTask'] - newTask['startTask']));
     }
+    console.log("added boardTasks:");
+    console.log(boardTasks);
     // clear board tasks []
     clearBoardTasks();
     // save tasks with added board tasks on server
@@ -272,10 +276,10 @@ function clearBoardTasks() {
  */
 async function loadTasks() {
     // load from server
-    await downloadFromServer();
+    await downloadFromServer(); 
 
     // TESTZWECKE
-    // backend.deleteItem('test_tasks_board_jklaf');
+    backend.deleteItem('test_tasks_board_jklaf');
     // TESTZWECKE
 
     tasks = backend.getItem('test_tasks_board_jklaf');
@@ -291,9 +295,12 @@ async function loadTasks() {
         tasks = JSON.parse(tasks);
         console.log('load json from server');
     }
-    console.log(tasks);
     // add new tasks from backlog
     addBoardTasksToTasks();
+    // show current tasks
+    console.log("current tasks in board:");
+    console.log(tasks);
+    console.log("__________________________");
 }
 
 /**
@@ -324,6 +331,31 @@ function timestampToDate(timestamp){
     let dateTime = new Date(timestamp);
     const options = { year: 'numeric', month: 'numeric', day: 'numeric' }; // month: 'long' -> 'april'
     return dateTime.toLocaleDateString('de-DE', options);
+}
+
+/**
+ * convert timestamp to this dateformat -> "16.5.1987"
+ * 
+ * @param {int} timestamp 
+ * @returns 
+ */
+function timestampToDateFormat(timestamp){
+    let dateTime = new Date(timestamp + addTimestampDay(1));
+    const options = { year: 'numeric', month: 'numeric', day: 'numeric' }; // month: 'long' -> 'april'
+    dateTime = dateTime.toLocaleDateString('de-DE', options);
+
+    dateTime = dateTime.split('.');
+
+    let newDate = "";
+    for(let i = dateTime.length-1; i >= 0; i--){
+        if(i == dateTime.length-1){
+            newDate = dateTime[i];
+        }
+        else{
+            newDate += "-" + `${dateTime[i]}`;
+        }
+    }
+    return newDate;
 }
 
 /**
@@ -442,7 +474,6 @@ function addEndTaskDate(tasks){
     // loop all elements
     for(task of tasks){
         task['endTaskDate'] = timestampToDate(task['endTask']);
-        console.log(task);
     }
 }
 
@@ -604,47 +635,22 @@ function createHTML_TaskGrid(colName, taskId, tasks) {
  * @param {tasks} tasks 
  */
 function setColorOfTask(colName, taskId, tasks) {
-    // get end of day timestamp
-    let timeNow = new Date().getTime();
-    let timeOverOfDay = timeNow % addTimestampDay(1);
-    timeNow = timeNow - timeOverOfDay + addTimestampDay(1);
-    // calc dif
-    let dif = tasks[taskId]['endTask'] - timeNow;
-    // set colors
-    // if (dif >= addTimestampDay(5)) {
-    //     document.getElementById(`${colName}-task-${taskId}`).style.backgroundColor = 'var(--time_6p_day_color)';
-    //     document.getElementById(`${colName}-task-${taskId}`).style.borderColor = 'var(--time_6p_day_color)';
-    // }
-    // else if (dif < addTimestampDay(5)) {
-    //     document.getElementById(`${colName}-task-${taskId}`).style.backgroundColor = 'var(--time_35_day_color)';
-    //     document.getElementById(`${colName}-task-${taskId}`).style.borderColor = 'var(--time_35_day_color)';
-    // }
-    // else if (dif <= addTimestampDay(2)) {
-    //     document.getElementById(`${colName}-task-${taskId}`).style.backgroundColor = 'var(--time_2_day_color)';
-    //     document.getElementById(`${colName}-task-${taskId}`).style.borderColor = 'var(--time_2_day_color)';
-    // }
-
+    // get dif timestamp of start and end date
+    let difDate = difDateTimestamp(tasks[taskId]);
     // day 1
-    if (dif <= addTimestampDay(1)) {
-
-        console.log(dif);
-        console.log(addTimestampDay(1));
-        console.log(colName);
-        console.log(taskId);
-        console.log("-----------");
-
+    if (difDate <= addTimestampDay(1)) {
         document.getElementById(`${colName}-task-${taskId}`).style.backgroundColor = 'var(--time_1_day_color)';
         document.getElementById(`${colName}-task-${taskId}`).style.borderColor = 'var(--time_1_day_color)';
         return;
     }
     // day 2
-    if (dif <= addTimestampDay(2)) {
+    if (difDate <= addTimestampDay(2)) {
         document.getElementById(`${colName}-task-${taskId}`).style.backgroundColor = 'var(--time_2_day_color)';
         document.getElementById(`${colName}-task-${taskId}`).style.borderColor = 'var(--time_2_day_color)';
         return;
     }
     // day 3-5
-    if (dif <= addTimestampDay(5)) {
+    if (difDate <= addTimestampDay(5)) {
         document.getElementById(`${colName}-task-${taskId}`).style.backgroundColor = 'var(--time_35_day_color)';
         document.getElementById(`${colName}-task-${taskId}`).style.borderColor = 'var(--time_35_day_color)';
         return;
@@ -683,6 +689,29 @@ function changeStateCheckBox() {
 }
 
 /**
+ * calculate the difference of date now and end date
+ * return timestamp dif 
+ * @param {JSON} task 
+ * @returns 
+ */
+function difDateTimestamp(task){
+    // get ttimestamp now
+    let timeNow = new Date().getTime();
+    // date today
+    let dateStart = timestampToDateFormat(timeNow);    
+
+    // timestamp endTask
+    let endTime = task['endTask'];
+    // date endTask
+    let dateEnd = timestampToDateFormat(endTime); 
+
+    // dif of start date and end date
+    let difDate = new Date(dateEnd).getTime() - new Date(dateStart).getTime();
+    // return timestamp dif
+    return difDate;
+}
+
+/**
  * no checked criteria:
  * if length == 0 -> return true
  * 
@@ -696,22 +725,17 @@ function changeStateCheckBox() {
 function checkTimes(task, checkboxNamesIndizes) {
     // no filter, show all
     if (checkboxNamesIndizes.length == 0) { return true; }
-    // make this day and plus search days -> 1day filter = today and tomorrow!
-    let timeNow = new Date().getTime();
-    let timeOverOfDay = timeNow % addTimestampDay(1);
-    timeNow = timeNow - timeOverOfDay + addTimestampDay(1);
-
-    let endTime = task['endTask'];
-    let dif = endTime - timeNow;
+    // get dif timestamp of start and end date
+    let difDate = difDateTimestamp(task);
+    
     let from, to;
-
     for (checkBoxIndx of checkboxNamesIndizes) {
         // 1 day 
         if (checkBoxIndx == 0) {
             // set time area
-            from = 0, to = addTimestampDay(1);
+            to = addTimestampDay(1);
             // check is in time area
-            if (dif >= from && dif <= to) {
+            if (difDate <= to) {
                 return true
             }
         }
@@ -720,7 +744,7 @@ function checkTimes(task, checkboxNamesIndizes) {
             // set time area
             from = addTimestampDay(1), to = addTimestampDay(2);
             // check is in time area
-            if (dif >= from && dif <= to) {
+            if (difDate > from && dif <= to) {
                 return true
             }
         }
@@ -729,7 +753,7 @@ function checkTimes(task, checkboxNamesIndizes) {
             // set time area
             from = addTimestampDay(2), to = addTimestampDay(5);
             // check is in time area
-            if (dif >= from && dif <= to) {
+            if (difDate > from && dif <= to) {
                 return true
             }
         }
@@ -738,7 +762,7 @@ function checkTimes(task, checkboxNamesIndizes) {
             // set time area
             from = addTimestampDay(5);
             // check is in time area
-            if (dif >= from) {
+            if (difDate > from) {
                 return true
             }
         }
@@ -909,11 +933,6 @@ function getSearchWords() {
 function wordInTask(word, task){
     let strTask = JSON.stringify(task).toLowerCase();
     let indx = strTask.search(word);
-
-    console.log("#############################");
-    console.log(strTask);
-    console.log("#############################");
-
     // word exist, return true
     if(indx != -1){ return true; }
     // not found, return false
