@@ -148,6 +148,9 @@ function openTaskDetail(i) {
  * @returns 
  */
 function generateOpenTaskHTML(title, name, prio, date, category, description, i) {
+    let today = new Date ();
+    today.setDate(new Date().getDate() + 1);
+    let tomorrow = today.toISOString().split('T')[0];
     return `
     <div class="details-layer-background">
         <div id="layer" class="details-layer">
@@ -164,7 +167,7 @@ function generateOpenTaskHTML(title, name, prio, date, category, description, i)
             </div>
             <label for="enddate"><b>Due to:</b></label>
             <input type="date" id="date${i}" name="end-date"
-                value="2021-04-01"
+                value="${tomorrow}"
                 min="2021-01-01" max="2025-12-31">
             </input>
             <div class="horizontal-line"></div>
