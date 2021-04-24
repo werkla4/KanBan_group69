@@ -256,7 +256,10 @@ function addBoardTasksToTasks() {
 
         console.log((newTask['endTask'] - newTask['startTask']));
     }
+    // clear board tasks []
     clearBoardTasks();
+    // save tasks with added board tasks on server
+    updateTasksBackend();
 }
 
 function clearBoardTasks() {
@@ -272,7 +275,7 @@ async function loadTasks() {
     await downloadFromServer();
 
     // TESTZWECKE
-    backend.deleteItem('test_tasks_board_jklaf');
+    // backend.deleteItem('test_tasks_board_jklaf');
     // TESTZWECKE
 
     tasks = backend.getItem('test_tasks_board_jklaf');
