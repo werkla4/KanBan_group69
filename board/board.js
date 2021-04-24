@@ -6,7 +6,7 @@ const CATEGORY_NAMES = ['marketing', 'it', 'accounting', 'organisation'];
 const URGENCY_COLORS = ['var(--urgency_high_color)', 'var(--urgency_medium_color)', 'var(--urgency_low_color)'];
 const URGENCY_NAMES = ['high', 'medium', 'low'];
 
-const USER_NAMES = ['Klaus', 'Katja', 'Feli'];
+const USER_NAMES = ['Klaus', 'Katja', 'Felicitas'];
 const USER_Pic = ['../img/KlausWerner.jpg', '../img/KlausWerner.jpg', '../img/felimock.jpg'];
 
 const CHECKBOX_NAMES = ['cb-1-day', 'cb-2-day', 'cb-35-day', 'cb-6p-day', 'cb-marketing', 'cb-it', 'cb-organisation', 'cb-high', 'cb-medium', 'cb-low'];
@@ -240,7 +240,7 @@ function addBoardTasksToTasks() {
     for (let taskId = 0; taskId < boardTasks.length; taskId++) {
         newTask = {};
         newTask['title'] = boardTasks[taskId]['title'];
-        newTask['assignedTo'] = ['Klaus', 'Feli'];
+        newTask['assignedTo'] = boardTasks[taskId]['assignedTo'];
         newTask['comments'] = [];
         newTask['startTask'] = boardTasks[taskId]['startdate'];
         newTask['state'] = 'toDo';
@@ -293,7 +293,6 @@ async function loadTasks() {
     }
     console.log(tasks);
     // add new tasks from backlog
-
     addBoardTasksToTasks();
 }
 
@@ -411,7 +410,7 @@ function getTestTasks() {
             'urgency': 'Medium'.toLowerCase(),
             'state': 'toDo',
             'comments': ['command1-0', 'command1-1'],
-            'assignedTo': ['Feli', 'Katja']
+            'assignedTo': ['Felicitas', 'Katja']
         },
 
         {
