@@ -200,7 +200,7 @@ h1 {
     justify-content: center;
 }
 
-.delete-note-confirm{
+.delete-note-confirm {
     border-radius: 5px;
     background-color: white;
     width: 500px;
@@ -215,7 +215,7 @@ h1 {
     text-align: center;
 }
 
-.btn-container-confirm{
+.btn-container-confirm {
     padding: 20px;
 }
 
@@ -231,4 +231,22 @@ label {
 
 input, label {
     margin: .4rem 0;
+}
+
+@media(max-width: 1000px) {
+    h1 {
+        padding-top: 10px;
+    }
+    .no-tasks {
+        text-align: center;
+    }
+    .bl-task {
+        display: flex;
+        flex-direction: column;
+        width: unset;
+    }
+    .color-category {
+        width: auto;
+        height: 10px;
+    }
 }
