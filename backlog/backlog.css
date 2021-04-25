@@ -233,7 +233,17 @@ input, label {
     margin: .4rem 0;
 }
 
+.hide {
+    display: none;
+}
+
 @media(max-width: 1000px) {
+    .hide-mobile {
+        display: none;
+    }
+    .hide {
+        display: unset;
+    }
     h1 {
         padding-top: 10px;
     }
@@ -248,5 +258,46 @@ input, label {
     .color-category {
         width: auto;
         height: 10px;
+    }
+    .mobile-headline {
+        padding-left: 5px;
+        padding-top: 5px;
+        width: unset;
+        font-weight: bold;
+        font-size: 10px;
+        border-bottom: 1px solid #00000082;
+    }
+    .bl-description {
+        width: unset;
+    }
+    .details-layer {
+        width: 300px;
+        height: 600px;
+    }
+    .delete-notification {
+        position: fixed;
+        top: 50px;
+        width: 300px;
+        z-index: 5;
+        width: 95%;
+    }
+    .horizontal-line {
+        width: 100%;
+    }
+
+    .details-layer{
+        z-index: 0;
+    }
+
+    .details-layer-background{
+        z-index: 1;
+    }
+
+    .delete-note-confirm {
+        height: unset;
+    }
+    .delete-note {
+        text-align: center;
+        display: unset;
     }
 }

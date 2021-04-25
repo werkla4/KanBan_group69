@@ -86,8 +86,11 @@ function generateShowTaskHTML() {
         document.getElementById('taskContainer').innerHTML += `
         <div onclick="openTaskDetail(${i})" class="bl-task">
             <div id="color${i}" class="color-category"></div>
+            <div class="mobile-headline hide">ASSIGNED TO:</div>
             <div class="bl-name">${task['assignedTo']}</div>
+            <div class="mobile-headline hide">CATEGORY:</div>
             <div id="category${i}" class="bl-category">${task['category']}</div>
+            <div class="mobile-headline hide">DETAILS:</div>
             <div class="bl-description">${task['description']}</div>
         </div>
         `;
