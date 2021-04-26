@@ -33,81 +33,83 @@
     <div class="app-container">
         <div w3-include-html="../main/navBar.html" class="navBar-container" id="navbar-container"></div>
         <div class="content-container" id="content-container" onclick="closeNavbarInMobileDevice()">
-
             <!-- please insert your content: START: -->
-            <div class="complete-screen d-none" id="completeSreen"></div>
-            <div class="pop-up d-none" id="popUp">
+            <div class="flex-box-container">
+                <div class="complete-screen d-none" id="completeSreen"></div>
+                <div class="pop-up d-none" id="popUp">
 
 
-            </div>
+                </div>
 
 
 
 
 
-            <!------------container left-->
-            <div class="task-container-wrap" id="taskWrap">
-                <h1>Add Task</h1>
-                <div class="task-container">
+                <!------------container left-->
+                <div class="task-container-wrap" id="taskWrap">
+                    <h1>Add Task</h1>
+                    <div class="task-container">
 
-                    <div class="task-container-left">
+                        <div class="task-container-left">
 
-                        <form onsubmit="addToTask(); return false;">
-                            <!--wichtig!!!!-->
+                            <form onsubmit="addToTask(); return false;">
+                                <!--wichtig!!!!-->
+                                <div class="mb-3">
+                                    <h2>TITLE</h2>
+
+                                    <input required placeholder="title" id="title-value" type="text"
+                                        class="form-control">
+                                </div>
+                                <div>
+                                    <h2>CATEGORY</h2>
+                                    <select required name="category" id="select-category" class="form-select"
+                                        aria-label="Default select example">
+                                        <option value="" selected>Select Category </option>
+                                        <option value="Marketing">Marketing</option>
+                                        <option value="IT">IT</option>
+                                        <option value="Organisation">Organisation</option>
+                                    </select>
+
+                                </div>
+
+                                <div class="form-floating">
+                                    <h2>description</h2>
+                                    <textarea required name="description" id="description" class="form-control"
+                                        id="floatingTextarea2" style="height: 200px"></textarea>
+                                    <label for="floatingTextarea2"></label>
+                                </div>
+
+                        </div>
+                        <!------------container right----------->
+                        <div class="task-container-right">
+
                             <div class="mb-3">
-                                <h2>TITLE</h2>
-
-                                <input required placeholder="title" id="title-value" type="text" class="form-control">
-                            </div>
-                            <div>
-                                <h2>CATEGORY</h2>
-                                <select required name="category" id="select-category" class="form-select"
-                                    aria-label="Default select example">
-                                    <option value="" selected>Select Category </option>
-                                    <option value="Marketing">Marketing</option>
-                                    <option value="IT">IT</option>
-                                    <option value="Organisation">Organisation</option>
+                                <h2>URGENCY</h2>
+                                <select required name="urgency" class="form-select" aria-label="Default select example"
+                                    id="select-urgency">
+                                    <option value="" selected>Select Urgency</option>
+                                    <option value="high">High</option>
+                                    <option value="medium">Medium</option>
+                                    <option value="low">Low</option>
                                 </select>
 
                             </div>
+                            <div class="mb-3">
+                                <h2>ASSIGNED TO</h2>
+                                <div id="users">
 
-                            <div class="form-floating">
-                                <h2>description</h2>
-                                <textarea required name="description" id="description" class="form-control"
-                                    id="floatingTextarea2" style="height: 200px"></textarea>
-                                <label for="floatingTextarea2"></label>
+                                </div>
                             </div>
+                            <!--mt-button-->
+                            <button class="btn btn-primary">
+                                <span class="mdc-button__label">CREATE TASK</span>
+                            </button>
+                            <!-- <button onclick="showSuccsess()">CREATE TASK</button> -->
 
-                    </div>
-                    <!------------container right----------->
-                    <div class="task-container-right">
-
-                        <div class="mb-3">
-                            <h2>URGENCY</h2>
-                            <select required name="urgency" class="form-select" aria-label="Default select example"
-                                id="select-urgency">
-                                <option value="" selected>Select Urgency</option>
-                                <option value="high">High</option>
-                                <option value="medium">Medium</option>
-                                <option value="low">Low</option>
-                            </select>
-
+                            </form>
                         </div>
-                        <div class="mb-3">
-                            <h2>ASSIGNED TO</h2>
-                            <div id="users">
-
-                            </div>
-                        </div>
-                        <!--mt-button-->
-                        <button class="btn btn-primary">
-                            <span class="mdc-button__label">CREATE TASK</span>
-                        </button>
-                        <!-- <button onclick="showSuccsess()">CREATE TASK</button> -->
-
-                        </form>
+                        <!-- please insert your content: END-->
                     </div>
-                    <!-- please insert your content: END-->
                 </div>
             </div>
         </div>
