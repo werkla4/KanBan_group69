@@ -39,14 +39,28 @@
 .task-container {
     display: flex;
 }
+.task-container-right {
+    width: 50%;
+    border: solid white 3px;
+    margin: 20px;
+    display: flex;
+    flex-direction: column;
+}
+.task-container-wrap {
+    width: 50vw;
+    border: solid 2px lightgray;
+    border-radius: 5px;
+    background-color: white; 
+}
 @media(max-width: 800px) {
     .task-container {
         flex-direction: column;
        width: 90%;
     }
     .task-container-wrap {
-        margin-top: 30px;
+        margin-top: 260px;
         margin-bottom: 30px;
+        width: 80%;
     }
     .task-container-left {
         width: 100%;
@@ -56,17 +70,8 @@
     }
 
 }
-.task-container-right {
-    width: 50%;
-    border: solid white 3px;
-    margin: 20px;
-}
-.task-container-wrap {
-    width: 50vw;
-    border: solid 2px lightgray;
-    border-radius: 5px;
-    background-color: white; 
-}
+
+
 h1 {
     margin: 20px;
 }
