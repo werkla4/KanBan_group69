@@ -75,6 +75,10 @@ body {
     transform: translateX(-200px) !important;
 }
 
+.unclickable{
+    pointer-events: none;
+}
+
 .arrow-right-navbar{
     position: absolute;
     transition: all 225ms ease-in-out;

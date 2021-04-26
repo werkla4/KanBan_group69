@@ -7,7 +7,7 @@ const URGENCY_COLORS = ['var(--urgency_high_color)', 'var(--urgency_medium_color
 const URGENCY_NAMES = ['high', 'medium', 'low'];
 
 const USER_NAMES = ['Klaus', 'Katja', 'Felicitas'];
-const USER_Pic = ['../img/KlausWerner.jpg', '../img/KlausWerner.jpg', '../img/felimock.jpg'];
+const USER_Pic = ['../img/KlausWerner.jpg', '../img/Katja.jpg', '../img/felimock.jpg'];
 
 const CHECKBOX_NAMES = ['cb-1-day', 'cb-2-day', 'cb-35-day', 'cb-6p-day', 'cb-marketing', 'cb-it', 'cb-organisation', 'cb-high', 'cb-medium', 'cb-low'];
 
@@ -279,7 +279,7 @@ async function loadTasks() {
     await downloadFromServer(); 
 
     // TESTZWECKE
-    backend.deleteItem('test_tasks_board_jklaf');
+    // backend.deleteItem('test_tasks_board_jklaf');
     // TESTZWECKE
 
     tasks = backend.getItem('test_tasks_board_jklaf');
@@ -697,11 +697,12 @@ function changeStateCheckBox() {
 function difDateTimestamp(task){
     // get ttimestamp now
     let timeNow = new Date().getTime();
-    // date today
-    let dateStart = timestampToDateFormat(timeNow);    
-
     // timestamp endTask
     let endTime = task['endTask'];
+
+
+    // date today
+    let dateStart = timestampToDateFormat(timeNow);     
     // date endTask
     let dateEnd = timestampToDateFormat(endTime); 
 
@@ -744,7 +745,7 @@ function checkTimes(task, checkboxNamesIndizes) {
             // set time area
             from = addTimestampDay(1), to = addTimestampDay(2);
             // check is in time area
-            if (difDate > from && dif <= to) {
+            if (difDate > from && difDate <= to) {
                 return true
             }
         }
@@ -753,7 +754,7 @@ function checkTimes(task, checkboxNamesIndizes) {
             // set time area
             from = addTimestampDay(2), to = addTimestampDay(5);
             // check is in time area
-            if (difDate > from && dif <= to) {
+            if (difDate > from && difDate <= to) {
                 return true
             }
         }

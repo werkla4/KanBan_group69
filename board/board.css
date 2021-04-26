@@ -199,6 +199,11 @@
     line-height: 130%;
     margin-bottom: 10px;
     margin-top: 10px;
+    font-size: calc(0.6rem + 0.6vw);
+}
+
+.task-expiration-date-row span{
+    font-size: calc(0.6rem + 0.4vw);
 }
 
 .row-category-urgency {
@@ -269,8 +274,12 @@
     margin-right: 5px;
 }
 
-h1{
-    font-size: 30px;
+.board-container h1{
+    font-size: calc(0.8rem + 1vw) !important;
+}
+
+.board-container h2{
+    font-size: calc(0.6rem + 1vw) !important;
 }
 
 .task-recycle-icon{
@@ -333,4 +342,35 @@ h1{
 
 ::-webkit-scrollbar-thumb {
     background: rgba(255, 255, 255, 0.5);
+}
+
+@media(max-width: 700px){
+    .grid-container{
+        flex-wrap: wrap;        
+    }
+
+    .four-grids{
+        height: 48%;
+        width: 48%;
+    }
+
+    .task-user-pic{
+        height: 35px;
+        width: 35px;
+    }
+
+    .add-task{
+        margin-top: 5px;
+        margin-bottom: 5px;
+        min-height: 30px;
+        min-width: 30px;
+    }    
+
+    .commands-container span, textarea{
+        font-size: calc(0.6rem + 1vw) !important;
+    }
+
+    .task h2{
+        margin: 0%;
+    }
 }

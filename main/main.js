@@ -129,12 +129,14 @@ function showNavbar(state) { // show || close
     document.getElementById('arrow-right-navbar').classList.remove('d-none');
     document.getElementById('arrow-left-navbar').classList.add('d-none');
     document.getElementById('navbar-container').classList.add('navbar-close');
+    document.getElementById('navBar-items').classList.add('unclickable');
   }
   if (state == "show") {
     document.getElementById('content-container').classList.add('opacity-20'); // show 20% color
     document.getElementById('arrow-right-navbar').classList.add('d-none');
     document.getElementById('arrow-left-navbar').classList.remove('d-none');
     document.getElementById('navbar-container').classList.remove('navbar-close');
+    document.getElementById('navBar-items').classList.remove('unclickable');
   }
 }
 
@@ -153,6 +155,7 @@ function defaultAttributesLargeDevice() {
   document.getElementById('arrow-right-navbar').classList.add('d-none');
   document.getElementById('arrow-left-navbar').classList.add('d-none');
   document.getElementById('navbar-container').classList.remove('navbar-close');
+  document.getElementById('navBar-items').classList.remove('unclickable');
 }
 
 function bodySizeIsChanging() {
@@ -161,7 +164,7 @@ function bodySizeIsChanging() {
 
   // show nacvbar if width is smaller than 1000px
   if (width <= 1000) {
-    showNavbar('show');
+    showNavbar('close');
   }
   // set default attributes
   if (width > 1000) {
