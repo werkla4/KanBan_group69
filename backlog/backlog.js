@@ -1,6 +1,3 @@
-/**
- * JSON of created Tasks
- */
 // JSON will BE FILLED from AddTask - just for testing
 /*
 let backlogTasks = [
@@ -37,7 +34,6 @@ let backlogTasks = [
         'urgency': 'low'
     }
 ];
-
 */
 
 let boardTasks = [];
@@ -68,6 +64,7 @@ function showBacklogTask() {
     }
     showCategory();
 }
+
 /**
  * function to generate HTML if there is no task
  */
@@ -263,13 +260,13 @@ function confirmDelete(i){
     let ctitle = backlogTasks[i]['title'];
 
     document.getElementById('notificationConfirm').innerHTML = `
-    <div id="notificationConfirm" class="delete-note-confirm">
-    <span>Are you sure you want to delete the task <br> &nbsp;<span class="text-highlight">"${ctitle}"</span>&nbsp;?</span>
-    <div class="btn-container-confirm">
-    <button class="btn btn-primary btn-move" onClick="noDelete()">No keep task</button>
-    <button class="btn btn-secondary btn-move" onclick="deleteBacklogTask(${i})">Yes delete task</button>
-    </div>
-    </div>
+        <div id="notificationConfirm" class="delete-note-confirm">
+            <span>Are you sure you want to delete the task <br> &nbsp;<span class="text-highlight">"${ctitle}"</span>&nbsp;?</span>
+            <div class="btn-container-confirm">
+            <button class="btn btn-primary btn-move" onClick="noDelete()">No keep task</button>
+            <button class="btn btn-secondary btn-move" onclick="deleteBacklogTask(${i})">Yes delete task</button>
+            </div>
+        </div>
     `;
 }
 
