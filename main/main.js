@@ -1,4 +1,5 @@
 const NAVBAR_TITLES = ['board', 'backlog', 'addTask', 'help'];
+let navbarSizeChanged = true;
 
 /**
  * this is a include function:
@@ -119,56 +120,74 @@ function getTicket() {
   return nextTicket;
 }
 
+function getReversedNavbarState(){
+  let isClosed = document.getElementById(`navbar-container`).classList.contains('navbar-close');
+
+  if(isClosed){
+    return 'show';
+  }
+  else{
+    return 'close';
+  }
+}
+
 /**
  * 
- * @param {string} state  'show' || 'close'
  */
-function showNavbar(state) { // show || close
+function showNavbar(state) { 
+  // if current navbar hae show state -> get reversed state = close
+  if(state == 'click'){ state = getReversedNavbarState(); }
+  // set navbar
   if (state == "close") {
     document.getElementById('content-container').classList.remove('opacity-20'); // show 100% color
-    document.getElementById('arrow-right-navbar').classList.remove('d-none');
-    document.getElementById('arrow-left-navbar').classList.add('d-none');
+    // document.getElementById('arrow-right-navbar').classList.remove('d-none');
+    // document.getElementById('arrow-left-navbar').classList.add('d-none');
     document.getElementById('navbar-container').classList.add('navbar-close');
     document.getElementById('navBar-items').classList.add('unclickable');
   }
   if (state == "show") {
     document.getElementById('content-container').classList.add('opacity-20'); // show 20% color
-    document.getElementById('arrow-right-navbar').classList.add('d-none');
-    document.getElementById('arrow-left-navbar').classList.remove('d-none');
+    // document.getElementById('arrow-right-navbar').classList.add('d-none');
+    // document.getElementById('arrow-left-navbar').classList.remove('d-none');
     document.getElementById('navbar-container').classList.remove('navbar-close');
     document.getElementById('navBar-items').classList.remove('unclickable');
   }
 }
 
-function closeNavbarInMobileDevice(){
-  let width = document.body.clientWidth;
-  let height = document.body.clientHeight;
-
-  // show nacvbar if width is smaller than 1000px
-  if (width <= 1000) {
-    showNavbar('close');
-  }
+/**
+ * show menu logo in mobile device
+ */
+function showMenuLogo(){
+  document.getElementById('menu-logo').classList.remove('d-none');
 }
 
+/**
+ * if size is changing to large view, hide menu-logo in navbar and fix the navbar
+ */
 function defaultAttributesLargeDevice() {
   document.getElementById('content-container').classList.remove('opacity-20');
-  document.getElementById('arrow-right-navbar').classList.add('d-none');
-  document.getElementById('arrow-left-navbar').classList.add('d-none');
+  document.getElementById('menu-logo').classList.add('d-none');
+  // document.getElementById('arrow-right-navbar').classList.add('d-none');
+  // document.getElementById('arrow-left-navbar').classList.add('d-none');
   document.getElementById('navbar-container').classList.remove('navbar-close');
   document.getElementById('navBar-items').classList.remove('unclickable');
 }
 
+/**
+ * event for controlling the device, mobile or not, 
+ */
 function bodySizeIsChanging() {
   let width = document.body.clientWidth;
   let height = document.body.clientHeight;
-
+  // set this for first view 
+  navbarSizeChanged = true;
   // show nacvbar if width is smaller than 1000px
   if (width <= 1000) {
+    showMenuLogo();
     showNavbar('close');
   }
   // set default attributes
   if (width > 1000) {
     defaultAttributesLargeDevice();
   }
-
 }

@@ -80,7 +80,7 @@ body {
     pointer-events: none;
 }
 
-.arrow-right-navbar{
+/* .arrow-right-navbar{
     position: absolute;
     transition: all 225ms ease-in-out;
     filter: invert(1);
@@ -91,11 +91,27 @@ body {
     top: 50%;
     translate: 0 -50%;
     z-index: 100;
+} */
+
+.menu-logo{
+    position: absolute;
+    transition: all 225ms ease-in-out;
+    filter: invert(1);
+    height: 20px;
+    width: 20px;
+    cursor: pointer;
+    right: 5px;
+    top: 20px;
+    z-index: 100;
 }
 
-.arrow-right-navbar:hover{
+.menu-logo:hover{
     filter: invert(0.6);
 }
+
+/* .arrow-right-navbar:hover{
+    filter: invert(0.6);
+} */
 
 .navBar-logo {
     margin-top: 20px;
