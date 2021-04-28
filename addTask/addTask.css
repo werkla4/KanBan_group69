@@ -59,6 +59,9 @@
     overflow-y: unset;
     max-height: unset;
 }
+.red-border{
+    border: 1px solid red;
+}
 
 @media(max-width: 800px) {
     .task-container {

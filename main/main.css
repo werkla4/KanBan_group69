@@ -50,6 +50,7 @@ body {
     position: relative;
     opacity: 100%;
     transition: all 225ms ease-in-out;
+    overflow-y: scroll;
 }
 
 /* ---------------------------------
