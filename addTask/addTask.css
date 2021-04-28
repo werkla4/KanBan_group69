@@ -81,6 +81,12 @@
         max-height: 90vh;
     }
 }
+@media(max-width: 500px) {
+    .task-container-wrap {
+        height: 100vh;
+        width: 100%;
+    }
+}
 
 
 h1 {
