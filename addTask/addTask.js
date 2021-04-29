@@ -52,9 +52,8 @@ function addToTask() {
  * this function creates Variables from the Form element in addTask.html
  */
 function getFromForm() {
-    let newTitle = document.getElementById('title-value'); 
-    // check if minimum 1 user is checked
-    if(!min1UserIsChecked()){ return; }
+    // // check if minimum 1 user is checked
+    // if(!min1UserIsChecked()){ return; }
 
     let newTitle = document.getElementById('title-value');
     let newCategory = document.getElementById('select-category');
