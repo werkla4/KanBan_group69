@@ -120,13 +120,13 @@ function getTicket() {
   return nextTicket;
 }
 
-function getReversedNavbarState(){
+function getReversedNavbarState() {
   let isClosed = document.getElementById(`navbar-container`).classList.contains('navbar-close');
 
-  if(isClosed){
+  if (isClosed) {
     return 'show';
   }
-  else{
+  else {
     return 'close';
   }
 }
@@ -134,9 +134,9 @@ function getReversedNavbarState(){
 /**
  * 
  */
-function showNavbar(state) { 
+function showNavbar(state) {
   // if current navbar hae show state -> get reversed state = close
-  if(state == 'click'){ state = getReversedNavbarState(); }
+  if (state == 'click') { state = getReversedNavbarState(); }
   // set navbar
   if (state == "close") {
     document.getElementById('content-container').classList.remove('opacity-20'); // show 100% color
@@ -157,7 +157,7 @@ function showNavbar(state) {
 /**
  * show menu logo in mobile device
  */
-function showMenuLogo(){
+function showMenuLogo() {
   document.getElementById('menu-logo').classList.remove('d-none');
 }
 
@@ -189,5 +189,21 @@ function bodySizeIsChanging() {
   // set default attributes
   if (width > 1000) {
     defaultAttributesLargeDevice();
+  }
+}
+
+function contentContainerInactive() {
+  let isInactive = document.getElementById(`content-container`).classList.contains('opacity-20');
+  if (isInactive) {
+    return true;
+  }
+  else {
+    return false
+  }
+}
+
+function closeNavbarInMobileDevice() {
+  if (contentContainerInactive()) {
+    showNavbar('close');
   }
 }
