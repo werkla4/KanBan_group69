@@ -110,12 +110,19 @@ function showSuccsess() {
         createHtml(task);  
     }
 };
+/**
+ * this function opens the pop up window
+ */
 function openWindow() {
     document.getElementById('popUp').classList.remove('d-none');
     document.getElementById('completeSreen').classList.remove('d-none');
     document.getElementById('taskWrap').classList.add('d-none');
 }
 
+/**
+ * this function creates html to be shown in the pop window
+ * @param {*} task 
+ */
 function createHtml(task) {
     document.getElementById('popUp').innerHTML = `
     <div class="pop-up-window p-4" id="popUp">
@@ -138,7 +145,9 @@ function createHtml(task) {
      </div>
 `;
 }
-
+/**
+ * function to close the pop up window
+ */
 function closeSuccsess() {
     document.getElementById('popUp').classList.add('d-none');
     document.getElementById('complete-screen').classList.add('d-none');
@@ -171,15 +180,18 @@ function showUsers() {
     userList.innerHTML = '';
     for (let i = 0; i < users.length; i++) {
         let newUser = users[i];
-        userList.innerHTML += `
-        <div class="form-check">
-            <input onchange="updateTaskUser(${i})" class="form-check-input" type="checkbox" value="" id="${i}">
-              <label class="form-check-label" for="defaultCheck1">
-             ${newUser['name']}
-             </label>  
-         </div>
-        ` ;
+        createUserHtml(userList, newUser, i);
     }
+}
+function createUserHtml(userList, newUser, i) {
+    userList.innerHTML += `
+    <div class="form-check">
+        <input onchange="updateTaskUser(${i})" class="form-check-input" type="checkbox" value="" id="${i}">
+          <label class="form-check-label" for="defaultCheck1">
+         ${newUser['name']}
+         </label>  
+     </div>
+    ` ;
 }
 
 /**
