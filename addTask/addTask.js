@@ -20,11 +20,33 @@ let selectedUsers = [];
  * funktion to push the values of input fields in addTask.html into Array tasks
  */
 function addToTask() {
-    let newTitle = document.getElementById('title-value');
+    getFromForm();
+
+    saveToBackend();//speichert das Array in Backend
+    showSuccsess();//öffnet eine Erfolgsmitteilung
+    loadTasks();
+};
+
+
+
+/**
+ * this function creates Variables from the Form element in addTask.html
+ */
+function getFromForm() {
+    let newTitle = document.getElementById('title-value'); 
     let newCategory = document.getElementById('select-category');
     let newDescription = document.getElementById('description');
     let urgency = document.getElementById('select-urgency');
 
+    newTask(newTitle, newCategory, newDescription, urgency);
+    // let task = newTask(newTitle, newCategory, newDescription, urgency);//?????????
+    // return task;
+}
+/**
+ * this funktions creats a variable to save the elements from the Form in addTask.html
+ * new variable task
+ */
+function newTask(newTitle, newCategory, newDescription, urgency) {
     let task = {
         'title': newTitle.value,
         'category': newCategory.value,
@@ -35,17 +57,29 @@ function addToTask() {
         'state': 'backlog',
         'comments': ''
     };
+    pushToTasks(task);
+    clearInputFields(newTitle, newCategory, newDescription);
+}
+
+/**
+ * this funktions pushes the new variable task into the array tasks
+ * @param {variable} task 
+ */
+function pushToTasks(task) {
     tasks.push(task);
     console.log(tasks);
+}
+
+/**
+ * this function clears the inputfields in addTask.html
+ */
+function clearInputFields(newTitle, newCategory, newDescription) {
     newTitle.value = '';
     newCategory.value = '';
     newDescription.value = '';
+}
 
-    let tasksAsString = JSON.stringify(tasks);//wandelt das Array in einen String um
-    backend.setItem('tasks', tasksAsString);//speichert ins backend
-    showSuccsess();
-    loadTasks();
-};
+
 
 /**
  * This function opens a pop window to show the user that the task has been saved
@@ -94,6 +128,14 @@ async function loadTasks() {
     tasks = JSON.parse(tasksAsString);//wandelt in json um
     console.log('loaded all tasks', tasks)
 };
+
+/**
+ * function to change JSON tasks to string and save it to backend
+ */
+function saveToBackend() {
+    let tasksAsString = JSON.stringify(tasks);//wandelt das Array in einen String um
+    backend.setItem('tasks', tasksAsString);//speichert ins backend
+}
 
 /**
  * this function creates html items with the content of users array
