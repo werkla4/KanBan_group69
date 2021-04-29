@@ -46,8 +46,6 @@ function addToTask() {
     loadTasks();
 };
 
-
-
 /**
  * this function creates Variables from the Form element in addTask.html
  */
@@ -101,40 +99,46 @@ function clearInputFields(newTitle, newCategory, newDescription) {
     newDescription.value = '';
 }
 
-
-
 /**
  * This function opens a pop window to show the user that the task has been saved
  * 
  */
 function showSuccsess() {
+    openWindow();
+    for (let i = 0; i < tasks.length; i++) {
+        let task = tasks[i];
+        createHtml(task);  
+    }
+};
+function openWindow() {
     document.getElementById('popUp').classList.remove('d-none');
     document.getElementById('completeSreen').classList.remove('d-none');
     document.getElementById('taskWrap').classList.add('d-none');
-    for (let i = 0; i < tasks.length; i++) {
-        let task = tasks[i];
-        document.getElementById('popUp').innerHTML = `
-        <div class="pop-up-window p-4" id="popUp">
-            <div class="close-element">
-              <a onclick="closeSuccsess()" href="../addTask/addTask.html">close</a>
-             </div>
-                 <h5 class="card-title">Your Task "${task['title']}" has been saved</h5>
-                   <p>You can now create a new Task, or visit Board to
-                    continue working with this Task.</p>
+}
 
-                 <button class="btn btn-primary">
-                   <span class="mdc-button__label"> <a class="text-light link"
-                      href="../addTask/addTask.html">New
-                      Task</a></span>
-                 </button>
-                <button class="btn btn-primary">
-                     <span class="mdc-button__label"> <a class="text-light link"
-                    href="../backlog/backlog.html">Backlog</a></span>
-                 </button>
+function createHtml(task) {
+    document.getElementById('popUp').innerHTML = `
+    <div class="pop-up-window p-4" id="popUp">
+        <div class="close-element">
+          <a onclick="closeSuccsess()" href="../addTask/addTask.html">close</a>
          </div>
-    `;
-    }
-};
+             <h5 class="card-title">Your Task "${task['title']}" has been saved</h5>
+               <p>You can now create a new Task, or visit Board to
+                continue working with this Task.</p>
+
+             <button class="btn btn-primary">
+               <span class="mdc-button__label"> <a class="text-light link"
+                  href="../addTask/addTask.html">New
+                  Task</a></span>
+             </button>
+            <button class="btn btn-primary">
+                 <span class="mdc-button__label"> <a class="text-light link"
+                href="../backlog/backlog.html">Backlog</a></span>
+             </button>
+     </div>
+`;
+}
+
 function closeSuccsess() {
     document.getElementById('popUp').classList.add('d-none');
     document.getElementById('complete-screen').classList.add('d-none');
