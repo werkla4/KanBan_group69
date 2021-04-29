@@ -16,6 +16,25 @@ let users = [
 let selectedUsers = [];
 
 /**
+ * return   true    -> mimimum 1 user is checked
+ *          false   -> nobody is checked -> dont create task!
+ * 
+ * @returns 
+ */
+function min1UserIsChecked(){
+    // no user is checked, make border red
+    if(selectedUsers.length == 0){
+        document.getElementById(`users`).classList.add('red-border');
+        return false;
+    }
+    // hide red border if input is ok
+    else{
+        document.getElementById(`users`).classList.remove('red-border');
+        return true;
+    }
+}
+
+/**
  * 
  * funktion to push the values of input fields in addTask.html into Array tasks
  */
@@ -34,6 +53,10 @@ function addToTask() {
  */
 function getFromForm() {
     let newTitle = document.getElementById('title-value'); 
+    // check if minimum 1 user is checked
+    if(!min1UserIsChecked()){ return; }
+
+    let newTitle = document.getElementById('title-value');
     let newCategory = document.getElementById('select-category');
     let newDescription = document.getElementById('description');
     let urgency = document.getElementById('select-urgency');
