@@ -31,7 +31,8 @@
 
 <body onload="main_init(); board_init()" onresize="bodySizeIsChanging()">
     <div class="app-container">
-        <div w3-include-html="../main/navBar.html" class="navBar-container"  onclick="closeFilterDropdown()" id="navbar-container"></div>
+        <div w3-include-html="../main/navBar.html" class="navBar-container" onclick="closeFilterDropdown()"
+            id="navbar-container"></div>
         <div class="content-container" id="content-container" onclick="closeNavbarInMobileDevice()">
             <!-- please insert your content: START: -->
 
@@ -39,79 +40,97 @@
                 <div class="search-filter-container">
                     <!-- <img src="../img/menu-icon.png" class="menu-icon"> -->
                     <div class="dropdown dropstart">
-                        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" onclick="showDropdownFilter()" id="btn-filter">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                            onclick="showDropdownFilter()" id="btn-filter">
                             <img src="../img/filter-icon.png" class="filter-icon">
                         </button>
-                        <ul class="dropdown-menu" aria-labelledby="dropdownFilter" id="dropdownFilter" >
+                        <ul class="dropdown-menu" aria-labelledby="dropdownFilter" id="dropdownFilter">
                             <li>
-                                <input class="form-control me-2 search-field" type="search" placeholder="Search" aria-label="Search" onkeyup="updateBoard()" id="search-field">
+                                <input class="form-control me-2 search-field" type="search" placeholder="Search"
+                                    aria-label="Search" onkeyup="updateBoard()" id="search-field">
                             </li>
-                            <li><hr class="dropdown-divider"></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
                             <li>
                                 <label class="list-group-item">
-                                    <input class="form-check-input me-1" type="checkbox" id="cb-1-day" onchange="changeStateCheckBox()">
+                                    <input class="form-check-input me-1" type="checkbox" id="cb-1-day"
+                                        onchange="changeStateCheckBox()">
                                     Time 1 Day
-                                  </label>
+                                </label>
                             </li>
                             <li>
                                 <label class="list-group-item">
-                                    <input class="form-check-input me-1" type="checkbox" id="cb-2-day" onchange="changeStateCheckBox()">
+                                    <input class="form-check-input me-1" type="checkbox" id="cb-2-day"
+                                        onchange="changeStateCheckBox()">
                                     Time 2 Day
-                                  </label>
+                                </label>
                             </li>
                             <li>
                                 <label class="list-group-item">
-                                    <input class="form-check-input me-1" type="checkbox" id="cb-35-day" onchange="changeStateCheckBox()">
+                                    <input class="form-check-input me-1" type="checkbox" id="cb-35-day"
+                                        onchange="changeStateCheckBox()">
                                     Time 3-5 Day
-                                  </label>
+                                </label>
                             </li>
                             <li>
                                 <label class="list-group-item">
-                                    <input class="form-check-input me-1" type="checkbox" id="cb-6p-day" onchange="changeStateCheckBox()">
+                                    <input class="form-check-input me-1" type="checkbox" id="cb-6p-day"
+                                        onchange="changeStateCheckBox()">
                                     Time 6+ Day
-                                  </label>
+                                </label>
                             </li>
-                            <li><hr class="dropdown-divider"></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
                             <li>
                                 <label class="list-group-item">
-                                    <input class="form-check-input me-1" type="checkbox" id="cb-marketing" onchange="changeStateCheckBox()">
+                                    <input class="form-check-input me-1" type="checkbox" id="cb-marketing"
+                                        onchange="changeStateCheckBox()">
                                     Marketing
-                                  </label>
+                                </label>
                             </li>
                             <li>
                                 <label class="list-group-item">
-                                    <input class="form-check-input me-1" type="checkbox" id="cb-it" onchange="changeStateCheckBox()">
+                                    <input class="form-check-input me-1" type="checkbox" id="cb-it"
+                                        onchange="changeStateCheckBox()">
                                     IT
-                                  </label>
+                                </label>
                             </li>
                             <li>
                                 <label class="list-group-item">
-                                    <input class="form-check-input me-1" type="checkbox" id="cb-organisation" onchange="changeStateCheckBox()">
+                                    <input class="form-check-input me-1" type="checkbox" id="cb-organisation"
+                                        onchange="changeStateCheckBox()">
                                     Organisation
-                                  </label>
+                                </label>
                             </li>
-                            <li><hr class="dropdown-divider"></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
                             <li>
                                 <label class="list-group-item">
-                                    <input class="form-check-input me-1" type="checkbox" id="cb-high" onchange="changeStateCheckBox()">
+                                    <input class="form-check-input me-1" type="checkbox" id="cb-high"
+                                        onchange="changeStateCheckBox()">
                                     Urgency High
-                                  </label>
+                                </label>
                             </li>
                             <li>
                                 <label class="list-group-item">
-                                    <input class="form-check-input me-1" type="checkbox" id="cb-medium" onchange="changeStateCheckBox()">
+                                    <input class="form-check-input me-1" type="checkbox" id="cb-medium"
+                                        onchange="changeStateCheckBox()">
                                     Urgency Medium
-                                  </label>
+                                </label>
                             </li>
                             <li>
                                 <label class="list-group-item">
-                                    <input class="form-check-input me-1" type="checkbox" id="cb-low" onchange="changeStateCheckBox()">
+                                    <input class="form-check-input me-1" type="checkbox" id="cb-low"
+                                        onchange="changeStateCheckBox()">
                                     Urgency Low
-                                  </label>
+                                </label>
                             </li>
                         </ul>
                     </div>
-                    
+
                 </div>
                 <div class="grid-container" onclick="closeFilterDropdown()">
                     <div id="toDo-grid" class="four-grids" ondrop="drop('toDo')"
@@ -119,7 +138,7 @@
                         ondragleave="dragHoverEffect('toDo', 'end');">
                         <!-- <div id="bg-toDo-grid" class="toDo-color"></div> -->
                         <h1>TO DO</h1>
-                        <div id="toDo-tasks" class="tasks-grid">                            
+                        <div id="toDo-tasks" class="tasks-grid">
                         </div>
                         <div class="add-task"><img src="../img/plus-icon.png" class="plus-logo"
                                 onclick="goToAddTask('toDo')"></div>
@@ -161,6 +180,24 @@
             </div>
             <!-- please insert your content: END-->
 
+        </div>
+    </div>
+    <!-- Modal -->
+    <div class="modal fade show bg-black-transparent80" id="staticBackdrop" data-bs-backdrop="static" style="display: hidden;">
+        <div class="modal-dialog modal-position">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">Delete Task</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="modal-txt">
+                    ...
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="closeModal()">Close</button>
+                    <button type="button" class="btn btn-danger" onclick="deleteTask()">Delete</button>
+                </div>
+            </div>
         </div>
     </div>
 </body>

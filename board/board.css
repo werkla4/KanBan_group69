@@ -332,16 +332,21 @@
     cursor: pointer;
 }
 
+.btn-close{
+    filter: invert(1);
+}
+
 .d-none{
     display: none;
 }
 
-::-webkit-scrollbar {
-    width: 2px;
+.modal-position{
+    top: 50%;
+    transform: translateY(-50%) !important;
 }
 
-::-webkit-scrollbar-thumb {
-    background: rgba(255, 255, 255, 0.5);
+.bg-black-transparent80{
+    background-color: rgba(0, 0, 0, 80%);
 }
 
 @media(max-width: 700px){

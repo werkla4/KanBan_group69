@@ -14,6 +14,7 @@ const CHECKBOX_NAMES = ['cb-1-day', 'cb-2-day', 'cb-35-day', 'cb-6p-day', 'cb-ma
 let current_drag_colName;
 let current_drag_taskId;
 let tasks;
+let delTask = {};
 let checkedElements = [];
 
 
@@ -166,6 +167,7 @@ function tasksIndxOf(colName, taskId) {
             }
         }
     }
+    throw ``;
 }
 
 /**
@@ -318,7 +320,6 @@ function showCommands(colName, taskId, showState) {
     if (showState == "hide") {
         document.getElementById(`${colName}-task-${taskId}-commands-container`).classList.add('d-none');
     }
-
 }
 
 /**
@@ -556,7 +557,6 @@ function createHTML_addComments(colName, taskId, tasks) {
  */
 function createHTML_dateTimeAndCommentsLogo(colName, taskId, tasks) {
     document.getElementById(`${colName}-task-${taskId}`).innerHTML += `
-
     <div class="task-expiration-date-row">  
         <div class="n-commands-container" onclick="showCommands('${colName}', ${taskId}, 'show')">
             <span id="${colName}-task-${taskId}-n-commands">2</span>
@@ -565,7 +565,6 @@ function createHTML_dateTimeAndCommentsLogo(colName, taskId, tasks) {
         <span id="${colName}-task-${taskId}-date">16.05.1987</span>
         <img src="../img/icons8-calendar-150.png" class="task-calender-icon">
     </div>
-
     `;
     // set n-comments
     document.getElementById(`${colName}-task-${taskId}-n-commands`).innerHTML = tasks[taskId]['comments'].length;
@@ -585,7 +584,6 @@ function createHTML_dateTimeAndCommentsLogo(colName, taskId, tasks) {
  */
 function createHTML_setTitleAndDescription(colName, taskId, tasks) {
     document.getElementById(`${colName}-task-${taskId}`).innerHTML += `
-
         <h2 id="${colName}-task-${taskId}-title">${tasks[taskId]['title']}</h2>
         <p id="${colName}-task-${taskId}-discreption">${tasks[taskId]['description']}</p>
 
@@ -599,12 +597,13 @@ function createHTML_setTitleAndDescription(colName, taskId, tasks) {
  * @param {int} taskId 
  * @param {JSON} tasks 
  */
-function createHTML_CategoryUrgency(colName, taskId, tasks) {
+function createHTML_CategoryUrgency(colName, taskId, tasks) {    
     // set code snippet
     document.getElementById(`${colName}-task-${taskId}`).innerHTML = `
     <div class="row-category-urgency">
         <div id="${colName}-task-${taskId}-category" class="task-category"></div>
         <div id="${colName}-task-${taskId}-urgency" class="task-urgency"></div>
+        <button type="button" class="btn-close" aria-label="Close" data-bs-toggle="modal" data-bs-target="#staticBackdrop" onclick="openModal('${colName}',${taskId})"></button>
     </div>
     `;
     // get indx of colors
@@ -699,8 +698,6 @@ function difDateTimestamp(task){
     let timeNow = new Date().getTime();
     // timestamp endTask
     let endTime = task['endTask'];
-
-
     // date today
     let dateStart = timestampToDateFormat(timeNow);     
     // date endTask
@@ -931,6 +928,14 @@ function getSearchWords() {
     return words;
 }
 
+/**
+ * returns true if the word is exist in task
+ * returns false if not
+ * 
+ * @param {string} word 
+ * @param {JSON} task 
+ * @returns 
+ */
 function wordInTask(word, task){
     let strTask = JSON.stringify(task).toLowerCase();
     let indx = strTask.search(word);
@@ -955,4 +960,75 @@ function searchWords(task) {
         }
     }
     return true;
+}
+
+/**
+ * close modal
+ */
+function closeModal(){
+    document.getElementById('staticBackdrop').style = "display: hidden;";
+}
+
+/**
+ * save 'colName' and 'taskId' in delTask[]
+ * 
+ * @param {string} colName 
+ * @param {int} taskId 
+ */
+function saveDeleteTaskInLocalStorage(colName, taskId){
+    delTask['colName'] = colName;
+    delTask['taskId'] = taskId;
+}
+
+/**
+ * update text in modal
+ * 
+ * @param {string} colName 
+ * @param {int} taskId 
+ */
+function updateDeleteTaskText(colName, taskId){
+    // get indx of tasks
+    let mainTaskIndx = tasksIndxOf(colName, taskId);
+    // get values
+    let title = tasks[mainTaskIndx]['title'];
+    let description = tasks[mainTaskIndx]['description'];
+    // set current text in modal
+    document.getElementById('modal-txt').innerHTML = `<b>${title}</b><br>${description}`;
+}
+
+/**
+ * pop up modal
+ */
+function showModal(){
+    document.getElementById('staticBackdrop').style = "display: block;";
+}
+
+/**
+ * show modal and save delTask['colName'] and ['taskId']
+ * 
+ * @param {string} colName 
+ * @param {int} taskId 
+ */
+function openModal(colName, taskId){
+    // save to del task in local storage
+    saveDeleteTaskInLocalStorage(colName, taskId);
+    // show current task
+    updateDeleteTaskText(colName, taskId);
+    showModal();
+}
+
+/**
+ * delete task from tasks and show updated board
+ */
+function deleteTask(){
+    // get indx of tasks
+    let mainTaskIndx = tasksIndxOf(delTask['colName'], delTask['taskId']);
+    // del item
+    tasks.splice(mainTaskIndx, 1);
+    // close modal
+    closeModal();
+    // update board
+    updateBoard();
+    // update backend
+    updateTasksBackend();
 }

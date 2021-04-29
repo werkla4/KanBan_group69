@@ -1,4 +1,4 @@
-const NAVBAR_TITLES = ['board', 'backlog', 'addTask', 'help'];
+const NAVBAR_TITLES = ['board', 'backlog', 'addTask']; // , 'help'];
 let navbarSizeChanged = true;
 
 /**
@@ -185,10 +185,14 @@ function bodySizeIsChanging() {
   if (width <= 1000) {
     showMenuLogo();
     showNavbar('close');
+
+    console.log("mobile--------------------------------------------------");
   }
   // set default attributes
   if (width > 1000) {
     defaultAttributesLargeDevice();
+
+    console.log("large device--------------------------------------------------");
   }
 }
 
