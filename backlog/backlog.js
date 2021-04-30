@@ -169,7 +169,6 @@ function generateOpenTaskHTML(title, name, prio, date, category, description, i)
             <input type="date" id="date${i}" name="end-date"
                 value="${tomorrow}"
                 min="2021-01-01" max="2025-12-31">
-            </input>
             <div class="horizontal-line"></div>
             <div class="details"><b>Description:</b> </div>
             <div class="description-container">${description}</div>       
@@ -222,10 +221,10 @@ function moveToBoard(position) {
  * @param {number} i - This is the position of the selected task where the dated get pushed in
  */
 function pushDates(i) {
-    for (let a = 0; a < boardTasks.length; a++) {
-        boardTasks[a].enddate = document.getElementById(`date${i}`).value;
-        boardTasks[a].startdate = new Date().getTime();
-    }
+
+        boardTasks[boardTasks.length - 1].enddate = document.getElementById(`date${i}`).value;
+        boardTasks[boardTasks.length - 1].startdate = new Date().getTime();
+    
 }
 
 /**
