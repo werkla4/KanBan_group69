@@ -77,10 +77,14 @@
     }
     .task-container-right {
         width: 100%;
+        margin-top: 0;
     }
     .task-container-wrap{        
         overflow-y: scroll;
         max-height: 90vh;
+    }
+    h1 {
+        margin-bottom: 0px !important;
     }
 }
 @media(max-width: 500px) {
