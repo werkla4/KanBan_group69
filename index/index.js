@@ -17,6 +17,8 @@ function updateRadioButtons() {
     let user = localStorage.getItem('user');
     // get pic indx
     let indxForPic = USER_NAMES.indexOf(user);
+    // first call, init pic is klaus
+    if(indxForPic == -1){ indxForPic = 0; }
     // delete all checked states
     RADIO_BUTTON_NAMES.forEach(id => document.getElementById(id).checked = false);
     // set check
