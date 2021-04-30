@@ -1,4 +1,9 @@
-const NAVBAR_TITLES = ['board', 'backlog', 'addTask']; // , 'help'];
+const USER_NAMES = ['Klaus', 'Katja', 'Felicitas'];
+const USER_Pic = ['../img/KlausWerner.jpg', '../img/Katja.jpg', '../img/felimock.jpg'];
+
+const RADIO_BUTTON_NAMES = ['rbKlaus', 'rbKatja', 'rbFeli'];
+
+const NAVBAR_TITLES = ['board', 'backlog', 'addTask', 'others']; // , 'help'];
 let navbarSizeChanged = true;
 
 /**
@@ -49,6 +54,8 @@ async function main_init() {
   updateLeftBarInNavBar();
   // check if it is mobile device
   bodySizeIsChanging();
+  // update user pic
+  updateUserPic();
 }
 
 /**
@@ -210,4 +217,35 @@ function closeNavbarInMobileDevice() {
   if (contentContainerInactive()) {
     showNavbar('close');
   }
+}
+
+/**
+ * update img in navbar
+ */
+function updateUserPic(){
+  // get user
+  let user = localStorage.getItem('user');
+  // first call -> init
+  if(user == null){
+    user = 'Klaus';    
+  }
+  // set pic
+  let indxForPic = USER_NAMES.indexOf(user);
+  document.getElementById('user-picture').src = USER_Pic[indxForPic];
+}
+
+/**
+ * jump to index.html
+ */
+function gotToIndexHtml(){
+  window.open("../index/index.html", '_self');
+}
+
+function radioBtnActivate(rb_Id, user){
+    // delete all checked states
+    RADIO_BUTTON_NAMES.forEach(id => document.getElementById(id).checked = false);
+    // set check
+    document.getElementById(rb_Id).checked = true;
+    // save in local Storage
+    localStorage.setItem('user', user);
 }

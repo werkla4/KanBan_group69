@@ -6,9 +6,6 @@ const CATEGORY_NAMES = ['marketing', 'it', 'accounting', 'organisation'];
 const URGENCY_COLORS = ['var(--urgency_high_color)', 'var(--urgency_medium_color)', 'var(--urgency_low_color)'];
 const URGENCY_NAMES = ['high', 'medium', 'low'];
 
-const USER_NAMES = ['Klaus', 'Katja', 'Felicitas'];
-const USER_Pic = ['../img/KlausWerner.jpg', '../img/Katja.jpg', '../img/felimock.jpg'];
-
 const CHECKBOX_NAMES = ['cb-1-day', 'cb-2-day', 'cb-35-day', 'cb-6p-day', 'cb-marketing', 'cb-it', 'cb-organisation', 'cb-high', 'cb-medium', 'cb-low'];
 
 let current_drag_colName;
