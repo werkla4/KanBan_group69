@@ -244,9 +244,9 @@ function changeState() {
 function deleteBacklogTask(position) {
         let deletedTask = backlogTasks.splice(position, 1);
         setArray('tasks', backlogTasks);
-        showDeleteNotification(deletedTask[0]['title']);
+        
         showBacklogTask();
-
+        showDeleteNotification(deletedTask[0]['title']);
         console.log('deleted task', deletedTask[0]['title']);
     
 }
@@ -259,12 +259,14 @@ function confirmDelete(i){
     let ctitle = backlogTasks[i]['title'];
 
     document.getElementById('notificationConfirm').innerHTML = `
-        <div id="notificationConfirm" class="delete-note-confirm">
+        <div id="notificationConfirm" class="delete-confirm-bg" >
+        <div class="delete-note-confirm">
             <span>Are you sure you want to delete the task <br> &nbsp;<span class="text-highlight">"${ctitle}"</span>&nbsp;?</span>
             <div class="btn-container-confirm">
             <button class="btn btn-primary btn-move" onClick="noDelete()">No keep task</button>
             <button class="btn btn-secondary btn-move" onclick="deleteBacklogTask(${i})">Yes delete task</button>
             </div>
+        </div>
         </div>
     `;
 }
@@ -287,10 +289,13 @@ function showDeleteNotification(deletedTask) {
     //document.getElementById('layer').classList.add('hide');
 
     document.getElementById('notificationConfirm').innerHTML = '';
+    
 
     document.getElementById('notificationContainer').innerHTML = `
+    <div class="delete-confirm-bg">
     <div id="notification" class="delete-note">
     The task &nbsp;<span class="text-highlight">"${title}"</span>&nbsp; was successfully deleted
+    </div>
     </div>`;
     setTimeout(function () {
         closeTaskDetail();
